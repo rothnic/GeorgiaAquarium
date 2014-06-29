@@ -7,8 +7,7 @@ from openmdao.lib.datatypes.api import Float, Int
 
 from calc_solar import *
 
-
-class Solar(Component):
+class SolarModel(Component):
     # set up inputs
     panelRating = Float(0.0, iotype='in', desc='panel rating')
     panelEff = Float(0.0, iotype='in', desc='panel efficiency')
