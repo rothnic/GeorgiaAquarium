@@ -1,4 +1,6 @@
-
+cases.csv
+cases*.csv
+driver.csv
 .coverage
 openmdao_log.txt
 
@@ -6,6 +8,7 @@ openmdao_log.txt
 *~
 *.egg-info
 *.egg
+.idea/
 
 # Compiled source
 *.com

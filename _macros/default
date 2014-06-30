@@ -1,1 +1,27 @@
 # Auto-generated file - MODIFY AT YOUR OWN RISK
+SolarModel = set_as_top(create("openmdao.main.assembly.Assembly"))
+SolarModel.add("sm", create("Energy.Sources.Solar.Solar.SolarModel"))
+SolarModel.replace("driver", create("openmdao.lib.drivers.doedriver.DOEdriver"))
+SolarModel.driver.add_parameter('sm.batteryCost',low=1,high=20);
+SolarModel.driver.add_parameter('sm.circuitLoss',low=.1,high=.4);
+SolarModel.driver.add_parameter('sm.panelEff',low=.8,high=.98);
+SolarModel.driver.add_parameter('sm.panelRating',low=.5,high=.6);
+SolarModel.driver.add_parameter('sm.solarCostPerWatt',low=.5,high=.8);
+SolarModel.driver.add_parameter('sm.sunRadianceScalar',low=.9,high=1.2);
+SolarModel.driver.add("DOEgenerator", create("openmdao.lib.doegenerators.full_factorial.FullFactorial", num_levels=4))
+SolarModel.driver.recorders.append(create("openmdao.lib.casehandlers.csvcase.CSVCaseRecorder"))
+SolarModel.set(u'driver.case_outputs', ['sm.totalkWh','sm.solarCapitalCost'])
+SolarModel.set(u'driver.case_outputs', ['sm.totalkWh'])
+SolarModel.driver.remove_parameter("sm.numPanels");
+SolarModel.driver.add_parameter('sm.numPanels',low=1,high=100,adder=1);
+SolarModel.driver.remove_parameter("sm.numPanels");
+SolarModel.driver.add_parameter('sm.numPanels',low=1,high=100);
+SolarModel.driver.clear_parameters();
+SolarModel.driver.add_parameter('sm.panelEff',low=.15,high=.45);
+SolarModel.driver.add_parameter('sm.solarCostPerWatt',low=.05,high=3.00);
+SolarModel.driver.add_parameter('sm.surfaceArea',low=100,high=1000);
+SolarModel.driver.add_parameter('sm.panelRating',low=200,high=350);
+SolarModel.driver.add_parameter('sm.sunRadianceScalar',low=.9,high=1.1);
+SolarModel.driver.add_parameter('sm.batteryCost',low=1,high=1);
+SolarModel.driver.add_parameter('sm.circuitLoss',low=.7,high=.95);
+SolarModel.set(u'driver.case_outputs', ['sm.totalkWh','sm.solarCapitalCost'])

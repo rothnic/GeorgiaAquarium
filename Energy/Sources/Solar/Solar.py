@@ -2,37 +2,54 @@
    /Energy/Sources/Solar/Solar.py
 """
 
-from openmdao.main.api import Component
-from openmdao.lib.datatypes.api import Float, Int
+import os
 
-from calc_solar import *
+from openmdao.main.api import Component
+from openmdao.lib.datatypes.api import Float
+import pandas as pd
+
+from calc_solar import calc_cost, calc_power, calc_num_panels
+
 
 class SolarModel(Component):
+    # get our current directory
+    path = os.path.dirname(os.path.realpath(__file__))
+
     # set up inputs
-    panelRating = Float(0.0, iotype='in', desc='panel rating')
-    panelEff = Float(0.0, iotype='in', desc='panel efficiency')
-    sunRadianceScalar = Float(0.0, iotype='in', desc='uncertainty around radiance')
-    numPanels = Int(0.0, iotype='in', desc='number of panels')
-    solarCostPerWatt = Float(0.0, iotype='in', desc='solar cost')
-    batteryCost = Float(0.0, iotype='in', desc='cost of batteries')
-    circuitLoss = Float(0.0, iotype='in', desc='circuit power loss')
+    panelRating = Float(1.0, iotype='in', desc='panel rating')
+    panelEff = Float(1.0, iotype='in', desc='panel efficiency')
+    sunRadianceScalar = Float(1.0, iotype='in', desc='uncertainty around radiance')
+    surfaceArea = Float(1.0, iotype='in', desc='number of panels')
+    solarCostPerWatt = Float(1.0, iotype='in', desc='solar cost')
+    batteryCost = Float(1.0, iotype='in', desc='cost of batteries')
+    circuitLoss = Float(1.0, iotype='in', desc='circuit power loss')
 
     # set up outputs
-    # solarSurfaceArea = Float(0.0, iotype='out', desc='surface area')
-    totalkWh = Float(0.0, iotype='out', desc='yearly power output')
-    solarCapitalCost = Float(0.0, iotype='out', desc='investment cost')
+    totalkWh = Float(1.0, iotype='out', desc='yearly power output')
+    solarCapitalCost = Float(1.0, iotype='out', desc='investment cost')
 
+    # set up constants
+    panelSize = 0.7
+    sunDataTable = pd.read_csv(path + '\\solarAtl2010.csv',
+                           index_col=["date", "time"],
+                           parse_dates=["date"])
+    sunData = sunDataTable["irradiance"].values
 
     def execute(self):
+        # Initial setup
+        numPanels = calc_num_panels(self.surfaceArea, self.panelSize)
+
         # Calculate power
         self.totalkWh = calc_power(
             self.panelRating,
             self.panelEff,
             self.sunRadianceScalar,
-            self.numPanels,
-            self.circuitLoss)
+            self.surfaceArea,
+            self.circuitLoss,
+            self.sunData)
 
         # Calculate cost
         self.solarCapitalCost = calc_cost(
             self.solarCostPerWatt,
-            self.batteryCost)
+            self.panelRating,
+            numPanels)
