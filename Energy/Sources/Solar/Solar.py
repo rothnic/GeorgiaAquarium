@@ -30,9 +30,7 @@ class SolarModel(Component):
 
     # set up constants
     panelSize = 0.7
-    sunDataTable = pd.read_csv(path + '\\solarAtl2010.csv',
-                           index_col=["date", "time"],
-                           parse_dates=["date"])
+    sunDataTable = pd.read_csv(path + '\\solarAtl2010.csv')
     sunData = sunDataTable["irradiance"].values
 
     def execute(self):

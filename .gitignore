@@ -8,7 +8,6 @@ openmdao_log.txt
 *~
 *.egg-info
 *.egg
-.idea/
 
 # Compiled source
 *.com

@@ -16,6 +16,16 @@ def calc_power(panelRating, panelEff, sunRadianceScalar, surfaceArea, circuitLos
 
 @jit
 def calc_power_fast(sunData, multValue, theRange):
+    '''
+    Computes the total yearly power for the solar panel system.
+
+    :param sunData: The solar irradiance array for one year
+    :param multValue: The value to multiply each value in the array by
+    :param theRange: Length of the input array, input to avoid JIT compilation issues
+    :return: Sum off the power output from each day
+
+    Uses numba just-in-time compilation to LLVM code to speed up the array operation 1000 times.
+    '''
     sum = 0
     for i in range(theRange):
         sum += sunData[i] * multValue
@@ -30,7 +40,3 @@ def calc_cost(solarCostPerWatt, panelRating, numPanels):
 @jit
 def calc_num_panels(surfaceArea, panelSize):
     return ceil(surfaceArea / panelSize)
-
-
-def load_solar_data(fullFile):
-    pass
