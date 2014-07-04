@@ -14,11 +14,3 @@ def create_year():
 # WedOffExp
 #
     pass
-
-
-cdfInput = pd.read_csv('uncertainties.csv')
-val_on = cdfInput['pedsPerHourOn']
-prob_on = cdfInput['pedsPerHourOn_prob']
-val_off = cdfInput['pedsPerHourOff']
-prob_off = cdfInput['pedsPerHourOff_prob']
-cdfInput.head()

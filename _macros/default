@@ -12,10 +12,6 @@ SolarModel.driver.add("DOEgenerator", create("openmdao.lib.doegenerators.full_fa
 SolarModel.driver.recorders.append(create("openmdao.lib.casehandlers.csvcase.CSVCaseRecorder"))
 SolarModel.set(u'driver.case_outputs', ['sm.totalkWh','sm.solarCapitalCost'])
 SolarModel.set(u'driver.case_outputs', ['sm.totalkWh'])
-SolarModel.driver.remove_parameter("sm.numPanels");
-SolarModel.driver.add_parameter('sm.numPanels',low=1,high=100,adder=1);
-SolarModel.driver.remove_parameter("sm.numPanels");
-SolarModel.driver.add_parameter('sm.numPanels',low=1,high=100);
 SolarModel.driver.clear_parameters();
 SolarModel.driver.add_parameter('sm.panelEff',low=.15,high=.45);
 SolarModel.driver.add_parameter('sm.solarCostPerWatt',low=.05,high=3.00);
@@ -25,3 +21,16 @@ SolarModel.driver.add_parameter('sm.sunRadianceScalar',low=.9,high=1.1);
 SolarModel.driver.add_parameter('sm.batteryCost',low=1,high=1);
 SolarModel.driver.add_parameter('sm.circuitLoss',low=.7,high=.95);
 SolarModel.set(u'driver.case_outputs', ['sm.totalkWh','sm.solarCapitalCost'])
+UncertaintyTester = set_as_top(create("openmdao.main.assembly.Assembly"))
+UncertaintyTester.add("um", create("Uncertainties.Uncertainties.UncertaintiesModel"))
+UncertaintyTester.replace("driver", create("openmdao.lib.drivers.doedriver.DOEdriver"))
+UncertaintyTester.driver.add("DOEgenerator", create("openmdao.lib.doegenerators.optlh.OptLatinHypercube", num_samples=50, population=100, generations=100))
+UncertaintyTester.driver.add_parameter('um.pedsPerHourOff_prob',low=0,high=1);
+UncertaintyTester.driver.add_parameter('um.pedsPerHourOn_prob',low=0,high=1);
+UncertaintyTester.set(u'driver.reload_model', False)
+UncertaintyTester.driver.recorders.append(create("openmdao.lib.casehandlers.csvcase.CSVCaseRecorder"))
+UncertaintyTester.set(u'driver.case_outputs', ['um.pedsPerHourOn','um.pedsPerHourOff'])
+UncertaintyTester.driver.remove('DOEgenerator')
+UncertaintyTester.driver.add("DOEgenerator", create("openmdao.lib.doegenerators.optlh.OptLatinHypercube", num_samples=10, population=10, generations=2))
+WindModelTester = set_as_top(create("openmdao.main.assembly.Assembly"))
+WindModelTester.add("wm", create("Energy.Sources.Wind.Wind.WindModel"))

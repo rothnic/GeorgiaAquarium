@@ -32,8 +32,8 @@ class UncertaintiesModel(Component):
         # Loop through and sample all of my uncertainties
         for dist in self.distributions:
             # Get latest value from input probabilities
-            sampleInput = getattr(self, dist.output + "_prob")
-            print dist.sample(sampleInput)
+            probInput = getattr(self, dist.output + "_prob")
+            setattr(self, dist.output, dist.sample(probInput))
 
     @property
     def my_outputs(self):

@@ -26,8 +26,8 @@ class TriboModel(Component):
     triboCapitalCost = Float(1.0, iotype='out', desc='investment cost ($)')
 
     # set up constants
-    triboDataTable = pd.read_csv(path + '\\triboAtl.csv')
-    triboData = triboDataTable["triboSpeed"].values
+    #triboDataTable = pd.read_csv(path + '\\triboAtl.csv')
+    #triboData = triboDataTable["triboSpeed"].values
 
     def execute(self):
         # Calculate power

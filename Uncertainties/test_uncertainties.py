@@ -1,5 +1,6 @@
 __author__ = 'Nick'
 from Uncertainties import UncertaintiesModel
 
-unc = UncertaintiesModel()
-unc.execute()
+if __name__=="__main__":
+    unc = UncertaintiesModel()
+    unc.execute()
