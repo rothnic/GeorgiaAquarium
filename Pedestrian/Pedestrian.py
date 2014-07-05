@@ -15,8 +15,8 @@ class PedestrianModel(Component):
     yearlyStepsPerTile = Float(1.0, iotype='out', desc='yearly power output')
 
     # set up constants
-    trainingFile = '\\pedTrainingData.csv'
-    netFile = '\\pedSurrogate.net'
+    trainingFile = 'pedTrainingData.csv'
+    netFile = 'pedSurrogate.net'
     outputCols = 'output'
 
     def __init__(self):

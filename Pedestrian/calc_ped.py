@@ -13,12 +13,12 @@ class Surrogate:
         self.path = os.path.dirname(os.path.realpath(__file__))
         self.inputCols = inputCols
         self.outputCols = outputCols
-        self.trainData = pd.read_csv(self.path + trainingFile)
+        self.trainData = pd.read_csv(os.path.join(self.path, trainingFile))
         self.normf = self.create_norm_function()
 
         # Load network if we have a saved network file
         if netFile is not None:
-            self.net = nl.load(self.path + netFile)
+            self.net = nl.load(os.path.join(self.path, netFile))
         else:
             pass  # ToDo Add training method to Surrogate class
 
@@ -65,8 +65,8 @@ class PedSurrogate:
 # Used for testing the functions
 if __name__ == "__main__":
     # Location of training and surrogate files
-    trainFile = '\\pedTrainingData.csv'
-    netFile = '\\pedSurrogate.net'
+    trainFile = 'pedTrainingData.csv'
+    netFile = 'pedSurrogate.net'
 
     # Load training data and initialize surrogate
     sur = Surrogate(trainingFile=trainFile, inputCols='', outputCols='output', netFile=netFile)
