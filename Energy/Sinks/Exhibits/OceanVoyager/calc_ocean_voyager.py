@@ -4,6 +4,7 @@ from math import pi
 
 from numba import jit
 from Common.FfnetSurrogate.FfnetSurrogate import FfnetSurrogate
+import os
 
 
 def init_surrogate():
@@ -30,6 +31,11 @@ def init_surrogate():
 
     trainFile = 'hydroTraining.csv'
     netFile = 'trainedHydroSurrogate.net'
+
+    # Get full paths to file co-located with this one
+    path = os.path.dirname(os.path.realpath(__file__))
+    trainFile = os.path.join(path, trainFile)
+    netFile = os.path.join(path, netFile)
 
     # Load and return stored surrogate object
     return FfnetSurrogate(trainFile, inputCols, outputCols, netFile)

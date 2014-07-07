@@ -2,16 +2,12 @@ __author__ = 'Nick'
 
 from FfnetSurrogate import FfnetSurrogate
 
-# Load csv
-# specify inputs
-# specify outputs
-#
-
-
 
 def neural_from_csv(trainFile, inputCols, outputCols):
     surr = FfnetSurrogate(trainingFile=trainFile, inputCols=inputCols, outputCols=outputCols)
-    surr.train([len(inputCols), 100, len(outputCols)])
+    print len(inputCols)
+    print len(outputCols)
+    surr.train([len(inputCols), 10, len(outputCols)])
     surr.test()
     return surr
 
@@ -19,30 +15,19 @@ def neural_from_csv(trainFile, inputCols, outputCols):
 def create_surrogate():
 
     inputCols = [
-        "ratedSpeed",
-        "flc",
-        "ratedEff",
-        "ratedHead",
-        "ratedFlow",
-        "csa",
-        "runSpeed"
+        "input"
     ]
 
     outputCols = [
-        "pumpHp",
-        "totalFlowOut",
-        "pskFlow2",
-        "pskFlow1",
-        "pIn",
-        "pOut1"
+        "output"
     ]
 
-    trainFile = 'hydroTraining.csv'
+    trainFile = 'pedTrainingData.csv'
 
     return neural_from_csv(trainFile, inputCols, outputCols)
 
 
 if __name__=="__main__":
     surr = create_surrogate()
-    surr.sim([800,20,0.6,20,1300,0.1,1600])
-    surr.save('trainedHydroSurrogate.net')
+    surr.sim([500])
+    surr.save('trainedPedSurrogate.net')

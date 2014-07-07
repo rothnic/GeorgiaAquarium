@@ -3,7 +3,7 @@ __author__ = 'Nick'
 from math import pi
 
 from numba import jit
-
+from math import ceil
 
 @jit
 def calc_power(tileCount, pedStepsPerTile, tileEff, tilekWh):
@@ -13,11 +13,7 @@ def calc_power(tileCount, pedStepsPerTile, tileEff, tilekWh):
 
 @jit
 def calc_cost(tileUnitCost, tileCount, mgtTileUnitCost):
-    if tileCount <= 50
-        return tileUnitCost * tileCount + mgtTileUnitCost
-    else
-        numMgtTiles = int(tileCount / 50)
-        if tileCount mod 50 > 0
-            numMgtTiles = numMgtTiles + 1
-        return (tileUnitCost * tileCount) + (numMgtTiles * mgtTileUnitCost)
+
+    numMgtTiles = ceil(tileCount / 50)
+    return (tileUnitCost * tileCount) + (numMgtTiles * mgtTileUnitCost)
         

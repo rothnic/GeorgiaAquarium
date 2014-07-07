@@ -9,6 +9,7 @@ from openmdao.lib.datatypes.api import Float
 import pandas as pd
 
 from calc_solar import calc_cost, calc_power, calc_num_panels
+from Common.AttributeTools.io import print_outputs
 
 
 class SolarModel(Component):
@@ -51,3 +52,15 @@ class SolarModel(Component):
             self.solarCostPerWatt,
             self.panelRating,
             numPanels)
+
+
+def run_tests():
+    comp = SolarModel()
+    comp.execute()
+    print_outputs(comp)
+
+
+if __name__ == "__main__":
+    # Module test routine, executes when this python file is ran independently
+    # For example, using Pycharm, right click while editing and select Run
+    run_tests()

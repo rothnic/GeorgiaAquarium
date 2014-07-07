@@ -5,7 +5,7 @@ import pandas as pd
 import neurolab as nl
 from scipy import stats
 
-class Surrogate:
+class NeurolabSurrogate:
     def __init__(self, trainingFile, inputCols, outputCols, netFile=None):
 
         self.inputCols = inputCols
