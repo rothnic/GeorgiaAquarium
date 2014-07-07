@@ -6,9 +6,9 @@ from openmdao.main.api import Component
 from openmdao.lib.datatypes.api import Float
 import pandas as pd
 
-from calc_cost import *
-from Common.AttributeTools.io import print_outputs
 
+from Common.AttributeTools.io import print_outputs
+from calc_cost import *
 
 class CostModel(Component):
     # get our current directory
@@ -16,13 +16,13 @@ class CostModel(Component):
 
     # set up inputs
     hydraulicCapitalCost = Float(1.0, iotype='in', desc='cost of making change to hydraulics')
-    windCapitalCost = Float(1.0, iotype='in', desc='cost of implementing wind energy')
-    solarCapitalCost = Float(1.0, iotype='in', desc='cost of implementing solar energy')
-    triboCapitalCost = Float(1.0, iotype='in', desc='cost of implementing tribo energy')
-    elecUtilityRate = Float(1.0, iotype='in', desc='cost of electricity')
-    baselineTotalPowerUse = Float(1.0, iotype='in', desc='total GA power use')
-    baselineOceanVoyPowerUse = Float(1.0, iotype='in', desc='total ocean voyager power use')
-    hydraulicPowerUse = Float(1.0, iotype='in', desc='total ocean voyager power use')
+    windCapitalCost = Float(10.0, iotype='in', desc='cost of implementing wind energy')
+    solarCapitalCost = Float(10.0, iotype='in', desc='cost of implementing solar energy')
+    triboCapitalCost = Float(10.0, iotype='in', desc='cost of implementing tribo energy')
+    elecUtilityRate = Float(0.1, iotype='in', desc='cost of electricity')
+    baselineTotalPowerUse = Float(1000.0, iotype='in', desc='total GA power use')
+    baselineOceanVoyPowerUse = Float(20.0, iotype='in', desc='total ocean voyager power use')
+    hydraulicPowerUse = Float(19.0, iotype='in', desc='total ocean voyager power use')
     yearlyPowerProducedSolar = Float(1.0, iotype='in', desc='solar power produced for given investment')
     yearlyPowerProducedWind = Float(1.0, iotype='in', desc='wind power produced for given investment')
     yearlyPowerProducedTribo = Float(1.0, iotype='in', desc='tribo power produced for given investment')
@@ -83,5 +83,17 @@ class CostModel(Component):
         self.year20Roi = roi[20]
         self.year30Roi = roi[30]
 
+        # Calculate the quality of this solution
         self.totalUtility = total_utility(self.year10Roi, self.expectedReturn, self.investmentYears,
                                           self.totalInitialInvestment)
+
+def run_tests():
+    comp = CostModel()
+    comp.execute()
+    print_outputs(comp)
+
+
+if __name__ == "__main__":
+    # Module test routine, executes when this python file is ran independently
+    # For example, using Pycharm, right click while editing and select Run
+    run_tests()

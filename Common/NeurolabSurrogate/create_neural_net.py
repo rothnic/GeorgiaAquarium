@@ -1,6 +1,6 @@
 __author__ = 'Nick'
 
-from NeurolabSurrogate import Surrogate
+from NeurolabSurrogate import NeurolabSurrogate
 
 # Load csv
 # specify inputs
@@ -10,7 +10,7 @@ from NeurolabSurrogate import Surrogate
 
 
 def neural_from_csv(trainFile, inputCols, outputCols):
-    surr = Surrogate(trainingFile=trainFile, inputCols=inputCols, outputCols=outputCols)
+    surr = NeurolabSurrogate(trainingFile=trainFile, inputCols=inputCols, outputCols=outputCols)
     surr.train([10,len(outputCols)])
     #print surr.sim([800,20,0.6,20,1300,0.1,1600])
     surr.test()

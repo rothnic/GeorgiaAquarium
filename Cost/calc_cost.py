@@ -46,10 +46,12 @@ def get_break_even(totalInitialInvestment, totalEnergyCost, originalEnergyCost):
     totalSavings = 0 - totalInitialInvestment
     months = 0.0
 
-    while totalSavings < 0:
-        totalSavings += monthlySavings
-        months += 1
-
+    if monthlySavings > 0:
+        while totalSavings < 0:
+            totalSavings += monthlySavings
+            months += 1
+    else:
+        months = -1
     # return decimal years
     return months / 12.0
 
