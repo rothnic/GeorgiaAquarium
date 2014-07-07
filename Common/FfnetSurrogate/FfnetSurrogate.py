@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import neurolab as nl
 from scipy import stats
-from ffnet import ffnet, mlgraph
+from ffnet import ffnet, mlgraph, savenet, loadnet
 
 class FfnetSurrogate:
     def __init__(self, trainingFile, inputCols, outputCols, netFile=None):
@@ -12,30 +12,17 @@ class FfnetSurrogate:
         self.inputCols = inputCols
         self.outputCols = outputCols
         self.trainData = pd.read_csv(trainingFile)
-        self.normf = self.create_norm_func()
         self.net = None
         self.inputData = None
         self.outputData = None
 
         # Load network if we have a saved network file
         if netFile is not None:
-            self.net = nl.load(netFile)
-
-    def create_norm_func(self):
-        # Get training data to recreate normalization function
-        trainData = self.trainData
-        outputCols = self.outputCols
-
-        # Use only output columns as input to normalization function
-        tar = trainData[outputCols].values
-        normf = nl.tool.Norm(tar)
-        return normf
+            self.load(netFile)
 
     def test(self):
         if self.net is not None:
             out = self.sim(self.inputData)
-            #out = self.normf.renorm(outNorm)
-
             for i, outCol in enumerate(self.outputCols):
                 slope, intercept, r_value, p_value, std_err = stats.linregress(self.outputData[:, i].T, out[:,i].T)
                 print "Training for " + outCol
@@ -45,7 +32,6 @@ class FfnetSurrogate:
                 print "p_value: " + str(p_value)
                 print "std_err: " + str(std_err)
                 print ""
-            #return out
 
     def train(self, layersList):
         # Select only input columns from pandas dataframe as numpy array
@@ -61,6 +47,11 @@ class FfnetSurrogate:
         out = self.net(inValue)
         return out
 
+    def save(self, filename):
+        savenet(self.net, filename)
+
+    def load(self, filename):
+        self.net = loadnet(filename)
 
     def print_sim(self, inValues):
         for value in inValues:
