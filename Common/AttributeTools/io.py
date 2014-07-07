@@ -22,3 +22,10 @@ def print_outputs(component):
         print output + ": " + str(getattr(component, output))
 
     print ""
+
+def get_output_values(component):
+    output_names = get_outputs(component)
+    outputs = {}
+    for name in output_names:
+        outputs[name] = getattr(component, name)
+    return outputs
