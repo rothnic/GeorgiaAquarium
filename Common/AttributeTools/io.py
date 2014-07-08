@@ -29,3 +29,20 @@ def get_output_values(component):
     for name in output_names:
         outputs[name] = getattr(component, name)
     return outputs
+
+def get_inputs(component):
+    # Get inputs from component
+    my_inputs = component.list_inputs()
+
+    # Defined standard outputs we don't want to see
+    standard_inputs = ['directory', 'force_execute', 'force_fd', 'missing_deriv_policy']
+
+    # Subtract out the standard outputs
+    return list(set(my_inputs) - set(standard_inputs))
+
+def get_input_values(component):
+    input_names = get_inputs(component)
+    inputs = {}
+    for name in input_names:
+        inputs[name] = getattr(component, name)
+    return inputs
