@@ -66,5 +66,5 @@ def calc_power_fast(outputs, numPumps):
 
 
 @jit
-def calc_cost():
-    return 119000.0
+def calc_cost(numPumpRetrofits, pumpModificationUnitCost):
+    return numPumpRetrofits * pumpModificationUnitCost

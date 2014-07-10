@@ -19,7 +19,7 @@ class UncertaintiesModel(Component):
     panelEff_prob = Float(0.5, iotype='in', desc='eff in conversion of sun energy distribution sample point')
     circuitLoss_prob = Float(0.5, iotype='in', desc='eff in collecting electrical energy distribution sample point')
     turbineEff_prob = Float(0.5, iotype='in', desc='eff in collecting electrical energy distribution sample point')
-    baselineTotalPowerUse_prob = Float(0.5, iotype='in', desc='current power use per year distribution sample point')
+    baselineOceanVoyPowerUse_prob = Float(0.5, iotype='in', desc='current power use per year for OV distribution sample point')
 
 
     # set up outputs
@@ -30,7 +30,7 @@ class UncertaintiesModel(Component):
     panelEff = Float(0.23, iotype='out', desc='eff in conversion of sun energy distribution sample value')
     circuitLoss = Float(0.30, iotype='out', desc='eff in collecting electrical energy distribution sample value')
     turbineEff = Float(0.367, iotype='out', desc='eff in collecting electrical energy distribution sample value')
-    baselineTotalPowerUse = Float(1438775.0, iotype='out', desc='current power use per year distribution sample value')
+    baselineOceanVoyPowerUse = Float(17265306.1224, iotype='out', desc='current power use per year for OV distribution sample value')
     distributions = []
 
     def __init__(self):

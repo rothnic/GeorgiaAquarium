@@ -18,7 +18,9 @@ class OceanVoyagerModel(Component):
     ratedHead = Float(20.0, iotype='in', desc='electric pump rated head')
     ratedFlow = Float(1300.0, iotype='in', desc='electric pump rated flow')
     referenceArea = Float(0.1, iotype='in', desc='reference area')
-    runSpeed = Float(1600.0, iotype='in', desc='electric pump actual run speed')
+    runSpeed = Float(800.0, iotype='in', desc='electric pump actual run speed')
+    pumpModificationUnitCost = Float(8000.0, iotype='in', desc='electric pump modification cost')
+    numPumpRetrofits = Float(34.0, iotype='in', desc='electric pump modification cost')
 
     # set up outputs
     totalPowerUsed = Float(1.0, iotype='out', desc='yearly power output')
@@ -49,7 +51,7 @@ class OceanVoyagerModel(Component):
             self.numPumps)
 
         # Calculate the cost
-        self.hydraulicCapitalCost = calc_cost()
+        self.hydraulicCapitalCost = calc_cost(self.numPumpRetrofits, self.pumpModificationUnitCost)
 
 
 def run_tests():

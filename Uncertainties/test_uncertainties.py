@@ -1,6 +1,5 @@
 __author__ = 'Nick'
-from Uncertainties import UncertaintiesModel
+from Uncertainties import run_tests
 
-if __name__=="__main__":
-    unc = UncertaintiesModel()
-    unc.execute()
+def test_uncertainties_openmdao_model():
+    run_tests()
