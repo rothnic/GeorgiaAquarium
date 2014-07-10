@@ -234,3 +234,6 @@ quickopt.set(u'driver.gradient_options.gmres_tolerance', 1e-6)
 quickopt.set(u'driver.pyopt_diff', True)
 opt.set(u'driver.optimizer', 'ALPSO')
 opt.set(u'driver.gradient_options.gmres_tolerance', 1e-6)
+opt.driver.add_parameter('gac.tileCount',low=0,high=20);
+opt.set(u'driver.optimizer', 'ALHSO')
+opt.driver.add_parameter('gac.turbineCount',low=0,high=10);

@@ -18,7 +18,7 @@ class SolarModel(Component):
 
     # set up inputs
     panelRating = Float(1.0, iotype='in', desc='panel rating')
-    panelEff = Float(1.0, iotype='in', desc='panel efficiency')
+    panelEff = Float(0.25, iotype='in', desc='panel efficiency')
     sunRadianceScalar = Float(1.0, iotype='in', desc='uncertainty around radiance')
     surfaceArea = Float(1.0, iotype='in', desc='number of panels')
     solarCostPerWatt = Float(1.0, iotype='in', desc='solar cost')

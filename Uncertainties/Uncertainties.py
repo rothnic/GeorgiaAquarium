@@ -14,11 +14,23 @@ class UncertaintiesModel(Component):
     # set up inputs
     pedsPerHourOn_prob = Float(0.5, iotype='in', desc='avg peds per hour on season distribution sample point')
     pedsPerHourOff_prob = Float(0.5, iotype='in', desc='avg peds per hour off season distribution sample point')
+    tileUnitCost_prob = Float(0.5, iotype='in', desc='cost of a tribo tile distribution sample point')
+    elecUtilityRate_prob = Float(0.5, iotype='in', desc='cost of electricity distribution sample point')
+    panelEff_prob = Float(0.5, iotype='in', desc='eff in conversion of sun energy distribution sample point')
+    circuitLoss_prob = Float(0.5, iotype='in', desc='eff in collecting electrical energy distribution sample point')
+    turbineEff_prob = Float(0.5, iotype='in', desc='eff in collecting electrical energy distribution sample point')
+    baselineTotalPowerUse_prob = Float(0.5, iotype='in', desc='current power use per year distribution sample point')
 
 
     # set up outputs
-    pedsPerHourOn = Float(1.0, iotype='out', desc='avg peds per hour on season distribution sample value')
-    pedsPerHourOff = Float(1.0, iotype='out', desc='avg peds per hour off season distribution sample value')
+    pedsPerHourOn = Float(600.0, iotype='out', desc='avg peds per hour on season distribution sample value')
+    pedsPerHourOff = Float(500.0, iotype='out', desc='avg peds per hour off season distribution sample value')
+    tileUnitCost = Float(800.0, iotype='out', desc='cost of a tribo tile distribution sample value')
+    elecUtilityRate = Float(0.1, iotype='out', desc='cost of electricity distribution sample value')
+    panelEff = Float(0.23, iotype='out', desc='eff in conversion of sun energy distribution sample value')
+    circuitLoss = Float(0.30, iotype='out', desc='eff in collecting electrical energy distribution sample value')
+    turbineEff = Float(0.367, iotype='out', desc='eff in collecting electrical energy distribution sample value')
+    baselineTotalPowerUse = Float(1438775.0, iotype='out', desc='current power use per year distribution sample value')
     distributions = []
 
     def __init__(self):

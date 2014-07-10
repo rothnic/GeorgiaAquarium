@@ -1,8 +1,4 @@
-cases.csv
-cases*.csv
-driver.csv
 .coverage
-openmdao_log.txt
 
 ~*
 *~
@@ -34,4 +30,10 @@ Thumbs.db
 .hg
 .svn
 
+# project specific
 .idea
+*.out
+openmdao_log.txt
+cases.csv
+cases*.csv
+driver.csv
