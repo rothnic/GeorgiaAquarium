@@ -17,11 +17,11 @@ class PedestrianModel(Component):
     """
 
     # set up inputs
-    pedsPerHourOn = Float(500.0, iotype='in', desc='panel rating')
-    pedsPerHourOff = Float(800.0, iotype='in', desc='panel efficiency')
+    pedsPerHourOn = Float(600.0, iotype='in', desc='panel rating')
+    pedsPerHourOff = Float(500.0, iotype='in', desc='panel efficiency')
 
     # set up outputs
-    yearlyStepsPerTile = Float(1.0, iotype='out', desc='yearly power output')
+    yearlyStepsPerTile = Float(47180.0, iotype='out', desc='yearly power output')
 
     def __init__(self):
         super(PedestrianModel, self).__init__()

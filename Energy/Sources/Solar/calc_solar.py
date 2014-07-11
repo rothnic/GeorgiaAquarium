@@ -34,8 +34,8 @@ def calc_power_fast(sunData, multValue, theRange):
 
 @jit
 def calc_cost(solarCostPerWatt, panelRating, numPanels):
-    return solarCostPerWatt * numPanels * panelRating
 
+    return solarCostPerWatt * numPanels * panelRating
 
 @jit
 def calc_num_panels(surfaceArea, panelSize):

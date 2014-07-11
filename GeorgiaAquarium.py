@@ -11,6 +11,7 @@ from Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager import OceanVoyagerModel
 from Energy.Sources.Solar.Solar import SolarModel
 from Energy.Sources.Wind.Wind import WindModel
 from Energy.Sources.Tribo.Tribo import TriboModel
+from Common.AttributeTools.io import *
 
 class GeorgiaAquarium(Assembly):
 
@@ -89,3 +90,14 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('ovm.totalFlow')
         self.create_passthrough('pm.pedsPerHourOff')
         self.create_passthrough('pm.pedsPerHourOn')
+
+def run_tests():
+    comp = GeorgiaAquarium()
+    comp.execute()
+    print_outputs(comp)
+
+
+if __name__ == "__main__":
+    # Module test routine, executes when this python file is ran independently
+    # For example, using Pycharm, right click while editing and select Run
+    run_tests()

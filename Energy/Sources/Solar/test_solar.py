@@ -4,7 +4,7 @@ __author__ = 'Nick'
 
 import pandas as pd
 
-from Energy.Sources.Solar.calc_solar import calc_power
+from Energy.Sources.Solar.calc_solar import *
 from Energy.Sources.Solar.Solar import SolarModel
 
 path = "C:\Users\Nick\.openmdao\gui\projects\GeorgiaAquarium\Energy\Sources\Solar\solarAtl2010.csv"
@@ -20,3 +20,9 @@ def testSolarClean():
 def testSolarComp():
     sm = SolarModel()
     sm.execute()
+
+def test_solar_non_neg():
+    pass
+    #numPanels = calc_num_panels(148.0, 0.7)
+    #cost = calc_cost(1.17, 183, numPanels)
+    #print cost

@@ -14,6 +14,8 @@ def calc_power(tileCount, pedStepsPerTile, tileEff, tilekWh):
 @jit
 def calc_cost(tileUnitCost, tileCount, mgtTileUnitCost):
 
+    if tileCount < 100:
+        tileUnitCost = tileUnitCost * 1.5
     numMgtTiles = ceil(tileCount / 50)
     return (tileUnitCost * tileCount) + (numMgtTiles * mgtTileUnitCost)
         

@@ -237,3 +237,55 @@ opt.set(u'driver.gradient_options.gmres_tolerance', 1e-6)
 opt.driver.add_parameter('gac.tileCount',low=0,high=20);
 opt.set(u'driver.optimizer', 'ALHSO')
 opt.driver.add_parameter('gac.turbineCount',low=0,high=10);
+solarOpt = set_as_top(create("openmdao.main.assembly.Assembly"))
+solarOpt.replace("driver", create("pyopt_driver.pyopt_driver.pyOptDriver"))
+solarOpt.add("sm", create("Energy.Sources.Solar.Solar.SolarModel"))
+solarOpt.driver.add_parameter('sm.batteryCost',low=0,high=0);
+solarOpt.driver.add_parameter('sm.circuitLoss',low=0.7,high=0.7);
+solarOpt.driver.add_parameter('sm.panelEff',low=.1,high=.25);
+solarOpt.driver.add_parameter('sm.panelRating',low=100,high=450);
+solarOpt.driver.add_parameter('sm.surfaceArea',low=100,high=1000);
+solarOpt.driver.add_parameter('sm.sunRadianceScalar',low=1,high=1);
+solarOpt.driver.add_parameter('sm.solarCostPerWatt',low=1.00,high=2.00);
+solarOpt.driver.add_objective('sm.totalkWh');
+solarOpt.driver.add_constraint('sm.solarCapitalCost < 400000');
+solarOpt.set(u'driver.optimizer', 'NSGA2')
+solarOpt.set(u'driver.optimizer', 'COBYLA')
+solarOpt.driver.recorders.append(create("openmdao.lib.casehandlers.csvcase.CSVCaseRecorder"))
+solarOpt.driver.remove_parameter("sm.batteryCost");
+solarOpt.driver.remove_parameter("sm.circuitLoss");
+solarOpt.driver.remove_parameter("sm.sunRadianceScalar");
+solarOpt.set(u'driver.optimizer', 'ALPSO')
+solarOpt.driver.remove_objective("sm.totalkWh");
+solarOpt.driver.add_objective('sm.totalkWh >= 0');
+solarOpt.driver.remove_objective("sm.totalkWh>=0");
+solarOpt.driver.add_objective('sm.totalkWh');
+solarOpt.set(u'driver.pyopt_diff', True)
+solarOpt.set(u'driver.options', {"'Problem Type'":"'Maximize'"})
+solarOpt.set(u'driver.options', {"'Problem Type'":"'Maximize'"})
+solarOpt.set(u'driver.options', {})
+solarOpt.set(u'driver.options', {"Problem Type":"Maximize"})
+solarOpt.set(u'driver.options', {})
+solarOpt.driver.remove_objective("sm.totalkWh");
+solarOpt.driver.add_objective('+sm.totalkWh');
+solarOpt.driver.remove_objective("+sm.totalkWh");
+solarOpt.driver.add_objective('sm.totalkWh');
+solarOpt.driver.remove_constraint("sm.solarCapitalCost<400000");
+solarOpt.driver.add_constraint('400000 > sm.solarCapitalCost');
+solarOpt.driver.remove_objective("sm.totalkWh");
+solarOpt.driver.add_objective('-sm.totalkWh');
+solarOpt.driver.remove_constraint("400000>sm.solarCapitalCost");
+solarOpt.driver.add_constraint('sm.solarCapitalCost >= 400000');
+solarOpt.driver.remove_constraint("sm.solarCapitalCost>=400000");
+solarOpt.driver.add_constraint('-sm.solarCapitalCost < 400000');
+solarOpt.driver.remove_constraint("-sm.solarCapitalCost<400000");
+solarOpt.driver.add_constraint('sm.solarCapitalCost < 400000.0');
+solarOpt.driver.remove_parameter("sm.solarCostPerWatt");
+solarOpt.driver.remove_constraint("sm.solarCapitalCost<400000.0");
+solarOpt.driver.add_constraint('400000.0 > sm.solarCapitalCost');
+solarOpt.driver.remove_constraint("400000.0>sm.solarCapitalCost");
+solarOpt.driver.add_constraint('sm.solarCapitalCost >= 400000.0',name='solarcost');
+solarOpt.driver.remove_parameter("sm.surfaceArea");
+solarOpt.driver.add_parameter('sm.surfaceArea',low=0,high=1000);
+solarOpt.driver.remove_constraint("solarcost");
+solarOpt.driver.add_constraint('sm.solarCapitalCost <= 400000.0',name='solarcost');
