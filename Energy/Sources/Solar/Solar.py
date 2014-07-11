@@ -4,13 +4,12 @@
 
 import os
 
-from openmdao.main.api import Component
+from openmdao.main.api import Component, Assembly
 from openmdao.lib.datatypes.api import Float
-import pandas as pd
-
-from calc_solar import calc_cost, calc_power, calc_num_panels
-from Common.AttributeTools.io import print_outputs
-
+from pyopt_driver import pyopt_driver
+from openmdao.lib.casehandlers import csvcase
+from pandas import read_csv
+from calc_solar import calc_num_panels, calc_power, calc_cost
 
 class SolarModel(Component):
     # get our current directory
@@ -31,8 +30,8 @@ class SolarModel(Component):
 
     # set up constants
     panelSize = 1.42
-    maxSurfaceArea = 1000.0 # Square meters
-    sunDataTable = pd.read_csv(path + '\\solarAtl2010.csv')
+    maxSurfaceArea = 1000.0  # Square meters
+    sunDataTable = read_csv(path + '\\solarAtl2010.csv')
     sunData = sunDataTable["irradiance"].values
 
     def execute(self):
@@ -56,17 +55,41 @@ class SolarModel(Component):
             numPanels)
 
 
-def run_tests():
-    comp = SolarModel()
-    comp.execute()
-    print_outputs(comp)
+class SolarOptimization(Assembly):
+    '''
+    Implements an assembly to contain the SolarModel component, and run optimizations on it stand-alone with the
+    pyOpt plugin of optimization drivers. Implements a caserecorder so that you can investigate the results
+    afterwards. This assembly will show up automatically when using openmdao gui, or can be used directly in another
+    python script as you would use a regular python class.
+    '''
+
+    def configure(self):
+        # Add the pyOpt driver and case recorder
+        self.replace("driver", pyopt_driver.pyOptDriver())
+        self.driver.recorders.append(csvcase.CSVCaseRecorder())
+
+        # Add the solar model to the assembly
+        self.add("sm", SolarModel())
+
+        # Add the parameters to be used in optimization
+        self.driver.add_parameter('sm.panelEff', low=.1, high=.25)
+        self.driver.add_parameter('sm.panelRating', low=100, high=450)
+        self.driver.add_parameter('sm.surfaceArea', low=0, high=1000)
+
+        self.driver.add_objective('-sm.totalkWh')
+        self.driver.add_constraint('sm.solarCapitalCost <= 400000.0')
 
 
 if __name__ == "__main__":
-    from test_solar import *
-    # Module test routine, executes when this python file is ran independently
-    # For example, using Pycharm, right click while editing and select Run
-    run_tests()
+    '''
+    A module testing routine, executes when this python file is ran independently. For example, using Pycharm,
+    right click while editing and select Run. The tests called below are alternatively ran automatically by pytest
+    from test_solar if configured to do so within Pycharm.
+    '''
+    from test_solar import run_print_test, test_solar_non_neg, testSolarComp, testSolarClean
+
+    run_print_test()
     testSolarClean()
     testSolarComp()
     test_solar_non_neg()
+
