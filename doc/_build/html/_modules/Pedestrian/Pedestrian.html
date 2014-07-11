@@ -69,6 +69,8 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AnalysisComponents.html">Analysis Components</a></li>
 </ul>
 </ul>
 </li>
@@ -118,15 +120,22 @@
   <h1>Source code for Pedestrian.Pedestrian</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
 
+<span class="kn">import</span> <span class="nn">os</span>
+
 <span class="kn">from</span> <span class="nn">openmdao.main.api</span> <span class="kn">import</span> <span class="n">Component</span>
 <span class="kn">from</span> <span class="nn">openmdao.lib.datatypes.api</span> <span class="kn">import</span> <span class="n">Float</span>
 
-<span class="kn">from</span> <span class="nn">calc_ped</span> <span class="kn">import</span> <span class="n">PedSurrogate</span>
+<span class="kn">from</span> <span class="nn">calc_ped</span> <span class="kn">import</span> <span class="n">PedSurrogate</span><span class="p">,</span> <span class="n">setup_defaults</span>
 <span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">print_outputs</span>
-<span class="kn">import</span> <span class="nn">os</span>
 
 
-<div class="viewcode-block" id="PedestrianModel"><a class="viewcode-back" href="../../Intro.html#Pedestrian.Pedestrian.PedestrianModel">[docs]</a><span class="k">class</span> <span class="nc">PedestrianModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<div class="viewcode-block" id="PedestrianModel"><a class="viewcode-back" href="../../Models.html#Pedestrian.Pedestrian.PedestrianModel">[docs]</a><span class="k">class</span> <span class="nc">PedestrianModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The PedestrianModel class represents the Pedestrian flow through the Georgia Aquarium. The model was originally</span>
+<span class="sd">    developed using AnyLogic, which includes powerfully pedestrian simulation capabilities. This OpenMDAO component</span>
+<span class="sd">    implements a surrogate of the original Anylogic model. It extends the OpenMDAO Component.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c"># set up inputs</span>
     <span class="n">pedsPerHourOn</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel rating&#39;</span><span class="p">)</span>
     <span class="n">pedsPerHourOff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel efficiency&#39;</span><span class="p">)</span>
@@ -134,30 +143,35 @@
     <span class="c"># set up outputs</span>
     <span class="n">yearlyStepsPerTile</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output&#39;</span><span class="p">)</span>
 
-    <span class="c"># set up constants</span>
-    <span class="n">trainingFile</span> <span class="o">=</span> <span class="s">&#39;pedTrainingData.csv&#39;</span>
-    <span class="n">netFile</span> <span class="o">=</span> <span class="s">&#39;trainedPedSurrogate.net&#39;</span>
-    <span class="n">outputCols</span> <span class="o">=</span> <span class="s">&#39;output&#39;</span>
-    <span class="n">inputCols</span> <span class="o">=</span> <span class="s">&#39;input&#39;</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">PedestrianModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
         <span class="c"># Get full paths to file co-located with this one</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="n">setup_defaults</span><span class="p">()</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
-        <span class="n">trainingFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainingFile</span><span class="p">)</span>
-        <span class="n">netFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">netFile</span><span class="p">)</span>
+        <span class="n">trainingFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">defaults</span><span class="p">[</span><span class="s">&#39;trainingFile&#39;</span><span class="p">])</span>
+        <span class="n">netFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">defaults</span><span class="p">[</span><span class="s">&#39;netFile&#39;</span><span class="p">])</span>
 
         <span class="c"># Initialize surrogate model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">PedSurrogate</span><span class="p">(</span><span class="n">trainingFile</span><span class="o">=</span><span class="n">trainingFile</span><span class="p">,</span> <span class="n">inputCols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inputCols</span><span class="p">,</span>
-                                  <span class="n">outputCols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">outputCols</span><span class="p">,</span> <span class="n">netFile</span><span class="o">=</span><span class="n">netFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">PedSurrogate</span><span class="p">(</span><span class="n">trainingFile</span><span class="o">=</span><span class="n">trainingFile</span><span class="p">,</span> <span class="n">inputCols</span><span class="o">=</span><span class="n">defaults</span><span class="p">[</span><span class="s">&#39;inputCols&#39;</span><span class="p">],</span>
+                                  <span class="n">outputCols</span><span class="o">=</span><span class="n">defaults</span><span class="p">[</span><span class="s">&#39;outputCols&#39;</span><span class="p">],</span> <span class="n">netFile</span><span class="o">=</span><span class="n">netFile</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PedestrianModel.execute"><a class="viewcode-back" href="../../Intro.html#Pedestrian.Pedestrian.PedestrianModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># Initial setup</span>
+<div class="viewcode-block" id="PedestrianModel.execute"><a class="viewcode-back" href="../../Models.html#Pedestrian.Pedestrian.PedestrianModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute is the primary method that every openMDAO component must implement. Each time the model is ran by</span>
+<span class="sd">        openMDAO, the execute method is called. In this case, the Pedestrian model reads the openMDAO input</span>
+<span class="sd">        attributes, then executes the surrogate model with these values. The surrogate model is trained within the</span>
+<span class="sd">        __init__ method, so the trained model is executed quickly. The inputs are both the on season and off season</span>
+<span class="sd">        values for how many expected visitors are expected on average in an hour. These values were derived from data</span>
+<span class="sd">        provided by Georgia Aquarium. These values are used to come up with an aggregate number of steps per tile</span>
+<span class="sd">        we&#39;d expected over a years time.</span>
+
+<span class="sd">        :return: yearly steps per single triboelectric tile</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">yearlyStepsPerTile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">sim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pedsPerHourOn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pedsPerHourOff</span><span class="p">)</span>
 
 </div></div>
-<div class="viewcode-block" id="run_tests"><a class="viewcode-back" href="../../Intro.html#Pedestrian.Pedestrian.run_tests">[docs]</a><span class="k">def</span> <span class="nf">run_tests</span><span class="p">():</span>
+<div class="viewcode-block" id="run_tests"><a class="viewcode-back" href="../../Models.html#Pedestrian.Pedestrian.run_tests">[docs]</a><span class="k">def</span> <span class="nf">run_tests</span><span class="p">():</span>
     <span class="n">comp</span> <span class="o">=</span> <span class="n">PedestrianModel</span><span class="p">()</span>
     <span class="n">comp</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
     <span class="n">print_outputs</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>

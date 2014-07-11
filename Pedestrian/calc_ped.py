@@ -3,6 +3,7 @@ __author__ = 'Nick'
 from Common.FfnetSurrogate.FfnetSurrogate import FfnetSurrogate
 
 class PedSurrogate:
+
     def __init__(self, trainingFile, inputCols, outputCols, netFile):
         self.surrogate = FfnetSurrogate(trainingFile, inputCols, outputCols, netFile)
         self.offDays = 236
@@ -16,6 +17,15 @@ class PedSurrogate:
 
         return yearlyStepsPerTile[0]
 
+
+def setup_defaults():
+    # set up constants
+    defaults = {}
+    defaults['trainingFile'] = 'pedTrainingData.csv'
+    defaults['netFile'] = 'trainedPedSurrogate.net'
+    defaults['outputCols'] = 'output'
+    defaults['inputCols'] = 'input'
+    return defaults
 
 # Only ran when this calc_ped is run directly
 # Used for testing the functions

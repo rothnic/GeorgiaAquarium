@@ -12,7 +12,8 @@ Contents:
    :maxdepth: 2
 
    Intro
-   Components
+   Models
+   AnalysisComponents
    Common
 
 

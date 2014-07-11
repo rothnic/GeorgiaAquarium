@@ -3,6 +3,4 @@
 Introduction
 =========================================================
 
-.. automodule:: Pedestrian.Pedestrian
-    :members:
-    :undoc-members:
+

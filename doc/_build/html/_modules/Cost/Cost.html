@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cost.Cost &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-3.1.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          Georgia Aquarium Energy Model</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AnalysisComponents.html">Analysis Components</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for Cost.Cost</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">openmdao.main.api</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.datatypes.api</span> <span class="kn">import</span> <span class="n">Float</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+
+<span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">print_outputs</span>
+<span class="kn">from</span> <span class="nn">calc_cost</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="CostModel"><a class="viewcode-back" href="../../Models.html#Cost.Cost.CostModel">[docs]</a><span class="k">class</span> <span class="nc">CostModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="c"># get our current directory</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+
+    <span class="c"># set up inputs</span>
+    <span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of making change to hydraulics&#39;</span><span class="p">)</span>
+    <span class="n">windCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of implementing wind energy&#39;</span><span class="p">)</span>
+    <span class="n">solarCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of implementing solar energy&#39;</span><span class="p">)</span>
+    <span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of implementing tribo energy&#39;</span><span class="p">)</span>
+    <span class="n">elecUtilityRate</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of electricity&#39;</span><span class="p">)</span>
+    <span class="n">baselineTotalPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total GA power use&#39;</span><span class="p">)</span>
+    <span class="n">baselineOceanVoyPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total ocean voyager power use&#39;</span><span class="p">)</span>
+    <span class="n">hydraulicPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">19.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total ocean voyager power use&#39;</span><span class="p">)</span>
+    <span class="n">yearlyPowerProducedSolar</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;solar power produced for given investment&#39;</span><span class="p">)</span>
+    <span class="n">yearlyPowerProducedWind</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wind power produced for given investment&#39;</span><span class="p">)</span>
+    <span class="n">yearlyPowerProducedTribo</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;tribo power produced for given investment&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up outputs</span>
+    <span class="n">totalPowerProduced</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output for GA&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerConsumed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output for GA&#39;</span><span class="p">)</span>
+    <span class="n">totalInitialInvestment</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergyCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;what is paid for energy to a utility company&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergySaved</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much energy we saved with modifications, excluding produced&#39;</span><span class="p">)</span>
+    <span class="n">originalEnergyCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;what we would have paid for energy to a utility company&#39;</span><span class="p">)</span>
+    <span class="n">breakEvenYear</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year at which we break even for investment&#39;</span><span class="p">)</span>
+    <span class="n">year1Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 1&#39;</span><span class="p">)</span>
+    <span class="n">year5Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 5&#39;</span><span class="p">)</span>
+    <span class="n">year10Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 10&#39;</span><span class="p">)</span>
+    <span class="n">year20Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 20&#39;</span><span class="p">)</span>
+    <span class="n">year30Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 30&#39;</span><span class="p">)</span>
+    <span class="n">totalUtility</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;overall, how good is the solution?&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up constants</span>
+    <span class="n">expectedReturn</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c"># S&amp;P 500 average return</span>
+    <span class="n">investmentYears</span> <span class="o">=</span> <span class="mi">10</span> <span class="c"># Number of years to wait before comparing which decision to make</span>
+
+<div class="viewcode-block" id="CostModel.execute"><a class="viewcode-back" href="../../Models.html#Cost.Cost.CostModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Initial setup</span>
+
+
+        <span class="c"># Calculate total power produced</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerProduced</span> <span class="o">=</span> <span class="n">total_energy_produced</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yearlyPowerProducedSolar</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">yearlyPowerProducedTribo</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">yearlyPowerProducedWind</span><span class="p">)</span>
+
+        <span class="c"># Calculate how much we power usage we saved due to modifications, excluding power production</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalEnergySaved</span> <span class="o">=</span> <span class="n">total_energy_saved</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hydraulicPowerUse</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baselineOceanVoyPowerUse</span><span class="p">)</span>
+
+        <span class="c"># Calculate total power consumed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerConsumed</span> <span class="o">=</span> <span class="n">total_energy_consumed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">baselineTotalPowerUse</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalEnergySaved</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerProduced</span><span class="p">)</span>
+
+        <span class="c"># Calculate the total paid out in energy costs, excluding renewable investment costs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalEnergyCost</span> <span class="o">=</span> <span class="n">total_energy_cost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elecUtilityRate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerConsumed</span><span class="p">)</span>
+
+        <span class="c"># Calculate how much we would have paid for energy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">originalEnergyCost</span> <span class="o">=</span> <span class="n">original_energy_cost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elecUtilityRate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">baselineTotalPowerUse</span><span class="p">)</span>
+
+        <span class="c"># Calculate how much we paid to decrease energy usage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalInitialInvestment</span> <span class="o">=</span> <span class="n">total_capital_cost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solarCapitalCost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">triboCapitalCost</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">windCapitalCost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hydraulicCapitalCost</span><span class="p">)</span>
+
+        <span class="c"># Get the year where we break even for this solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">breakEvenYear</span> <span class="o">=</span> <span class="n">get_break_even</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">totalInitialInvestment</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalEnergyCost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">originalEnergyCost</span><span class="p">)</span>
+
+        <span class="c"># Get return on investment after x number of years</span>
+        <span class="n">roi</span> <span class="o">=</span> <span class="n">calc_roi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">totalInitialInvestment</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalEnergyCost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">originalEnergyCost</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year1Roi</span> <span class="o">=</span> <span class="n">roi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year5Roi</span> <span class="o">=</span> <span class="n">roi</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year10Roi</span> <span class="o">=</span> <span class="n">roi</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year20Roi</span> <span class="o">=</span> <span class="n">roi</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year30Roi</span> <span class="o">=</span> <span class="n">roi</span><span class="p">[</span><span class="mi">30</span><span class="p">]</span>
+
+        <span class="c"># Calculate the quality of this solution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalUtility</span> <span class="o">=</span> <span class="n">total_utility</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year10Roi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expectedReturn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">investmentYears</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">totalInitialInvestment</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="run_tests"><a class="viewcode-back" href="../../Models.html#Cost.Cost.run_tests">[docs]</a><span class="k">def</span> <span class="nf">run_tests</span><span class="p">():</span>
+    <span class="n">comp</span> <span class="o">=</span> <span class="n">CostModel</span><span class="p">()</span>
+    <span class="n">comp</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+    <span class="n">print_outputs</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c"># Module test routine, executes when this python file is ran independently</span>
+    <span class="c"># For example, using Pycharm, right click while editing and select Run</span>
+    <span class="n">run_tests</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Nick Roth.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

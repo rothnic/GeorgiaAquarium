@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>GeorgiaAquariumOptimizer &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.1.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          Georgia Aquarium Energy Model</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AnalysisComponents.html">Analysis Components</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for GeorgiaAquariumOptimizer</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
+
+<span class="kn">from</span> <span class="nn">openmdao.main.api</span> <span class="kn">import</span> <span class="n">Assembly</span>
+<span class="kn">from</span> <span class="nn">openmdao.main.driver</span> <span class="kn">import</span> <span class="n">Driver</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.doegenerators.api</span> <span class="kn">import</span> <span class="n">FullFactorial</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.casehandlers.api</span> <span class="kn">import</span> <span class="n">ListCaseRecorder</span>
+
+<span class="kn">from</span> <span class="nn">Cost.Cost</span> <span class="kn">import</span> <span class="n">CostModel</span>
+<span class="kn">from</span> <span class="nn">Pedestrian.Pedestrian</span> <span class="kn">import</span> <span class="n">PedestrianModel</span>
+<span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager</span> <span class="kn">import</span> <span class="n">OceanVoyagerModel</span>
+<span class="kn">from</span> <span class="nn">Energy.Sources.Solar.Solar</span> <span class="kn">import</span> <span class="n">SolarModel</span>
+<span class="kn">from</span> <span class="nn">Energy.Sources.Wind.Wind</span> <span class="kn">import</span> <span class="n">WindModel</span>
+<span class="kn">from</span> <span class="nn">Energy.Sources.Tribo.Tribo</span> <span class="kn">import</span> <span class="n">TriboModel</span>
+<span class="kn">from</span> <span class="nn">Uncertainties.Uncertainties</span> <span class="kn">import</span> <span class="n">UncertaintiesModel</span>
+<span class="kn">from</span> <span class="nn">Common.RunAggregator.RunAggregator</span> <span class="kn">import</span> <span class="n">RunAggregator</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.drivers.doedriver</span> <span class="kn">import</span> <span class="n">DOEdriver</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.doegenerators.optlh</span> <span class="kn">import</span> <span class="n">OptLatinHypercube</span>
+<span class="kn">import</span> <span class="nn">GeorgiaAquarium</span>
+
+<div class="viewcode-block" id="GeorgiaAquariumComponent"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumComponent">[docs]</a><span class="k">class</span> <span class="nc">GeorgiaAquariumComponent</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GeorgiaAquariumComponent.configure"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumComponent.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c"># Create wrapper for sampler so we only see the final averaged output from the LHS runs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;gas&#39;</span><span class="p">,</span> <span class="n">GeorgiaAquariumSampler</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;gas&#39;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c"># Create passthroughs to optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.bladeLength&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.ratedEff&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.ratedFlow&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.ratedHead&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.ratedSpeed&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.referenceArea&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.runSpeed&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.surfaceArea&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.tileCount&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.turbineCount&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.breakEvenYearMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.headOutMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.originalEnergyCostMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalEnergyCostMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalEnergySavedMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalFlowMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalInitialInvestmentMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalPowerConsumedMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalPowerProducedMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalUtilityMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.year10RoiMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.year1RoiMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.year20RoiMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.year30RoiMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.year5RoiMean&#39;</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="GeorgiaAquariumSampler"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler">[docs]</a><span class="k">class</span> <span class="nc">GeorgiaAquariumSampler</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GeorgiaAquariumSampler.configure"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c"># Add components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;um&#39;</span><span class="p">,</span> <span class="n">UncertaintiesModel</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;ga&#39;</span><span class="p">,</span> <span class="n">GeorgiaAquarium</span><span class="o">.</span><span class="n">GeorgiaAquarium</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;ra&#39;</span><span class="p">,</span> <span class="n">RunAggregator</span><span class="p">())</span>
+
+        <span class="c"># Add all components to the workflow</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;driver&quot;</span><span class="p">,</span> <span class="n">DOEdriver</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;um&quot;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;ga&quot;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;ra&quot;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c"># Make connections between internal components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;um.pedsPerHourOff&quot;</span><span class="p">,</span><span class="s">&quot;ga.pedsPerHourOff&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;um.pedsPerHourOn&quot;</span><span class="p">,</span><span class="s">&quot;ga.pedsPerHourOn&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.breakEvenYear&quot;</span><span class="p">,</span><span class="s">&quot;ra.breakEvenYearSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.headOut&quot;</span><span class="p">,</span><span class="s">&quot;ra.headOutSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.originalEnergyCost&quot;</span><span class="p">,</span><span class="s">&quot;ra.originalEnergyCostSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalEnergyCost&quot;</span><span class="p">,</span><span class="s">&quot;ra.totalEnergyCostSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalEnergySaved&quot;</span><span class="p">,</span><span class="s">&quot;ra.totalEnergySavedSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalFlow&quot;</span><span class="p">,</span><span class="s">&quot;ra.totalFlowSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalInitialInvestment&quot;</span><span class="p">,</span><span class="s">&quot;ra.totalInitialInvestmentSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalPowerConsumed&quot;</span><span class="p">,</span><span class="s">&quot;ra.totalPowerConsumedSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalPowerProduced&quot;</span><span class="p">,</span><span class="s">&quot;ra.totalPowerProducedSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalUtility&quot;</span><span class="p">,</span><span class="s">&quot;ra.totalUtilitySamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.year10Roi&quot;</span><span class="p">,</span><span class="s">&quot;ra.year10RoiSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.year1Roi&quot;</span><span class="p">,</span><span class="s">&quot;ra.year1RoiSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.year20Roi&quot;</span><span class="p">,</span><span class="s">&quot;ra.year20RoiSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.year30Roi&quot;</span><span class="p">,</span><span class="s">&quot;ra.year30RoiSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.year5Roi&quot;</span><span class="p">,</span><span class="s">&quot;ra.year5RoiSamp&quot;</span><span class="p">)</span>
+
+        <span class="c"># Replace with LHS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;DOEgenerator&quot;</span><span class="p">,</span> <span class="n">OptLatinHypercube</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">population</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">generations</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="c"># Add parameters to Driver</span>
+        <span class="c"># Uncertainty variables are sampled as invest CDFs, so should always be low=0, high=1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;um.pedsPerHourOff_prob&#39;</span><span class="p">,</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;um.pedsPerHourOn_prob&#39;</span><span class="p">,</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c"># Setup passthroughs for design variables and expected output values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.bladeLength&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.ratedSpeed&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.ratedHead&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.ratedFlow&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.surfaceArea&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.tileCount&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.turbineCount&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.runSpeed&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.referenceArea&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.ratedEff&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.breakEvenYearMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.headOutMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.originalEnergyCostMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalEnergyCostMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalEnergySavedMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalFlowMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalInitialInvestmentMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalPowerConsumedMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalPowerProducedMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalUtilityMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.year10RoiMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.year1RoiMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.year20RoiMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.year30RoiMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.year5RoiMean&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Nick Roth.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
