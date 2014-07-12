@@ -12,6 +12,19 @@ from calc_tribo import calc_cost, calc_power
 
 
 class TriboModel(Component):
+    '''
+    The TriboModel is a wrapper for a power and cost calculation in regard to implementing a tile-based triboelectric
+    system. The PaveGen solution was the primary intended use, although there is very little available information
+    for it. There are some articles, such as _this: http://www.theguardian.com/sustainable-business/power-generating-tiles-renewable-energy
+    one that seems to cause confusion on how to calculate the power generation. The approach taken is to create a
+    detailed simulation of the pedestrian movement through the aquarium to estimate the number of steps we would see
+    on a given tile, then use that information in the calculation of power generation.
+
+    The current assumption for power calculation is that the quoted 7 watts per step is only over a short period of
+    time, like 1 second. You can use this to calculate what that is in kWh. This can be used with the yearly steps
+    per tile to provide some performance output for a design decision on the number of tiles, along with the cost
+    impact of that decision.
+    '''
     # set up inputs
     tileCount = Float(20.0, iotype='in', desc='number of tiles')
     pedStepsPerTile = Float(260000.0, iotype='in', desc='expected steps per tile')
