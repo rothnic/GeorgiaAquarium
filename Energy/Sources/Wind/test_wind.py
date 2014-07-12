@@ -5,8 +5,8 @@ __author__ = 'Nick'
 import pandas as pd
 
 from Energy.Sources.Wind.calc_wind import calc_power
-from Energy.Sources.Wind.Wind import WindModel
-from Common.AttributeTools.io import get_output_values
+from Energy.Sources.Wind.Wind import WindModel, WindOptimization
+from Common.AttributeTools.io import get_output_values, print_outputs
 
 path = "C:\Users\Nick\.openmdao\gui\projects\GeorgiaAquarium\Energy\Sources\Wind\windAtl.csv"
 windDataTable = pd.read_csv(path)
@@ -23,3 +23,12 @@ def test_wind_component():
     outputs = get_output_values(wm)
     for key in outputs:
         assert outputs[key] > 0
+
+def run_print_test():
+    comp = WindModel()
+    comp.execute()
+    print_outputs(comp)
+
+def test_wind_optimization():
+    wo = WindOptimization()
+    wo.execute()

@@ -66,7 +66,7 @@ class SolarOptimization(Assembly):
     def configure(self):
         # Add the pyOpt driver and case recorder
         self.replace("driver", pyopt_driver.pyOptDriver())
-        self.driver.recorders.append(csvcase.CSVCaseRecorder())
+        self.driver.recorders.append(csvcase.CSVCaseRecorder(filename='solar_optimization.csv'))
 
         # Add the solar model to the assembly
         self.add("sm", SolarModel())
@@ -86,10 +86,11 @@ if __name__ == "__main__":
     right click while editing and select Run. The tests called below are alternatively ran automatically by pytest
     from test_solar if configured to do so within Pycharm.
     '''
-    from test_solar import run_print_test, test_solar_non_neg, testSolarComp, testSolarClean
+    from test_solar import run_print_test, test_solar_non_neg, testSolarComp, testSolarClean, test_solar_optimization
 
     run_print_test()
     testSolarClean()
     testSolarComp()
     test_solar_non_neg()
+    test_solar_optimization()
 

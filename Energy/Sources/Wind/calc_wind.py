@@ -23,15 +23,15 @@ def calc_power(bladeLength, turbineEff, airDensity, turbineCount, circuitLoss, w
     :return:
 
     '''
-    multValue = (0.5 * airDensity * turbineCount * turbineEff * circuitLoss * pi * bladeLength ** 2) / 1000.0
-    powerOut = calc_power_fast(windData, multValue, len(windData))
+    powerMult = (0.5 * airDensity * turbineCount * turbineEff * circuitLoss * pi * (bladeLength ** 2)) / 1000.0
+    powerOut = calc_power_fast(windData, powerMult, len(windData))
 
     # sum and return days
     return powerOut
 
 
 @jit
-def calc_power_fast(windData, multValue, theRange):
+def calc_power_fast(windData, powerMult, theRange):
     """
     Computes the total yearly power for the solar panel system.
 
@@ -41,7 +41,7 @@ def calc_power_fast(windData, multValue, theRange):
     """
     sum = 0
     for i in range(theRange):
-        sum += (windData[i] ** 3) * multValue
+        sum += (windData[i] ** 3) * powerMult
     return sum
 
 

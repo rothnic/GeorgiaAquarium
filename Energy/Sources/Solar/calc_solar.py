@@ -1,6 +1,6 @@
 __author__ = 'Nick'
 
-from math import ceil
+from math import floor
 
 from numba import jit
 
@@ -56,4 +56,11 @@ def calc_cost(solarCostPerWatt, panelRating, numPanels):
 
 @jit
 def calc_num_panels(surfaceArea, panelSize):
-    return ceil(surfaceArea / panelSize)
+    '''
+    Finds the number of panels that will fit in the desired area.
+
+    :param surfaceArea: The surface area where the solar panels are installed
+    :param panelSize: The size in square meters of each solar panel
+    :return: The number of solar panels for this solution
+    '''
+    return floor(surfaceArea / panelSize)
