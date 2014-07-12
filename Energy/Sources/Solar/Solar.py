@@ -20,7 +20,7 @@ class SolarModel(Component):
     panelEff = Float(0.17, iotype='in', desc='panel efficiency')
     sunRadianceScalar = Float(1.0, iotype='in', desc='uncertainty around radiance')
     surfaceArea = Float(558.0, iotype='in', desc='number of panels')
-    solarCostPerWatt = Float(1.50, iotype='in', desc='solar cost')
+    solarCostPerWatt = Float(1.50, iotype='in', desc='solar cost, including installation, per watt')
     batteryCost = Float(0.0, iotype='in', desc='cost of batteries')
     circuitLoss = Float(0.7, iotype='in', desc='circuit power loss')
 

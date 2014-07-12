@@ -24,10 +24,12 @@ def test_wind_component():
     for key in outputs:
         assert outputs[key] > 0
 
+
 def run_print_test():
     comp = WindModel()
     comp.execute()
     print_outputs(comp)
+
 
 def test_wind_optimization():
     wo = WindOptimization()

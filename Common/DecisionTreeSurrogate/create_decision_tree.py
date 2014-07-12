@@ -18,29 +18,19 @@ def decision_tree_from_csv(trainFile, inputCols, outputCols):
 def init_surrogate():
 
     inputCols = [
-        "ratedSpeed",
-        "flc",
-        "ratedEff",
-        "ratedHead",
-        "ratedFlow",
-        "csa",
-        "runSpeed"
+        "input"
     ]
 
     outputCols = [
-        "pumpHp",
-        "totalFlowOut",
-        "pskFlow2",
-        "pskFlow1",
-        "pIn",
-        "pOut1"
+        "output"
     ]
 
-    trainFile = 'hydroTraining.csv'
+    trainFile = 'pedTrainingData.csv'
 
     surr = decision_tree_from_csv(trainFile, inputCols, outputCols)
     surr.test()
     return surr
 
-def test_surrogate(surr):
-    surr.predict([800, 20, 0.6, 20, 1300, 0.1, 1600])
+if __name__=="__main__":
+    from test_decisiontree_surrogate import test_decision_tree
+    test_decision_tree()

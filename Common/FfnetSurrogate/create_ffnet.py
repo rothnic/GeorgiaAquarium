@@ -5,9 +5,7 @@ from FfnetSurrogate import FfnetSurrogate
 
 def neural_from_csv(trainFile, inputCols, outputCols):
     surr = FfnetSurrogate(trainingFile=trainFile, inputCols=inputCols, outputCols=outputCols)
-    print len(inputCols)
-    print len(outputCols)
-    surr.train([len(inputCols), 10, len(outputCols)])
+    surr.train([len(inputCols), 2, len(outputCols)])
     surr.test()
     return surr
 

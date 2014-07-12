@@ -1,19 +1,18 @@
 __author__ = 'Nick'
 
-from Common.FfnetSurrogate.FfnetSurrogate import FfnetSurrogate
+from Common.DecisionTreeSurrogate.DecisionTreeSurrogate import DecisionTreeSurrogate
 
 class PedSurrogate:
 
     def __init__(self, trainingFile, inputCols, outputCols, netFile):
-        self.surrogate = FfnetSurrogate(trainingFile, inputCols, outputCols, netFile)
+        self.surrogate = DecisionTreeSurrogate(trainingFile, inputCols, outputCols, netFile)
         self.offDays = 236
         self.onDays = 129
 
     def sim(self, pedsPerHourOn, pedsPerHourOff):
         avgStepsOn = self.surrogate.sim([pedsPerHourOn])
         avgStepsOff = self.surrogate.sim([pedsPerHourOff])
-
-        yearlyStepsPerTile = self.offDays * avgStepsOff + self.onDays * avgStepsOn
+        yearlyStepsPerTile = (self.offDays * 7.0 * avgStepsOff) + (self.onDays * 12.0 * avgStepsOn)
 
         return yearlyStepsPerTile[0]
 
@@ -22,23 +21,21 @@ def setup_defaults():
     # set up constants
     defaults = {}
     defaults['trainingFile'] = 'pedTrainingData.csv'
-    defaults['netFile'] = 'trainedPedSurrogate.net'
-    defaults['outputCols'] = 'output'
-    defaults['inputCols'] = 'input'
+    defaults['netFile'] = 'decisionTreeSurrogate.p'
+    defaults['outputCols'] = ['output']
+    defaults['inputCols'] = ['input']
     return defaults
 
 # Only ran when this calc_ped is run directly
 # Used for testing the functions
 if __name__ == "__main__":
-    from Common.NeurolabSurrogate.NeurolabSurrogate import NeurolabSurrogate
 
-    # Location of training and surrogate files
-    trainFile = 'pedTrainingData.csv'
-    netFile = 'pedSurrogate.net'
+    # Load default values
+    defaults = setup_defaults()
 
     # Load training data and initialize surrogate
-    sur = NeurolabSurrogate(trainingFile=trainFile, inputCols='', outputCols='output', netFile=netFile)
+    ps = PedSurrogate(trainingFile=defaults['trainingFile'], inputCols=defaults['inputCols'],
+                       outputCols=defaults['outputCols'], netFile=defaults['netFile'])
 
     # Print results of input data
-    print "Surrogate Testing Results"
-    sur.print_sim(xrange(50, 1500, 100))
+    print ps.sim(500, 600)

@@ -10,20 +10,23 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn import gaussian_process
 from sklearn.ensemble.partial_dependence import plot_partial_dependence
 import cPickle as pickle
+import os
 
 class DecisionTreeSurrogate:
     def __init__(self, trainingFile, inputCols, outputCols, regressorFile=None):
+        path = os.path.dirname(os.path.realpath(__file__))
 
         self.inputCols = inputCols
         self.outputCols = outputCols
-        self.trainData = pd.read_csv(trainingFile)
+        self.trainData = pd.read_csv(os.path.join(path, trainingFile))
         self.regressor = None
         self.inputData = None
         self.outputData = None
 
         # Load regressor if we have a saved regressor file
         if regressorFile is not None:
-            self.regressor = pickle.loads(regressorFile)
+            with open(regressorFile, 'rb') as handle:
+                self.regressor = pickle.load(handle)
 
     def test(self):
         if self.regressor is not None:
@@ -44,6 +47,8 @@ class DecisionTreeSurrogate:
                 print "p_value: " + str(p_value)
                 print "std_err: " + str(std_err)
                 print ""
+            with open("decisionTreeSurrogate.p", "wb") as handle:
+                pickle.dump(self.regressor, handle)
             return out
 
     def train(self, n_estimators):
@@ -58,7 +63,7 @@ class DecisionTreeSurrogate:
         # Fit regressor to inputs/outputs
         self.regressor.fit(self.inputData, self.outputData)
 
-    def predict(self, inValue):
+    def sim(self, inValue):
         # Ensure we already have trained regressorwork before trying to sim
         if self.regressor is not None and len(inValue) == len(self.inputCols):
             out = self.regressor.predict(inValue)
@@ -68,4 +73,4 @@ class DecisionTreeSurrogate:
 
     def print_sim(self, inValues):
         for value in inValues:
-            print "Input: " + str(value) + " Output: " + str(self.predict(value))
+            print "Input: " + str(value) + " Output: " + str(self.sim(value))
