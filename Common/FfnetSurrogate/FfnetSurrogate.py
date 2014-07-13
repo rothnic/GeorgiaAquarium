@@ -1,10 +1,9 @@
 __author__ = 'Nick'
 
-import numpy as np
 import pandas as pd
-import neurolab as nl
 from scipy import stats
-from ffnet import ffnet, mlgraph, savenet, loadnet
+from ffnet import ffnet, mlgraph, imlgraph, savenet, loadnet
+
 
 class FfnetSurrogate:
     def __init__(self, trainingFile, inputCols, outputCols, netFile=None):
@@ -24,7 +23,7 @@ class FfnetSurrogate:
         if self.net is not None:
             out = self.sim(self.inputData)
             for i, outCol in enumerate(self.outputCols):
-                slope, intercept, r_value, p_value, std_err = stats.linregress(self.outputData[:, i].T, out[:,i].T)
+                slope, intercept, r_value, p_value, std_err = stats.linregress(self.outputData[:, i].T, out[:, i].T)
                 print "Training for " + outCol
                 print "slope: " + str(slope)
                 print "intercept: " + str(intercept)
@@ -39,7 +38,8 @@ class FfnetSurrogate:
         self.net = ffnet(conec)
         self.inputData = self.trainData[self.inputCols].values
         self.outputData = self.trainData[self.outputCols].values
-        self.net.train_tnc(self.inputData, self.outputData, nproc=8, messages=1)
+        self.net.train_tnc(self.inputData, self.outputData, nproc='ncpu', messages=1)
+        #self.net.train_genetic(self.inputData, self.outputData, verbosity=1)
         self.net.test(self.inputData, self.outputData)
 
     def sim(self, inValue):
