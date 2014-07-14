@@ -35,11 +35,11 @@ class OceanVoyagerModel(Component):
     ozoneValveOpen = Float(0.1, iotype='in', desc='electric pump rated flow')
     denitValveOpen = Float(0.1, iotype='in', desc='reference area')
     deaerationFlowLossCoef = Float(2.0, iotype='in', desc='electric pump actual run speed')
-    doProteinUpgrade = Bool(True, iotype='in', desc='boolean to do retrofit or not')
-    doSandUpgrade = Bool(True, iotype='in', desc='boolean to do retrofit or not')
+    doProteinUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
+    doSandUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
 
 
-    # set up outputs
+    # Set up outputs
     # potential constraints
     proteinHead = Float(25.0, iotype='out', desc='simulated head')
     totalFlow = Float(63000.0, iotype='out', desc='simulated head')
@@ -50,14 +50,16 @@ class OceanVoyagerModel(Component):
     denitFlow = Float(8000.0, iotype='out', desc='simulated head')
     bypassFlow = Float(45500.0, iotype='out', desc='simulated head')
     sandFilterFlow = Float(800.0, iotype='out', desc='flow through one of the sand filters')
+
     # power
     totalPowerSand = Float(1350.0, iotype='out', desc='yearly power used for sand filters')
     totalPowerProtein = Float(1.0, iotype='out', desc='yearly power used for protein skimmers')
     totalPowerUsed = Float(1.0, iotype='out', desc='yearly power output')
+
     # cost
-    proteinCapitalCost = Float(1.0, iotype='out', desc='cost of modification')
-    sandCapitalCost = Float(1.0, iotype='out', desc='cost of modification')
-    hydraulicCapitalCost = Float(1.0, iotype='out', desc='cost of modification')
+    proteinCapitalCost = Float(153000.0, iotype='out', desc='cost of modification')
+    sandCapitalCost = Float(162000.0, iotype='out', desc='cost of modification')
+    hydraulicCapitalCost = Float(315000.0, iotype='out', desc='cost of modification')
 
     # set up constants
     numProteinPumps = 34
@@ -88,7 +90,7 @@ class OceanVoyagerModel(Component):
                       self.ozoneFlowLossCoef, self.ozoneValveOpen, self.denitValveOpen, self.deaerationFlowLossCoef]
 
         # Calculations for protein skimmers
-        if self.doProteinUpgrade:
+        if self.doProteinUpgrade == 1.0:
             # Calculate protein performance attributes
             self.totalPowerProtein, \
             self.proteinHead, \
@@ -106,7 +108,7 @@ class OceanVoyagerModel(Component):
         # This calculation is dependent on whether or not we'd like to do an upgrade. The upgrade is essentially the
         # controlling design variable, while the actual hydraulic-specific variables are only relevant if we perform
         # the upgrade. Otherwise, we set the output values to their default.
-        if self.doSandUpgrade:
+        if self.doSandUpgrade == 1.0:
             # Calculate sand filter performance attributes
             self.totalPowerProtein, \
             self.sandFilterFlow, \

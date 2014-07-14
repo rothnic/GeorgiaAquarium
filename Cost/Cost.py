@@ -78,6 +78,7 @@ class CostModel(Component):
         # Get return on investment after x number of years
         roi = calc_roi(self.totalInitialInvestment, self.totalEnergyCost, self.originalEnergyCost)
         self.year1Roi = roi[1]
+        self.year3Roi = roi[3]
         self.year5Roi = roi[5]
         self.year10Roi = roi[10]
         self.year20Roi = roi[20]

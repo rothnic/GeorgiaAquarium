@@ -289,3 +289,6 @@ solarOpt.driver.remove_parameter("sm.surfaceArea");
 solarOpt.driver.add_parameter('sm.surfaceArea',low=0,high=1000);
 solarOpt.driver.remove_constraint("solarcost");
 solarOpt.driver.add_constraint('sm.solarCapitalCost <= 400000.0',name='solarcost');
+del(opt)
+del(GeorgiaAquariumOptimizer)
+del(SolarModel)
