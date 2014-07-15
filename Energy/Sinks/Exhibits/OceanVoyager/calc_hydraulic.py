@@ -128,7 +128,7 @@ def calc_sand_power(surrogate, inputs, numPumps):
     heatExchFlow2 = outputs[4]
     denitFlow = outputs[14]
     bypassFlow = outputs[20]
-    totalFlow = heatExchFlow1 + heatExchFlow2 + denitFlow + bypassFlow + sandFlow
+    totalFlow = heatExchFlow2 + denitFlow + bypassFlow + sandFlow
 
     return totalPower, sandFlow, heatExchFlow1, heatExchFlow2, denitFlow, bypassFlow, totalFlow
 

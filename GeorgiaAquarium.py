@@ -55,6 +55,7 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('wm.turbineRating')
         self.create_passthrough('wm.windCostPerWatt')
         self.create_passthrough('wm.windSpeedScalar')
+        self.create_passthrough('wm.windCapitalCost')
 
         # Solar Model
         self.create_passthrough('sm.batteryCost')
@@ -62,6 +63,7 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('sm.panelRating')
         self.create_passthrough('sm.sunRadianceScalar')
         self.create_passthrough('sm.surfaceArea')
+        self.create_passthrough('sm.solarCapitalCost')
 
         # Pedestrian Model
         self.create_passthrough('pm.pedsPerHourOff')
@@ -73,6 +75,7 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('tb.tileEff')
         self.create_passthrough('tb.tileUnitCost')
         self.create_passthrough('tb.tilekWh')
+        self.create_passthrough('tb.triboCapitalCost')
 
         # Ocean Voyager Model In
         self.create_passthrough('ovm.proteinRatedSpeed')
@@ -101,7 +104,6 @@ class GeorgiaAquarium(Assembly):
 
         # Ocean Voyager Out (possible constraints)
         self.create_passthrough('ovm.proteinHead')
-        self.create_passthrough('ovm.totalFlow')
         self.create_passthrough('ovm.totalFlowProtein')
         self.create_passthrough('ovm.totalFlowSand')
         self.create_passthrough('ovm.heatExchFlow1')
@@ -109,6 +111,7 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('ovm.denitFlow')
         self.create_passthrough('ovm.bypassFlow')
         self.create_passthrough('ovm.sandFilterFlow')
+        self.create_passthrough('ovm.hydraulicCapitalCost')
 
         # Cost Model
         self.create_passthrough('cm.breakEvenYear')

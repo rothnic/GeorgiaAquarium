@@ -3,7 +3,7 @@
 """
 
 from openmdao.main.api import Component
-from openmdao.lib.datatypes.api import Float, Bool
+from openmdao.lib.datatypes.api import Float, Enum
 
 from Common.AttributeTools.io import print_outputs
 from Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic import init_protein_skimmer_surrogate
@@ -26,7 +26,7 @@ class OceanVoyagerModel(Component):
     pumpRatedHead = Float(40.0, iotype='in', desc='electric pump rated head')
     pumpRatedRpm = Float(1000.0, iotype='in', desc='electric pump speed rating')
     pumpRunRpm = Float(1000.0, iotype='in', desc='electric pump actual run speed')
-    pumpEff = Float(0.7, iotype='in', desc='electric pump efficiency')
+    pumpEff = Float(0.6, iotype='in', desc='electric pump efficiency')
     flowLossCoef = Float(0.1, iotype='in', desc='electric pump speed rating')
     heatExchFlowLossCoef = Float(0.1, iotype='in', desc='electric pump speed rating')
     heatExchValveOpen = Float(0.1, iotype='in', desc='loss multiplier')
@@ -42,9 +42,8 @@ class OceanVoyagerModel(Component):
     # Set up outputs
     # potential constraints
     proteinHead = Float(25.0, iotype='out', desc='simulated head')
-    totalFlow = Float(63000.0, iotype='out', desc='simulated head')
+    totalFlowSand = Float(63000.0, iotype='out', desc='total gallons per minute sand filters')
     totalFlowProtein = Float(1.0, iotype='out', desc='total gallons per minute protein skimmers')
-    totalFlowSand = Float(61000.0, iotype='out', desc='total gallons per minute sand filters')
     heatExchFlow1 = Float(1000.0, iotype='out', desc='simulated head')
     heatExchFlow2 = Float(1000.0, iotype='out', desc='simulated head')
     denitFlow = Float(8000.0, iotype='out', desc='simulated head')
@@ -110,7 +109,7 @@ class OceanVoyagerModel(Component):
         # the upgrade. Otherwise, we set the output values to their default.
         if self.doSandUpgrade == 1.0:
             # Calculate sand filter performance attributes
-            self.totalPowerProtein, \
+            self.totalPowerSand, \
             self.sandFilterFlow, \
             self.heatExchFlow1, \
             self.heatExchFlow2, \

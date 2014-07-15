@@ -15,17 +15,17 @@ class CostModel(Component):
     path = os.path.dirname(os.path.realpath(__file__))
 
     # set up inputs
-    hydraulicCapitalCost = Float(1.0, iotype='in', desc='cost of making change to hydraulics')
-    windCapitalCost = Float(10.0, iotype='in', desc='cost of implementing wind energy')
-    solarCapitalCost = Float(10.0, iotype='in', desc='cost of implementing solar energy')
-    triboCapitalCost = Float(10.0, iotype='in', desc='cost of implementing tribo energy')
+    hydraulicCapitalCost = Float(100000.0, iotype='in', desc='cost of making change to hydraulics')
+    windCapitalCost = Float(100000.0, iotype='in', desc='cost of implementing wind energy')
+    solarCapitalCost = Float(100000.0, iotype='in', desc='cost of implementing solar energy')
+    triboCapitalCost = Float(100000.0, iotype='in', desc='cost of implementing tribo energy')
     elecUtilityRate = Float(0.1, iotype='in', desc='cost of electricity')
-    baselineTotalPowerUse = Float(1000.0, iotype='in', desc='total GA power use')
-    baselineOceanVoyPowerUse = Float(20.0, iotype='in', desc='total ocean voyager power use')
-    hydraulicPowerUse = Float(19.0, iotype='in', desc='total ocean voyager power use')
-    yearlyPowerProducedSolar = Float(1.0, iotype='in', desc='solar power produced for given investment')
-    yearlyPowerProducedWind = Float(1.0, iotype='in', desc='wind power produced for given investment')
-    yearlyPowerProducedTribo = Float(1.0, iotype='in', desc='tribo power produced for given investment')
+    baselineTotalPowerUse = Float(27765028.90, iotype='in', desc='total GA power use')
+    baselineOceanVoyPowerUse = Float(19948604.08, iotype='in', desc='total ocean voyager power use')
+    hydraulicPowerUse = Float(19648604.08, iotype='in', desc='total ocean voyager power use')
+    yearlyPowerProducedSolar = Float(100.0, iotype='in', desc='solar power produced for given investment')
+    yearlyPowerProducedWind = Float(100.0, iotype='in', desc='wind power produced for given investment')
+    yearlyPowerProducedTribo = Float(100.0, iotype='in', desc='tribo power produced for given investment')
 
     # set up outputs
     totalPowerProduced = Float(1.0, iotype='out', desc='yearly power output for GA')

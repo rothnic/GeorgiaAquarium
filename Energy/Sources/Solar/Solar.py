@@ -37,7 +37,7 @@ class SolarModel(Component):
     def execute(self):
         # Initial setup
         numPanels = calc_num_panels(self.surfaceArea, self.panelSize)
-        self.solarCostPerWatt = (-68.33333 + 7.5 * self.panelEff) * self.surfaceArea * 0.027945
+        self.solarCostPerWatt = -(-68.33333 + 7.5 * self.panelEff) * self.surfaceArea * 0.027945
 
         # Calculate power
         self.totalkWh = calc_power(

@@ -55,10 +55,9 @@ class DecisionTreeSurrogate:
         # Select only input columns from pandas dataframe as numpy array
         self.inputData = self.trainData[self.inputCols].values
         self.outputData = self.trainData[self.outputCols].values
+
         # Create decision tree regressor object
-        #self.regressor = DecisionTreeRegressor(random_state=0, max_features=1.0, min_samples_split=2, max_depth=7)
         self.regressor = RandomForestRegressor(n_estimators=n_estimators, n_jobs=-1)
-        #scores = cross_val_score(self.regressor, self.inputData, self.outputData, cv=10)
 
         # Fit regressor to inputs/outputs
         self.regressor.fit(self.inputData, self.outputData)

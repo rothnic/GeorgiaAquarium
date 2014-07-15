@@ -2,12 +2,13 @@ __author__ = 'Nick'
 
 from openmdao.main.api import Assembly
 from openmdao.lib.casehandlers.api import CSVCaseRecorder
-#import pyopt_driver.pyopt_driver as pyopt_driver
+from pyopt_driver.pyopt_driver import pyOptDriver
 from openmdao.lib.drivers.doedriver import DOEdriver
-from openmdao.lib.drivers.api import CONMINdriver
-from openmdao.lib.doegenerators.optlh import OptLatinHypercube
+#from openmdao.lib.drivers.api import CONMINdriver
+from openmdao.lib.doegenerators.optlh import LatinHypercube
 from Uncertainties.Uncertainties import UncertaintiesModel
 from Common.RunAggregator.RunAggregator import RunAggregator
+from openmdao.lib.drivers.genetic import Genetic
 import os
 import GeorgiaAquarium
 
@@ -67,7 +68,7 @@ class GeorgiaAquariumSampler(Assembly):
         self.connect("ga.originalEnergyCost", "ra.originalEnergyCostSamp")
         self.connect("ga.totalEnergyCost", "ra.totalEnergyCostSamp")
         self.connect("ga.totalEnergySaved", "ra.totalEnergySavedSamp")
-        self.connect("ga.totalFlow", "ra.totalFlowSamp")
+        self.connect("ga.totalProteinFlow", "ra.totalProteinFlowSamp")
         self.connect("ga.totalInitialInvestment", "ra.totalInitialInvestmentSamp")
         self.connect("ga.totalPowerConsumed", "ra.totalPowerConsumedSamp")
         self.connect("ga.totalPowerProduced", "ra.totalPowerProducedSamp")
@@ -79,7 +80,7 @@ class GeorgiaAquariumSampler(Assembly):
         self.connect("ga.year5Roi", "ra.year5RoiSamp")
 
         # Replace with LHS
-        self.driver.add("DOEgenerator", OptLatinHypercube(num_samples=50, population=10, generations=2))
+        self.driver.add("DOEgenerator", LatinHypercube(num_samples=50))
 
         # Add parameters to Driver
         # Uncertainty variables are sampled as invest CDFs, so should always be low=0, high=1
@@ -125,15 +126,15 @@ class GeorgiaAquariumOptimization(Assembly):
 
         # Add components
         self.add('ga', GeorgiaAquarium.GeorgiaAquarium())
-        self.replace("driver", CONMINdriver())
-        self.driver.recorders.append(CSVCaseRecorder(filename=os.path.join(path, 'ga_simpleoptimization.csv')))
+        self.replace("driver", pyOptDriver())
+        self.driver.recorders.append(CSVCaseRecorder(filename='ga_simpleoptimization.csv'))
 
         # Add all components to the workflow
         self.driver.workflow.add("ga", check=True)
 
         # Add parameters to Optimization Driver
-        self.driver.add_parameter('ga.doProteinUpgrade', low=0.0, high=1.0)
-        self.driver.add_parameter('ga.doSandUpgrade', low=0.0, high=1.0)
+        #self.driver.add_parameter('ga.doProteinUpgrade', low=0.0, high=1.0)
+        #self.driver.add_parameter('ga.doSandUpgrade', low=0.0, high=1.0)
 
         self.driver.add_parameter('ga.bladeLength', low=1.0, high=5.0)
         self.driver.add_parameter('ga.proteinRatedSpeed', low=100.0, high=1500.0)
@@ -147,13 +148,56 @@ class GeorgiaAquariumOptimization(Assembly):
         self.driver.add_parameter('ga.panelEff', low=.05, high=.25)
         self.driver.add_parameter('ga.panelRating', low=100, high=450)
         self.driver.add_parameter('ga.surfaceArea', low=0, high=1000)
-
         self.driver.add_objective('-ga.year5Roi')
-        self.driver.add_constraint('400000.0 >= ga.totalInitialInvestment')
-        self.driver.add_constraint('3.0 >= ga.breakEvenYear')
-        self.driver.add_constraint('66000.0 >= ga.totalFlowProtein')
-        self.driver.add_constraint('60000.0 <= ga.totalFlowProtein')
+        self.driver.add_constraint('ga.totalInitialInvestment-400000.0 <= 0.0')
+        self.driver.add_constraint('ga.breakEvenYear - 3.0 < 0')
+        self.driver.add_constraint('ga.totalFlowProtein-66000 < 0')
+        self.driver.add_constraint('ga.totalFlowProtein-60000 > 0')
+        self.driver.add_constraint('ga.totalFlowProtein<66000.0')
+        self.driver.add_constraint('ga.totalFlowProtein>60000.0')
+        self.driver.printvars = ['ga.totalInitialInvestment', 'ga.breakEvenYear', 'ga.totalFlowProtein', 'ga.year5Roi']
+
+class GeorgiaAquariumDoe(Assembly):
+    '''
+    An assembly to connect the optimizer directly to the Georgia Aquarium model. This can be used to avoid issues
+    with the uncertainty distributions. After it is found that this assembly is working correctly, the next step
+    would be to
+    '''
+    def configure(self):
+        path = os.path.dirname(os.path.realpath(__file__))
+
+        # Add components
+        self.add('ga', GeorgiaAquarium.GeorgiaAquarium())
+        self.replace("driver", DOEdriver())
+        self.driver.recorders.append(CSVCaseRecorder(filename='ga_simpledoe.csv'))
+
+        # Add all components to the workflow
+        self.driver.workflow.add("ga", check=True)
+
+        # Add parameters to Optimization Driver
+        #self.driver.add_parameter('ga.doProteinUpgrade', low=0.0, high=1.0)
+        #self.driver.add_parameter('ga.doSandUpgrade', low=0.0, high=1.0)
+        self.driver.add_parameter('ga.bladeLength', low=1.0, high=5.0)
+        self.driver.add_parameter('ga.proteinRatedSpeed', low=100.0, high=1500.0)
+        self.driver.add_parameter('ga.ratedHead', low=20.0, high=40.0)
+        self.driver.add_parameter('ga.ratedFlow', low=1300.0, high=2000.0)
+        self.driver.add_parameter('ga.tileCount', low=1.0, high=100.0)
+        self.driver.add_parameter('ga.turbineCount', low=1.0, high=25.0)
+        self.driver.add_parameter('ga.runSpeed', low=800.0, high=1600.0)
+        self.driver.add_parameter('ga.referenceArea', low=.1, high=.5)
+        self.driver.add_parameter('ga.pumpEff', low=.6, high=.9)
+        self.driver.add_parameter('ga.panelEff', low=.05, high=.25)
+        self.driver.add_parameter('ga.panelRating', low=100, high=450)
+        self.driver.add_parameter('ga.surfaceArea', low=0, high=1000)
+        self.driver.case_outputs = ['ga.totalInitialInvestment', 'ga.breakEvenYear', 'ga.totalFlowProtein',
+                                    'ga.year5Roi', 'ga.solarCapitalCost', 'ga.triboCapitalCost', 'ga.windCapitalCost',
+                                    'ga.hydraulicCapitalCost']
+        self.driver.add("DOEgenerator", LatinHypercube(num_samples=1000))
+
+
 
 if __name__=="__main__":
     gao = GeorgiaAquariumOptimization()
     gao.execute()
+    gad = GeorgiaAquariumDoe()
+    gad.execute()
