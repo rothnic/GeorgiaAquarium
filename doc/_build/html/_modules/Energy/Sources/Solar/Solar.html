@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Energy.Sources.Solar.Solar &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootstrap-3.1.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../index.html">
+          Georgia Aquarium Energy Model</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../AnalysisComponents.html">Analysis Components</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for Energy.Sources.Solar.Solar</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   /Energy/Sources/Solar/Solar.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">openmdao.main.api</span> <span class="kn">import</span> <span class="n">Component</span><span class="p">,</span> <span class="n">Assembly</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.datatypes.api</span> <span class="kn">import</span> <span class="n">Float</span>
+<span class="kn">from</span> <span class="nn">pyopt_driver</span> <span class="kn">import</span> <span class="n">pyopt_driver</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.casehandlers</span> <span class="kn">import</span> <span class="n">csvcase</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+<span class="kn">from</span> <span class="nn">calc_solar</span> <span class="kn">import</span> <span class="n">calc_num_panels</span><span class="p">,</span> <span class="n">calc_power</span><span class="p">,</span> <span class="n">calc_cost</span>
+
+<div class="viewcode-block" id="SolarModel"><a class="viewcode-back" href="../../../../Models.html#Energy.Sources.Solar.Solar.SolarModel">[docs]</a><span class="k">class</span> <span class="nc">SolarModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="c"># get our current directory</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+
+    <span class="c"># set up inputs</span>
+    <span class="n">panelRating</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">280.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel rating&#39;</span><span class="p">)</span>
+    <span class="n">panelEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.17</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel efficiency&#39;</span><span class="p">)</span>
+    <span class="n">sunRadianceScalar</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;uncertainty around radiance&#39;</span><span class="p">)</span>
+    <span class="n">surfaceArea</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">558.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;number of panels&#39;</span><span class="p">)</span>
+    <span class="c">#solarCostPerWatt = Float(1.50, iotype=&#39;in&#39;, desc=&#39;solar cost, including installation, per watt&#39;)</span>
+    <span class="n">batteryCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of batteries&#39;</span><span class="p">)</span>
+    <span class="n">circuitLoss</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;circuit power loss&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up outputs</span>
+    <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">110000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output&#39;</span><span class="p">)</span>
+    <span class="n">solarCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">150000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up constants</span>
+    <span class="n">panelSize</span> <span class="o">=</span> <span class="mf">1.42</span>
+    <span class="n">maxSurfaceArea</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c"># Square meters</span>
+    <span class="n">sunDataTable</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">solarAtl2010.csv&#39;</span><span class="p">)</span>
+    <span class="n">sunData</span> <span class="o">=</span> <span class="n">sunDataTable</span><span class="p">[</span><span class="s">&quot;irradiance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<div class="viewcode-block" id="SolarModel.execute"><a class="viewcode-back" href="../../../../Models.html#Energy.Sources.Solar.Solar.SolarModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Initial setup</span>
+        <span class="n">numPanels</span> <span class="o">=</span> <span class="n">calc_num_panels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">surfaceArea</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">panelSize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solarCostPerWatt</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="o">-</span><span class="mf">68.33333</span> <span class="o">+</span> <span class="mf">7.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">panelEff</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">surfaceArea</span> <span class="o">*</span> <span class="mf">0.027945</span>
+
+        <span class="c"># Calculate power</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalkWh</span> <span class="o">=</span> <span class="n">calc_power</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panelRating</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panelEff</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sunRadianceScalar</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">surfaceArea</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">circuitLoss</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sunData</span><span class="p">)</span>
+
+        <span class="c"># Calculate cost</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solarCapitalCost</span> <span class="o">=</span> <span class="n">calc_cost</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">solarCostPerWatt</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panelRating</span><span class="p">,</span>
+            <span class="n">numPanels</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="SolarOptimization"><a class="viewcode-back" href="../../../../Models.html#Energy.Sources.Solar.Solar.SolarOptimization">[docs]</a><span class="k">class</span> <span class="nc">SolarOptimization</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Implements an assembly to contain the SolarModel component, and run optimizations on it stand-alone with the</span>
+<span class="sd">    pyOpt plugin of optimization drivers. Implements a caserecorder so that you can investigate the results</span>
+<span class="sd">    afterwards. This assembly will show up automatically when using openmdao gui, or can be used directly in another</span>
+<span class="sd">    python script as you would use a regular python class.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="SolarOptimization.configure"><a class="viewcode-back" href="../../../../Models.html#Energy.Sources.Solar.Solar.SolarOptimization.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Add the pyOpt driver and case recorder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;driver&quot;</span><span class="p">,</span> <span class="n">pyopt_driver</span><span class="o">.</span><span class="n">pyOptDriver</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">csvcase</span><span class="o">.</span><span class="n">CSVCaseRecorder</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;solar_optimization.csv&#39;</span><span class="p">))</span>
+
+        <span class="c"># Add the solar model to the assembly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;sm&quot;</span><span class="p">,</span> <span class="n">SolarModel</span><span class="p">())</span>
+
+        <span class="c"># Add the parameters to be used in optimization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;sm.panelEff&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=.</span><span class="mi">25</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;sm.panelRating&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">450</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;sm.surfaceArea&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_objective</span><span class="p">(</span><span class="s">&#39;-sm.totalkWh&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;sm.solarCapitalCost &lt;= 400000.0&#39;</span><span class="p">)</span>
+
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A module testing routine, executes when this python file is ran independently. For example, using Pycharm,</span>
+<span class="sd">    right click while editing and select Run. The tests called below are alternatively ran automatically by pytest</span>
+<span class="sd">    from test_solar if configured to do so within Pycharm.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">from</span> <span class="nn">test_solar</span> <span class="kn">import</span> <span class="n">run_print_test</span><span class="p">,</span> <span class="n">test_solar_non_neg</span><span class="p">,</span> <span class="n">testSolarComp</span><span class="p">,</span> <span class="n">testSolarClean</span><span class="p">,</span> <span class="n">test_solar_optimization</span>
+
+    <span class="n">run_print_test</span><span class="p">()</span>
+    <span class="n">testSolarClean</span><span class="p">()</span>
+    <span class="n">testSolarComp</span><span class="p">()</span>
+    <span class="n">test_solar_non_neg</span><span class="p">()</span>
+    <span class="n">test_solar_optimization</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Nick Roth.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
