@@ -10,8 +10,8 @@ from Uncertainties.Uncertainties import UncertaintiesModel
 from Common.RunAggregator.RunAggregator import RunAggregator
 from openmdao.lib.drivers.genetic import Genetic
 import os
-import GeorgiaAquarium
-
+import GeorgiaAquarium as ga
+from cobyla.cobyla import cob
 
 class GeorgiaAquariumGlobalOptimization(Assembly):
     def configure(self):
@@ -51,7 +51,7 @@ class GeorgiaAquariumSampler(Assembly):
     def configure(self):
         # Add components
         self.add('um', UncertaintiesModel())
-        self.add('ga', GeorgiaAquarium.GeorgiaAquarium())
+        self.add('ga', ga.GeorgiaAquarium())
         self.add('ra', RunAggregator())
 
         # Add all components to the workflow
@@ -125,7 +125,7 @@ class GeorgiaAquariumOptimization(Assembly):
         path = os.path.dirname(os.path.realpath(__file__))
 
         # Add components
-        self.add('ga', GeorgiaAquarium.GeorgiaAquarium())
+        self.add('ga', ga.GeorgiaAquarium())
         self.replace("driver", pyOptDriver())
         self.driver.recorders.append(CSVCaseRecorder(filename='ga_simpleoptimization.csv'))
 
@@ -133,28 +133,23 @@ class GeorgiaAquariumOptimization(Assembly):
         self.driver.workflow.add("ga", check=True)
 
         # Add parameters to Optimization Driver
-        #self.driver.add_parameter('ga.doProteinUpgrade', low=0.0, high=1.0)
-        #self.driver.add_parameter('ga.doSandUpgrade', low=0.0, high=1.0)
-
-        self.driver.add_parameter('ga.bladeLength', low=1.0, high=5.0)
+        self.driver.add_parameter('ga.bladeLength', low=0.0, high=5.0)
         self.driver.add_parameter('ga.proteinRatedSpeed', low=100.0, high=1500.0)
         self.driver.add_parameter('ga.ratedHead', low=20.0, high=40.0)
         self.driver.add_parameter('ga.ratedFlow', low=1300.0, high=2000.0)
-        self.driver.add_parameter('ga.tileCount', low=1.0, high=100.0)
-        self.driver.add_parameter('ga.turbineCount', low=1.0, high=25.0)
+        self.driver.add_parameter('ga.tileCount', low=0.0, high=100.0)
+        self.driver.add_parameter('ga.turbineCount', low=0.0, high=25.0)
         self.driver.add_parameter('ga.runSpeed', low=800.0, high=1600.0)
         self.driver.add_parameter('ga.referenceArea', low=.1, high=.5)
         self.driver.add_parameter('ga.pumpEff', low=.6, high=.9)
         self.driver.add_parameter('ga.panelEff', low=.05, high=.25)
         self.driver.add_parameter('ga.panelRating', low=100, high=450)
-        self.driver.add_parameter('ga.surfaceArea', low=0, high=1000)
+        self.driver.add_parameter('ga.surfaceArea', low=0.0, high=1000.0)
         self.driver.add_objective('-ga.year5Roi')
         self.driver.add_constraint('ga.totalInitialInvestment-400000.0 <= 0.0')
         self.driver.add_constraint('ga.breakEvenYear - 3.0 < 0')
         self.driver.add_constraint('ga.totalFlowProtein-66000 < 0')
         self.driver.add_constraint('ga.totalFlowProtein-60000 > 0')
-        self.driver.add_constraint('ga.totalFlowProtein<66000.0')
-        self.driver.add_constraint('ga.totalFlowProtein>60000.0')
         self.driver.printvars = ['ga.totalInitialInvestment', 'ga.breakEvenYear', 'ga.totalFlowProtein', 'ga.year5Roi']
 
 class GeorgiaAquariumDoe(Assembly):
@@ -167,7 +162,7 @@ class GeorgiaAquariumDoe(Assembly):
         path = os.path.dirname(os.path.realpath(__file__))
 
         # Add components
-        self.add('ga', GeorgiaAquarium.GeorgiaAquarium())
+        self.add('ga', ga.GeorgiaAquarium())
         self.replace("driver", DOEdriver())
         self.driver.recorders.append(CSVCaseRecorder(filename='ga_simpledoe.csv'))
 

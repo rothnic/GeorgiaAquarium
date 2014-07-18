@@ -31,11 +31,11 @@ class DecisionTreeSurrogate:
     def test(self):
         if self.regressor is not None:
             out = self.regressor.predict(self.inputData)
-            scores = cross_val_score(self.regressor, self.inputData, self.outputData, cv=20, scoring='r2')
-            print "Cross Validation for Trained Model"
-            print "Mean: " + str(scores.mean())
-            print "Std: " + str(scores.std()*2)
-            print ""
+            # scores = cross_val_score(self.regressor, self.inputData, self.outputData, cv=20, scoring='r2')
+            # print "Cross Validation for Trained Model"
+            # print "Mean: " + str(scores.mean())
+            # print "Std: " + str(scores.std()*2)
+            # print ""
             for i, outCol in enumerate(self.outputCols):
                 if out.ndim == 1:
                     out = np.asarray(out).reshape(out.size, 1)
@@ -53,6 +53,7 @@ class DecisionTreeSurrogate:
 
     def train(self, n_estimators):
         # Select only input columns from pandas dataframe as numpy array
+        sz = np.shape(self.trainData.values)
         self.inputData = self.trainData[self.inputCols].values
         self.outputData = self.trainData[self.outputCols].values
 
