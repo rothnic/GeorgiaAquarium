@@ -11,7 +11,6 @@ from Common.RunAggregator.RunAggregator import RunAggregator
 from openmdao.lib.drivers.genetic import Genetic
 import os
 import GeorgiaAquarium as ga
-from cobyla.cobyla import cob
 
 class GeorgiaAquariumGlobalOptimization(Assembly):
     def configure(self):

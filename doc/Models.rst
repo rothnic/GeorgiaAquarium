@@ -3,10 +3,8 @@
 Models
 ==========================================================
 
-.. py:currentmodule:: Pedestrian.Pedestrian
-.. autoclass:: PedestrianModel
-    :attributes:
-
+.. automodule:: Pedestrian.Pedestrian
+    :members:
     :undoc-members:
 
 .. automodule:: Cost.Cost
