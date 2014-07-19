@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Energy.Sources.Solar.calc_solar &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../../index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../oceanvoyager.html#module-Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager">OceanVoyager Component</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../solar.html">Solar Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../solar.html#module-Energy.Sources.Solar.Solar">SolarModel Component</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../wind.html">Wind Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pedestrian.html">Pedestrian Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../AnalysisComponents.html">Analysis Components</a></li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>Energy.Sources.Solar.calc_solar</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for Energy.Sources.Solar.calc_solar</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">floor</span>
+
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+
+
+<span class="nd">@jit</span>
+<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.calc_solar.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">panelRating</span><span class="p">,</span> <span class="n">panelEff</span><span class="p">,</span> <span class="n">sunRadianceScalar</span><span class="p">,</span> <span class="n">surfaceArea</span><span class="p">,</span> <span class="n">circuitLoss</span><span class="p">,</span> <span class="n">sunData</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Calculates the total yearly power for the solar panel system. Utilizes a separate vectorized function for most of</span>
+<span class="sd">    the computation. This function computes as much of the calculation as possible so that there is only a single</span>
+<span class="sd">    value to be multiplied with each component of the array of daily solar data.</span>
+
+<span class="sd">    :param panelRating: Rated wattage of the solar panel. This can affect the price of the panels</span>
+<span class="sd">    :param panelEff: Rated efficiency of the panel in turning solar into stored energy</span>
+<span class="sd">    :param sunRadianceScalar: Uncertainty around how much the sun radiance would vary over many years</span>
+<span class="sd">    :param surfaceArea: The total desired area of solar panels to be implemented</span>
+<span class="sd">    :param circuitLoss: Reduces the power production by some uncertain amount based on inefficiencies in circuits</span>
+<span class="sd">    :param sunData: An array of a single year of solar radiance data</span>
+<span class="sd">    :return: Total power generated by solar over a year</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">multValue</span> <span class="o">=</span> <span class="p">(</span><span class="n">surfaceArea</span> <span class="o">*</span> <span class="n">panelEff</span> <span class="o">*</span> <span class="n">circuitLoss</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
+    <span class="n">powerOut</span> <span class="o">=</span> <span class="n">calc_power_fast</span><span class="p">(</span><span class="n">sunData</span><span class="p">,</span> <span class="n">multValue</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sunData</span><span class="p">))</span>
+
+    <span class="c"># Sum and return power output for the year</span>
+    <span class="k">return</span> <span class="n">powerOut</span>
+
+</div>
+<span class="nd">@jit</span>
+<div class="viewcode-block" id="calc_power_fast"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.calc_solar.calc_power_fast">[docs]</a><span class="k">def</span> <span class="nf">calc_power_fast</span><span class="p">(</span><span class="n">sunData</span><span class="p">,</span> <span class="n">multValue</span><span class="p">,</span> <span class="n">theRange</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes the total yearly power for the solar panel system. Uses numba just-in-time compilation to LLVM code to</span>
+<span class="sd">    speed up the array operation 1000 times.</span>
+
+<span class="sd">    :param sunData: The solar irradiance array for one year</span>
+<span class="sd">    :param multValue: The value to multiply each value in the array by</span>
+<span class="sd">    :param theRange: Length of the input array, input to avoid JIT compilation issues</span>
+<span class="sd">    :return: Sum off the power output from each day</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c"># Multiplies value from calc_power by each element in array and aggregates into a sum</span>
+    <span class="c"># The formatting of this function and loop are very specific to achieve large speed increase by numba,</span>
+    <span class="c"># so make sure that any changes are compatible with numba by comparing run time using ipython %timeit magic from</span>
+    <span class="c"># an ipython console.</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">theRange</span><span class="p">):</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">sunData</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">multValue</span>
+    <span class="k">return</span> <span class="nb">sum</span>
+
+</div>
+<span class="nd">@jit</span>
+<div class="viewcode-block" id="calc_cost"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.calc_solar.calc_cost">[docs]</a><span class="k">def</span> <span class="nf">calc_cost</span><span class="p">(</span><span class="n">solarCostPerWatt</span><span class="p">,</span> <span class="n">panelRating</span><span class="p">,</span> <span class="n">numPanels</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">solarCostPerWatt</span> <span class="o">*</span> <span class="n">numPanels</span> <span class="o">*</span> <span class="n">panelRating</span>
+
+</div>
+<span class="nd">@jit</span>
+<div class="viewcode-block" id="calc_num_panels"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.calc_solar.calc_num_panels">[docs]</a><span class="k">def</span> <span class="nf">calc_num_panels</span><span class="p">(</span><span class="n">surfaceArea</span><span class="p">,</span> <span class="n">panelSize</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Finds the number of panels that will fit in the desired area.</span>
+
+<span class="sd">    :param surfaceArea: The surface area where the solar panels are installed</span>
+<span class="sd">    :param panelSize: The size in square meters of each solar panel</span>
+<span class="sd">    :return: The number of solar panels for this solution</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">floor</span><span class="p">(</span><span class="n">surfaceArea</span> <span class="o">/</span> <span class="n">panelSize</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

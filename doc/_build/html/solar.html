@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Solar Model &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Wind Model" href="wind.html"/>
+        <link rel="prev" title="Ocean Voyager Model" href="oceanvoyager.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#module-Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager">OceanVoyager Component</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Solar Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-Energy.Sources.Solar.Solar">SolarModel Component</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a></li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Solar Model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/solar.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="solar-model">
+<h1>Solar Model<a class="headerlink" href="#solar-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-Energy.Sources.Solar.Solar">
+<span id="solarmodel-component"></span><h2>SolarModel Component<a class="headerlink" href="#module-Energy.Sources.Solar.Solar" title="Permalink to this headline">¶</a></h2>
+<p>/Energy/Sources/Solar/Solar.py</p>
+<dl class="class">
+<dt id="Energy.Sources.Solar.Solar.SolarModel">
+<em class="property">class </em><tt class="descclassname">Energy.Sources.Solar.Solar.</tt><tt class="descname">SolarModel</tt><a class="reference internal" href="_modules/Energy/Sources/Solar/Solar.html#SolarModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Energy.Sources.Solar.Solar.SolarModel.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/Solar.html#SolarModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Energy.Sources.Solar.Solar.SolarModel.maxSurfaceArea">
+<tt class="descname">maxSurfaceArea</tt><em class="property"> = 1000.0</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.maxSurfaceArea" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Energy.Sources.Solar.Solar.SolarModel.panelSize">
+<tt class="descname">panelSize</tt><em class="property"> = 1.42</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.panelSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Energy.Sources.Solar.Solar.SolarModel.path">
+<tt class="descname">path</tt><em class="property"> = 'C:\\Users\\Nick\\.openmdao\\gui\\projects\\GeorgiaAquarium\\Energy\\Sources\\Solar'</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Energy.Sources.Solar.Solar.SolarModel.sunData">
+<tt class="descname">sunData</tt><em class="property"> = array([0, 0, 0, ..., 0, 0, 0], dtype=int64)</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.sunData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Energy.Sources.Solar.Solar.SolarModel.sunDataTable">
+<tt class="descname">sunDataTable</tt><em class="property"> =             date      time  irradiance  irrUnc 0       1/1/2010      1:00           0       0 1       1/1/2010      2:00           0       0 2       1/1/2010      3:00           0       0 3       1/1/2010      4:00           0       0 4       1/1/2010      5:00           0       0 5       1/1/2010      6:00           0       0 6       1/1/2010      7:00           0       0 7       1/1/2010      8:00           1      24 8       1/1/2010      9:00          36      24 9       1/1/2010     10:00          75      24 10      1/1/2010     11:00         281      24 11      1/1/2010     12:00         472      24 12      1/1/2010     13:00         445      24 13      1/1/2010     14:00         536      24 14      1/1/2010     15:00         465      24 15      1/1/2010     16:00         325      24 16      1/1/2010     17:00         153      24 17      1/1/2010     18:00          17      24 18      1/1/2010     19:00           0       0 19      1/1/2010     20:00           0       0 20      1/1/2010     21:00           0       0 21      1/1/2010     22:00           0       0 22      1/1/2010     23:00           0       0 23      1/1/2010  24:00:00           0       0 24      1/2/2010      1:00           0       0 25      1/2/2010      2:00           0       0 26      1/2/2010      3:00           0       0 27      1/2/2010      4:00           0       0 28      1/2/2010      5:00           0       0 29      1/2/2010      6:00           0       0 ...          ...       ...         ...     ... 8730  12/30/2010     19:00           0       0 8731  12/30/2010     20:00           0       0 8732  12/30/2010     21:00           0       0 8733  12/30/2010     22:00           0       0 8734  12/30/2010     23:00           0       0 8735  12/30/2010  24:00:00           0       0 8736  12/31/2010      1:00           0       0 8737  12/31/2010      2:00           0       0 8738  12/31/2010      3:00           0       0 8739  12/31/2010      4:00           0       0 8740  12/31/2010      5:00           0       0 8741  12/31/2010      6:00           0       0 8742  12/31/2010      7:00           0       0 8743  12/31/2010      8:00           1      24 8744  12/31/2010      9:00          81      24 8745  12/31/2010     10:00         174      24 8746  12/31/2010     11:00         286      24 8747  12/31/2010     12:00         459      24 8748  12/31/2010     13:00         553      24 8749  12/31/2010     14:00         489      24 8750  12/31/2010     15:00         369      24 8751  12/31/2010     16:00         231      24 8752  12/31/2010     17:00         125      24 8753  12/31/2010     18:00           9      24 8754  12/31/2010     19:00           0       0 8755  12/31/2010     20:00           0       0 8756  12/31/2010     21:00           0       0 8757  12/31/2010     22:00           0       0 8758  12/31/2010     23:00           0       0 8759  12/31/2010  24:00:00           0       0  [8760 rows x 4 columns]</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.sunDataTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Energy.Sources.Solar.Solar.SolarOptimization">
+<em class="property">class </em><tt class="descclassname">Energy.Sources.Solar.Solar.</tt><tt class="descname">SolarOptimization</tt><a class="reference internal" href="_modules/Energy/Sources/Solar/Solar.html#SolarOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarOptimization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements an assembly to contain the SolarModel component, and run optimizations on it stand-alone with the
+pyOpt plugin of optimization drivers. Implements a caserecorder so that you can investigate the results
+afterwards. This assembly will show up automatically when using openmdao gui, or can be used directly in another
+python script as you would use a regular python class.</p>
+<dl class="method">
+<dt id="Energy.Sources.Solar.Solar.SolarOptimization.configure">
+<tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/Solar.html#SolarOptimization.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarOptimization.configure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Solar.calc_solar.calc_power">
+<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_power</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_power" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Solar.calc_solar.calc_power_fast">
+<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_power_fast</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_power_fast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_power_fast" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Solar.calc_solar.calc_cost">
+<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_cost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Solar.calc_solar.calc_num_panels">
+<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_num_panels</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_num_panels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_num_panels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wind.html" class="btn btn-neutral float-right" title="Wind Model"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="oceanvoyager.html" class="btn btn-neutral" title="Ocean Voyager Model"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

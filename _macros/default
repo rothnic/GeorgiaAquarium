@@ -6,7 +6,6 @@ SolarModel.driver.add_parameter('sm.batteryCost',low=1,high=20);
 SolarModel.driver.add_parameter('sm.circuitLoss',low=.1,high=.4);
 SolarModel.driver.add_parameter('sm.panelEff',low=.8,high=.98);
 SolarModel.driver.add_parameter('sm.panelRating',low=.5,high=.6);
-SolarModel.driver.add_parameter('sm.solarCostPerWatt',low=.5,high=.8);
 SolarModel.driver.add_parameter('sm.sunRadianceScalar',low=.9,high=1.2);
 SolarModel.driver.add("DOEgenerator", create("openmdao.lib.doegenerators.full_factorial.FullFactorial", num_levels=4))
 SolarModel.driver.recorders.append(create("openmdao.lib.casehandlers.csvcase.CSVCaseRecorder"))
@@ -14,7 +13,6 @@ SolarModel.set(u'driver.case_outputs', ['sm.totalkWh','sm.solarCapitalCost'])
 SolarModel.set(u'driver.case_outputs', ['sm.totalkWh'])
 SolarModel.driver.clear_parameters();
 SolarModel.driver.add_parameter('sm.panelEff',low=.15,high=.45);
-SolarModel.driver.add_parameter('sm.solarCostPerWatt',low=.05,high=3.00);
 SolarModel.driver.add_parameter('sm.surfaceArea',low=100,high=1000);
 SolarModel.driver.add_parameter('sm.panelRating',low=200,high=350);
 SolarModel.driver.add_parameter('sm.sunRadianceScalar',low=.9,high=1.1);
@@ -81,7 +79,6 @@ _ = GeorgiaAquarium.create_passthrough('wm.windSpeedScalar')
 _ = GeorgiaAquarium.create_passthrough('sm.batteryCost')
 _ = GeorgiaAquarium.create_passthrough('sm.panelEff')
 _ = GeorgiaAquarium.create_passthrough('sm.panelRating')
-_ = GeorgiaAquarium.create_passthrough('sm.solarCostPerWatt')
 _ = GeorgiaAquarium.create_passthrough('sm.sunRadianceScalar')
 _ = GeorgiaAquarium.create_passthrough('sm.surfaceArea')
 _ = GeorgiaAquarium.create_passthrough('tb.mgtTileUnitCost')
@@ -91,7 +88,7 @@ _ = GeorgiaAquarium.create_passthrough('tb.tileEff')
 _ = GeorgiaAquarium.create_passthrough('tb.tileUnitCost')
 _ = GeorgiaAquarium.create_passthrough('tb.tilekWh')
 _ = GeorgiaAquarium.create_passthrough('ovm.lossMultiplier')
-_ = GeorgiaAquarium.create_passthrough('ovm.ratedEff')
+_ = GeorgiaAquarium.create_passthrough('ovm.proteinRatedEff')
 _ = GeorgiaAquarium.create_passthrough('ovm.ratedFlow')
 _ = GeorgiaAquarium.create_passthrough('ovm.ratedHead')
 _ = GeorgiaAquarium.create_passthrough('ovm.ratedSpeed')
@@ -110,8 +107,8 @@ _ = GeorgiaAquarium.create_passthrough('cm.year1Roi')
 _ = GeorgiaAquarium.create_passthrough('cm.year20Roi')
 _ = GeorgiaAquarium.create_passthrough('cm.year30Roi')
 _ = GeorgiaAquarium.create_passthrough('cm.year5Roi')
-_ = GeorgiaAquarium.create_passthrough('ovm.headOut')
-_ = GeorgiaAquarium.create_passthrough('ovm.totalFlow')
+_ = GeorgiaAquarium.create_passthrough('ovm.proteinHead')
+_ = GeorgiaAquarium.create_passthrough('ovm.totalFlowProtein')
 GeorgiaAquarium.driver.workflow.add("ovm", check=True)
 GeorgiaAquarium.driver.workflow.add("tb", check=True)
 GeorgiaAquarium.driver.workflow.add("sm", check=True)
@@ -136,7 +133,6 @@ _ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.batteryCost')
 _ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.circuitLoss')
 _ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.panelEff')
 _ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.panelRating')
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.solarCostPerWatt')
 _ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.sunRadianceScalar')
 _ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.surfaceArea')
 _ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.solarCapitalCost')
@@ -172,11 +168,11 @@ GeorgiaAquariumSampler.driver.add_parameter('um.pedsPerHourOn_prob',low=0,high=1
 GeorgiaAquariumSampler.driver.workflow.add("ga", check=True)
 GeorgiaAquariumSampler.driver.workflow.add("um", check=True)
 GeorgiaAquariumSampler.connect("ga.breakEvenYear","ra.breakEvenYearSamp")
-GeorgiaAquariumSampler.connect("ga.headOut","ra.headOutSamp")
+GeorgiaAquariumSampler.connect("ga.proteinHead","ra.proteinHeadSamp")
 GeorgiaAquariumSampler.connect("ga.originalEnergyCost","ra.originalEnergyCostSamp")
 GeorgiaAquariumSampler.connect("ga.totalEnergyCost","ra.totalEnergyCostSamp")
 GeorgiaAquariumSampler.connect("ga.totalEnergySaved","ra.totalEnergySavedSamp")
-GeorgiaAquariumSampler.connect("ga.totalFlow","ra.totalFlowSamp")
+GeorgiaAquariumSampler.connect("ga.totalFlowProtein","ra.totalFlowProteinSamp")
 GeorgiaAquariumSampler.connect("ga.totalInitialInvestment","ra.totalInitialInvestmentSamp")
 GeorgiaAquariumSampler.connect("ga.totalPowerConsumed","ra.totalPowerConsumedSamp")
 GeorgiaAquariumSampler.connect("ga.totalPowerProduced","ra.totalPowerProducedSamp")
@@ -198,98 +194,6 @@ GeorgiaAquariumSampler.set(u'driver.sequential', True)
 GeorgiaAquariumSampler.set(u'driver.sequential', False)
 GeorgiaAquariumSampler.set(u'driver.sequential', True)
 del GeorgiaAquariumSampler.driver.recorders[0]
-gas = set_as_top(create("GeorgiaAquariumOptimizer.GeorgiaAquariumSampler"))
-opt = set_as_top(create("openmdao.main.assembly.Assembly"))
-opt.add("gas", create("GeorgiaAquariumOptimizer.GeorgiaAquariumSampler"))
-opt.replace("driver", create("openmdao.lib.drivers.genetic.Genetic"))
-gac = set_as_top(create("GeorgiaAquariumOptimizer.GeorgiaAquariumComponent"))
-del(gas)
-del(GeorgiaAquariumSampler)
-del(GeorgiaAquariumAssembly)
-del(GeorgiaAquarium)
-opt.remove("gas")
-opt.add("gac", create("GeorgiaAquariumOptimizer.GeorgiaAquariumComponent"))
-opt.driver.add_objective('gac.totalUtilityMean');
-opt.driver.add_parameter('gac.bladeLength',low=1,high=10);
-opt.driver.add_parameter('gac.ratedEff',low=.7,high=.9);
-opt.driver.add_parameter('gac.runSpeed',low=100,high=1800);
-opt.set(u'driver.opt_type', 'maximize')
-opt.set(u'driver.population_size', 20)
-opt.set(u'driver.generations', 50)
-import pyopt
-import pyopt as pyOpt
-opt.replace("driver", create("pyopt_driver.pyopt_driver.pyOptDriver"))
-opt.set(u'driver.optimizer', 'NSGA2')
-opt.driver.recorders.append(create("openmdao.lib.casehandlers.csvcase.CSVCaseRecorder"))
-opt.set(u'driver.pyopt_diff', True)
-quickopt = set_as_top(create("openmdao.main.assembly.Assembly"))
-quickopt.add("ga", create("GeorgiaAquarium.GeorgiaAquarium"))
-quickopt.replace("driver", create("pyopt_driver.pyopt_driver.pyOptDriver"))
-quickopt.driver.recorders.append(create("openmdao.lib.casehandlers.csvcase.CSVCaseRecorder"))
-quickopt.driver.add_parameter('ga.bladeLength',low=1,high=5);
-quickopt.driver.add_parameter('ga.runSpeed',low=200,high=1800);
-quickopt.driver.add_parameter('ga.tileCount',low=0,high=50);
-quickopt.driver.add_objective('ga.totalUtility');
-quickopt.set(u'driver.gradient_options.gmres_tolerance', 1e-6)
-quickopt.set(u'driver.pyopt_diff', True)
-opt.set(u'driver.optimizer', 'ALPSO')
-opt.set(u'driver.gradient_options.gmres_tolerance', 1e-6)
-opt.driver.add_parameter('gac.tileCount',low=0,high=20);
-opt.set(u'driver.optimizer', 'ALHSO')
-opt.driver.add_parameter('gac.turbineCount',low=0,high=10);
-solarOpt = set_as_top(create("openmdao.main.assembly.Assembly"))
-solarOpt.replace("driver", create("pyopt_driver.pyopt_driver.pyOptDriver"))
-solarOpt.add("sm", create("Energy.Sources.Solar.Solar.SolarModel"))
-solarOpt.driver.add_parameter('sm.batteryCost',low=0,high=0);
-solarOpt.driver.add_parameter('sm.circuitLoss',low=0.7,high=0.7);
-solarOpt.driver.add_parameter('sm.panelEff',low=.1,high=.25);
-solarOpt.driver.add_parameter('sm.panelRating',low=100,high=450);
-solarOpt.driver.add_parameter('sm.surfaceArea',low=100,high=1000);
-solarOpt.driver.add_parameter('sm.sunRadianceScalar',low=1,high=1);
-solarOpt.driver.add_parameter('sm.solarCostPerWatt',low=1.00,high=2.00);
-solarOpt.driver.add_objective('sm.totalkWh');
-solarOpt.driver.add_constraint('sm.solarCapitalCost < 400000');
-solarOpt.set(u'driver.optimizer', 'NSGA2')
-solarOpt.set(u'driver.optimizer', 'COBYLA')
-solarOpt.driver.recorders.append(create("openmdao.lib.casehandlers.csvcase.CSVCaseRecorder"))
-solarOpt.driver.remove_parameter("sm.batteryCost");
-solarOpt.driver.remove_parameter("sm.circuitLoss");
-solarOpt.driver.remove_parameter("sm.sunRadianceScalar");
-solarOpt.set(u'driver.optimizer', 'ALPSO')
-solarOpt.driver.remove_objective("sm.totalkWh");
-solarOpt.driver.add_objective('sm.totalkWh >= 0');
-solarOpt.driver.remove_objective("sm.totalkWh>=0");
-solarOpt.driver.add_objective('sm.totalkWh');
-solarOpt.set(u'driver.pyopt_diff', True)
-solarOpt.set(u'driver.options', {"'Problem Type'":"'Maximize'"})
-solarOpt.set(u'driver.options', {"'Problem Type'":"'Maximize'"})
-solarOpt.set(u'driver.options', {})
-solarOpt.set(u'driver.options', {"Problem Type":"Maximize"})
-solarOpt.set(u'driver.options', {})
-solarOpt.driver.remove_objective("sm.totalkWh");
-solarOpt.driver.add_objective('+sm.totalkWh');
-solarOpt.driver.remove_objective("+sm.totalkWh");
-solarOpt.driver.add_objective('sm.totalkWh');
-solarOpt.driver.remove_constraint("sm.solarCapitalCost<400000");
-solarOpt.driver.add_constraint('400000 > sm.solarCapitalCost');
-solarOpt.driver.remove_objective("sm.totalkWh");
-solarOpt.driver.add_objective('-sm.totalkWh');
-solarOpt.driver.remove_constraint("400000>sm.solarCapitalCost");
-solarOpt.driver.add_constraint('sm.solarCapitalCost >= 400000');
-solarOpt.driver.remove_constraint("sm.solarCapitalCost>=400000");
-solarOpt.driver.add_constraint('-sm.solarCapitalCost < 400000');
-solarOpt.driver.remove_constraint("-sm.solarCapitalCost<400000");
-solarOpt.driver.add_constraint('sm.solarCapitalCost < 400000.0');
-solarOpt.driver.remove_parameter("sm.solarCostPerWatt");
-solarOpt.driver.remove_constraint("sm.solarCapitalCost<400000.0");
-solarOpt.driver.add_constraint('400000.0 > sm.solarCapitalCost');
-solarOpt.driver.remove_constraint("400000.0>sm.solarCapitalCost");
-solarOpt.driver.add_constraint('sm.solarCapitalCost >= 400000.0',name='solarcost');
-solarOpt.driver.remove_parameter("sm.surfaceArea");
-solarOpt.driver.add_parameter('sm.surfaceArea',low=0,high=1000);
-solarOpt.driver.remove_constraint("solarcost");
-solarOpt.driver.add_constraint('sm.solarCapitalCost <= 400000.0',name='solarcost');
-del(opt)
 del(GeorgiaAquariumOptimizer)
 del(SolarModel)
 gao = set_as_top(create("GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization"))
