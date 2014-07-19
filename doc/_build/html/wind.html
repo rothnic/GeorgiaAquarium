@@ -122,23 +122,34 @@
 <p>The solar model component is developed in OpenMDAO, but the calculation functions have been developed as stand-alone
 units. The primary OpenMDAO element that would be executed is the Solar Model Component,
 which is can be loaded by other OpenMDAO structures for automated execution.</p>
+<p>Attributes of the component are where the explicit inputs and outputs are defined, and come in the following format:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">attribute_name</span> <span class="o">=</span> <span class="n">attribute_type</span><span class="p">(</span><span class="n">default_value</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in/out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;description of the attribute&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="section" id="windmodel-class-input-attributes">
 <h3><em>WindModel Class Input Attributes</em><a class="headerlink" href="#windmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>    turbineCount = Float(3.0, iotype=&#39;in&#39;, desc=&#39;turbine count&#39;)
-    turbineRating = Float(3000.0, iotype=&#39;in&#39;, desc=&#39;turbine power rating (kW)&#39;)
-    turbineEff = Float(0.4, iotype=&#39;in&#39;, desc=&#39;turbine efficiency (percent)&#39;)
-    windSpeedScalar = Float(1.0, iotype=&#39;in&#39;, desc=&#39;uncertainty around wind speed (scalar)&#39;)
-    windCostPerWatt = Float(1.5, iotype=&#39;in&#39;, desc=&#39;wind cost per capacity ($/watt)&#39;)
-    circuitLoss = Float(0.75, iotype=&#39;in&#39;, desc=&#39;circuit power loss (percent)&#39;)
-    airDensity = Float(1.23, iotype=&#39;in&#39;, desc=&#39;air density (kg/m^3)&#39;)
-    bladeLength = Float(1.524, iotype=&#39;in&#39;, desc=&#39;turbine blade length (m)&#39;)
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">turbineCount</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine count&#39;</span><span class="p">)</span>
+    <span class="n">turbineRating</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine power rating (kW)&#39;</span><span class="p">)</span>
+    <span class="n">turbineEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine efficiency (percent)&#39;</span><span class="p">)</span>
+    <span class="n">windSpeedScalar</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;uncertainty around wind speed (scalar)&#39;</span><span class="p">)</span>
+    <span class="n">windCostPerWatt</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wind cost per capacity ($/watt)&#39;</span><span class="p">)</span>
+    <span class="n">circuitLoss</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;circuit power loss (percent)&#39;</span><span class="p">)</span>
+    <span class="n">airDensity</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.23</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;air density (kg/m^3)&#39;</span><span class="p">)</span>
+    <span class="n">bladeLength</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.524</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine blade length (m)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="windmodel-class-output-attributes">
 <h3><em>WindModel Class Output Attributes</em><a class="headerlink" href="#windmodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>    totalkWh = Float(1.0, iotype=&#39;out&#39;, desc=&#39;yearly power output (kWh)&#39;)
-    windCapitalCost = Float(1.0, iotype=&#39;out&#39;, desc=&#39;investment cost ($)&#39;)
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">windCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="windmodel-class-constants">
+<h3><em>WindModel Class Constants</em><a class="headerlink" href="#windmodel-class-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">windDataTable</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">windAtl.csv&#39;</span><span class="p">)</span> <span class="c">#: Pandas table read from a csv file, windAtl.csv</span>
+    <span class="n">windData</span> <span class="o">=</span> <span class="n">windDataTable</span><span class="p">[</span><span class="s">&quot;windSpeed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>        <span class="c">#: Only the wind speed column from the windDataTable</span>
 </pre></div>
 </div>
 </div>
@@ -151,22 +162,18 @@ which is can be loaded by other OpenMDAO structures for automated execution.</p>
 <dl class="method">
 <dt id="Energy.Sources.Wind.Wind.WindModel.execute">
 <tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/Wind.html#WindModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindModel.execute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sources.Wind.Wind.WindModel.path">
-<tt class="descname">path</tt><em class="property"> = 'C:\\Users\\Nick\\.openmdao\\gui\\projects\\GeorgiaAquarium\\Energy\\Sources\\Wind'</em><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindModel.path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sources.Wind.Wind.WindModel.windData">
-<tt class="descname">windData</tt><em class="property"> = array([ 1.5,  1.5,  2.1, ...,  3.6,  4.6,  4.1])</em><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindModel.windData" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sources.Wind.Wind.WindModel.windDataTable">
-<tt class="descname">windDataTable</tt><em class="property"> =       windDirection  windSpeed 0               290       1.50 1               280       1.50 2               280       2.10 3               290       1.50 4               270       1.50 5             -9999       1.80 6               270       2.10 7               300       4.10 8               330       4.60 9               340       4.10 10              330       5.70 11              330       4.10 12              320       5.70 13              330       9.30 14              340       8.80 15              320       8.20 16              330       9.30 17              330       7.20 18              320      10.30 19              330       7.70 20              340       8.80 21              310       8.80 22              330       8.80 23              330       6.70 24              330       6.70 25              330       7.70 26              310       6.70 27              310       5.70 28              310       5.70 29            -9999       5.95 ...             ...        ... 8726            130       5.10 8727            120       4.60 8728            130       3.10 8729            130       4.10 8730            110       3.10 8731            100       3.60 8732            100       4.60 8733            110       4.10 8734            100       4.10 8735             70       5.10 8736             80       4.60 8737          -9999       5.15 8738             90       5.70 8739             90       5.10 8740            100       4.60 8741             90       4.10 8742             80       3.60 8743             90       4.10 8744            100       5.10 8745            100       4.60 8746            110       3.60 8747            110       4.60 8748            130       3.60 8749            110       3.10 8750            130       4.10 8751            150       4.10 8752            140       4.60 8753            120       3.60 8754            130       4.60 8755            120       4.10  [8756 rows x 2 columns]</em><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindModel.windDataTable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,
+OpenMDAO will write new values into the model&#8217;s inputs, then will call this execute method. After the
+execution is complete, it will read total power and total initial capital cost information from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -189,14 +196,16 @@ T = absolute temperature</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>windSpeed</strong> &#8211; </li>
-<li><strong>bladeLength</strong> &#8211; meters</li>
-<li><strong>turbineEff</strong> &#8211; </li>
-<li><strong>airDensity</strong> &#8211; </li>
+<li><strong>bladeLength</strong> &#8211; Length of turbine blades in meters</li>
+<li><strong>turbineEff</strong> &#8211; Rated efficiency of the wind turbine motor</li>
+<li><strong>airDensity</strong> &#8211; Uncertainty around the density of the air</li>
+<li><strong>turbineCount</strong> &#8211; The integer quantity of the number of turbines purchased</li>
+<li><strong>circuitLoss</strong> &#8211; A percentage reduction of the power production that would be usable between 0 and 1</li>
+<li><strong>windData</strong> &#8211; A numpy array of hourly wind speeds for an entire year</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total power generated for an entire year</p>
 </td>
 </tr>
 </tbody>
@@ -229,7 +238,24 @@ to speed up the array operation 1000 times.</p>
 <dl class="function">
 <dt id="Energy.Sources.Wind.calc_wind.calc_cost">
 <tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_cost</tt><big>(</big><em>windCostPerWatt</em>, <em>turbineRating</em>, <em>turbineCount</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_cost" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Computes the total initial capital cost for a configuration of the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>windCostPerWatt</strong> &#8211; Cost in relation to the power rating of the wind turbine</li>
+<li><strong>turbineRating</strong> &#8211; The power rating of the chosen wind turbine in watts</li>
+<li><strong>turbineCount</strong> &#8211; The integer quantity of the number of turbines chosen for a design of the system</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total initial capital cost of the considered configuration in dollars</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 <div class="section" id="windmodel-optimization">
@@ -255,6 +281,26 @@ python script as you would use a regular python class.</p>
 </div>
 <div class="section" id="windmodel-tests">
 <h2>WindModel Tests<a class="headerlink" href="#windmodel-tests" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Energy.Sources.Wind.test_wind.test_wind_power_calc">
+<tt class="descclassname">Energy.Sources.Wind.test_wind.</tt><tt class="descname">test_wind_power_calc</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/test_wind.html#test_wind_power_calc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.test_wind.test_wind_power_calc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.test_wind.test_wind_component">
+<tt class="descclassname">Energy.Sources.Wind.test_wind.</tt><tt class="descname">test_wind_component</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/test_wind.html#test_wind_component"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.test_wind.test_wind_component" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.test_wind.run_print_test">
+<tt class="descclassname">Energy.Sources.Wind.test_wind.</tt><tt class="descname">run_print_test</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/test_wind.html#run_print_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.test_wind.run_print_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.test_wind.test_wind_optimization">
+<tt class="descclassname">Energy.Sources.Wind.test_wind.</tt><tt class="descname">test_wind_optimization</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/test_wind.html#test_wind_optimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.test_wind.test_wind_optimization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 

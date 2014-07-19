@@ -152,6 +152,7 @@
     <span class="n">sunDataTable</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">solarAtl2010.csv&#39;</span><span class="p">)</span> <span class="c">#: CSV table of solar data read into Pandas object</span>
     <span class="n">sunData</span> <span class="o">=</span> <span class="n">sunDataTable</span><span class="p">[</span><span class="s">&quot;irradiance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>          <span class="c">#: Solar irradiance data read from sunDataTable</span>
 
+    <span class="c"># primary model method</span>
 <div class="viewcode-block" id="SolarModel.execute"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.Solar.SolarModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,</span>

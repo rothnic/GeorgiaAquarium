@@ -9,24 +9,35 @@ The solar model component is developed in OpenMDAO, but the calculation function
 units. The primary OpenMDAO element that would be executed is the Solar Model Component,
 which is can be loaded by other OpenMDAO structures for automated execution.
 
+Attributes of the component are where the explicit inputs and outputs are defined, and come in the following format::
+
+    attribute_name = attribute_type(default_value, iotype='in/out', desc='description of the attribute')
+
 *WindModel Class Input Attributes*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ..\Energy\Sources\Wind\Wind.py
+    :language: python
     :start-after: # set up inputs
     :end-before: # set up outputs
 
 *WindModel Class Output Attributes*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ..\Energy\Sources\Wind\Wind.py
+    :language: python
     :start-after: # set up outputs
     :end-before: # set up constants
+
+*WindModel Class Constants*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. literalinclude:: ..\Energy\Sources\Wind\Wind.py
+    :language: python
+    :start-after: # set up constants
+    :end-before: # primary model method
 
 *WindModel Class Definition*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. autoclass:: Energy.Sources.Wind.Wind.WindModel
-    :members:
-    :undoc-members:
-    :private-members:
+    :members: execute
     :show-inheritance:
 
 WindModel Calculations
@@ -50,3 +61,7 @@ with other models.
 
 WindModel Tests
 ---------------
+.. autofunction:: Energy.Sources.Wind.test_wind.test_wind_power_calc
+.. autofunction:: Energy.Sources.Wind.test_wind.test_wind_component
+.. autofunction:: Energy.Sources.Wind.test_wind.run_print_test
+.. autofunction:: Energy.Sources.Wind.test_wind.test_wind_optimization

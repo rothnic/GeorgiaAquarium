@@ -35,6 +35,7 @@ class SolarModel(Component):
     sunDataTable = read_csv(path + '\\solarAtl2010.csv') #: CSV table of solar data read into Pandas object
     sunData = sunDataTable["irradiance"].values          #: Solar irradiance data read from sunDataTable
 
+    # primary model method
     def execute(self):
         '''
         The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,

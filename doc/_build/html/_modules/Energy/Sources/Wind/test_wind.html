@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Energy.Sources.Solar.test_solar &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  <title>Energy.Sources.Wind.test_wind &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
   
 
   
@@ -105,7 +105,7 @@
       
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
       
-    <li>Energy.Sources.Solar.test_solar</li>
+    <li>Energy.Sources.Wind.test_wind</li>
       <li class="wy-breadcrumbs-aside">
         
       </li>
@@ -114,45 +114,43 @@
 </div>
           <div role="main">
             
-  <h1>Source code for Energy.Sources.Solar.test_solar</h1><div class="highlight"><pre>
+  <h1>Source code for Energy.Sources.Wind.test_wind</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
 <span class="c"># Simple test for solar model</span>
 
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">Energy.Sources.Solar.calc_solar</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">Energy.Sources.Solar.Solar</span> <span class="kn">import</span> <span class="n">SolarModel</span><span class="p">,</span> <span class="n">SolarOptimization</span>
-<span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">print_outputs</span>
+<span class="kn">from</span> <span class="nn">Energy.Sources.Wind.calc_wind</span> <span class="kn">import</span> <span class="n">calc_power</span>
+<span class="kn">from</span> <span class="nn">Energy.Sources.Wind.Wind</span> <span class="kn">import</span> <span class="n">WindModel</span><span class="p">,</span> <span class="n">WindOptimization</span>
+<span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">get_output_values</span><span class="p">,</span> <span class="n">print_outputs</span>
 
-<span class="n">path</span> <span class="o">=</span> <span class="s">&quot;C:\Users\Nick\.openmdao\gui\projects\GeorgiaAquarium\Energy\Sources\Solar\solarAtl2010.csv&quot;</span>
-<span class="n">sunData0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>
-                       <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">,</span> <span class="s">&quot;time&quot;</span><span class="p">],</span>
-                       <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">])</span>
-<span class="n">sunData</span> <span class="o">=</span> <span class="n">sunData0</span><span class="p">[</span><span class="s">&quot;irradiance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">&quot;C:\Users\Nick\.openmdao\gui\projects\GeorgiaAquarium\Energy\Sources\Wind\windAtl.csv&quot;</span>
+<span class="n">windDataTable</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">windData</span> <span class="o">=</span> <span class="n">windDataTable</span><span class="p">[</span><span class="s">&quot;windSpeed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
 
-<div class="viewcode-block" id="testSolarClean"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.test_solar.testSolarClean">[docs]</a><span class="k">def</span> <span class="nf">testSolarClean</span><span class="p">():</span>
-    <span class="n">calc_power</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">sunData</span><span class="p">)</span>
+<div class="viewcode-block" id="test_wind_power_calc"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.test_wind.test_wind_power_calc">[docs]</a><span class="k">def</span> <span class="nf">test_wind_power_calc</span><span class="p">():</span>
+    <span class="n">calc_power</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">windData</span><span class="p">)</span>
+
 </div>
-<div class="viewcode-block" id="testSolarComp"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.test_solar.testSolarComp">[docs]</a><span class="k">def</span> <span class="nf">testSolarComp</span><span class="p">():</span>
-    <span class="n">sm</span> <span class="o">=</span> <span class="n">SolarModel</span><span class="p">()</span>
-    <span class="n">sm</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+<div class="viewcode-block" id="test_wind_component"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.test_wind.test_wind_component">[docs]</a><span class="k">def</span> <span class="nf">test_wind_component</span><span class="p">():</span>
+    <span class="n">wm</span> <span class="o">=</span> <span class="n">WindModel</span><span class="p">()</span>
+    <span class="n">wm</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">get_output_values</span><span class="p">(</span><span class="n">wm</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">outputs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
 </div>
-<div class="viewcode-block" id="test_solar_non_neg"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.test_solar.test_solar_non_neg">[docs]</a><span class="k">def</span> <span class="nf">test_solar_non_neg</span><span class="p">():</span>
-    <span class="n">numPanels</span> <span class="o">=</span> <span class="n">calc_num_panels</span><span class="p">(</span><span class="mf">148.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
-    <span class="n">cost</span> <span class="o">=</span> <span class="n">calc_cost</span><span class="p">(</span><span class="mf">1.17</span><span class="p">,</span> <span class="mi">183</span><span class="p">,</span> <span class="n">numPanels</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">cost</span> <span class="o">&gt;</span> <span class="mi">0</span>
-    <span class="k">assert</span> <span class="n">numPanels</span> <span class="o">%</span> <span class="n">numPanels</span> <span class="o">==</span> <span class="mi">0</span>
-</div>
-<div class="viewcode-block" id="test_solar_optimization"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.test_solar.test_solar_optimization">[docs]</a><span class="k">def</span> <span class="nf">test_solar_optimization</span><span class="p">():</span>
-    <span class="n">so</span> <span class="o">=</span> <span class="n">SolarOptimization</span><span class="p">()</span>
-    <span class="n">so</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="run_print_test"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.test_solar.run_print_test">[docs]</a><span class="k">def</span> <span class="nf">run_print_test</span><span class="p">():</span>
-    <span class="n">comp</span> <span class="o">=</span> <span class="n">SolarModel</span><span class="p">()</span>
+<div class="viewcode-block" id="run_print_test"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.test_wind.run_print_test">[docs]</a><span class="k">def</span> <span class="nf">run_print_test</span><span class="p">():</span>
+    <span class="n">comp</span> <span class="o">=</span> <span class="n">WindModel</span><span class="p">()</span>
     <span class="n">comp</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-    <span class="n">print_outputs</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span></div>
+    <span class="n">print_outputs</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="test_wind_optimization"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.test_wind.test_wind_optimization">[docs]</a><span class="k">def</span> <span class="nf">test_wind_optimization</span><span class="p">():</span>
+    <span class="n">wo</span> <span class="o">=</span> <span class="n">WindOptimization</span><span class="p">()</span>
+    <span class="n">wo</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div>
 </pre></div>
 
           </div>

@@ -133,11 +133,13 @@
 <span class="sd">    R = 287.058J/(kgK)</span>
 <span class="sd">    T = absolute temperature</span>
 
-<span class="sd">    :param windSpeed:</span>
-<span class="sd">    :param bladeLength: meters</span>
-<span class="sd">    :param turbineEff:</span>
-<span class="sd">    :param airDensity:</span>
-<span class="sd">    :return:</span>
+<span class="sd">    :param bladeLength: Length of turbine blades in meters</span>
+<span class="sd">    :param turbineEff: Rated efficiency of the wind turbine motor</span>
+<span class="sd">    :param airDensity: Uncertainty around the density of the air</span>
+<span class="sd">    :param turbineCount: The integer quantity of the number of turbines purchased</span>
+<span class="sd">    :param circuitLoss: A percentage reduction of the power production that would be usable between 0 and 1</span>
+<span class="sd">    :param windData: A numpy array of hourly wind speeds for an entire year</span>
+<span class="sd">    :return: Total power generated for an entire year</span>
 
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">powerMult</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">airDensity</span> <span class="o">*</span> <span class="n">turbineCount</span> <span class="o">*</span> <span class="n">turbineEff</span> <span class="o">*</span> <span class="n">circuitLoss</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">bladeLength</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="mf">1000.0</span>
@@ -166,6 +168,14 @@
 
 <span class="c">#@jit</span></div>
 <div class="viewcode-block" id="calc_cost"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.calc_wind.calc_cost">[docs]</a><span class="k">def</span> <span class="nf">calc_cost</span><span class="p">(</span><span class="n">windCostPerWatt</span><span class="p">,</span> <span class="n">turbineRating</span><span class="p">,</span> <span class="n">turbineCount</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes the total initial capital cost for a configuration of the system.</span>
+
+<span class="sd">    :param windCostPerWatt: Cost in relation to the power rating of the wind turbine</span>
+<span class="sd">    :param turbineRating: The power rating of the chosen wind turbine in watts</span>
+<span class="sd">    :param turbineCount: The integer quantity of the number of turbines chosen for a design of the system</span>
+<span class="sd">    :return: Total initial capital cost of the considered configuration in dollars</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">windCostPerWatt</span> <span class="o">*</span> <span class="n">turbineRating</span> <span class="o">*</span> <span class="n">turbineCount</span></div>
 </pre></div>
 

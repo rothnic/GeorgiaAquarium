@@ -1,17 +1,17 @@
 __author__ = 'Nick'
 # Simple test for solar model
 
-
 import pandas as pd
-
-from Energy.Sources.Solar.calc_solar import *
-from Energy.Sources.Solar.Solar import SolarModel, SolarOptimization
+from calc_solar import *
+from Solar import SolarModel, SolarOptimization
+import os
 from Common.AttributeTools.io import print_outputs
 
-path = "C:\Users\Nick\.openmdao\gui\projects\GeorgiaAquarium\Energy\Sources\Solar\solarAtl2010.csv"
-sunData0 = pd.read_csv(path,
-                       index_col=["date", "time"],
-                       parse_dates=["date"])
+user = os.getenv('USERNAME')
+projectPath = '\\.openmdao\\gui\\projects\\GeorgiaAquarium\\Energy\\Sources\\Solar\\solarAtl2010.csv'
+
+sunpath =  'c:\\Users\\' + user + projectPath
+sunData0 = pd.read_csv(sunpath, index_col=["date", "time"],parse_dates=["date"])
 sunData = sunData0["irradiance"].values
 
 
@@ -24,7 +24,7 @@ def testSolarComp():
 
 def test_solar_non_neg():
     numPanels = calc_num_panels(148.0, 0.7)
-    cost = calc_cost(1.17, 183, numPanels)
+    cost = calc_cost(0.7, 500, 300, numPanels)
     assert cost > 0
     assert numPanels % numPanels == 0
 

@@ -12,21 +12,28 @@ which is can be loaded by other OpenMDAO structures for automated execution.
 *SolarModel Class Input Attributes*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ..\Energy\Sources\Solar\Solar.py
+    :language: python
     :start-after: # set up inputs
     :end-before: # set up outputs
 
 *SolarModel Class Output Attributes*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. literalinclude:: ..\Energy\Sources\Solar\Solar.py
+    :language: python
     :start-after: # set up outputs
     :end-before: # set up constants
+
+*WindModel Class Constants*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. literalinclude:: ..\Energy\Sources\Solar\Solar.py
+    :language: python
+    :start-after: # set up constants
+    :end-before: # primary model method
 
 *SolarModel Class Definition*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. autoclass:: Energy.Sources.Solar.Solar.SolarModel
-    :members:
-    :undoc-members:
-    :private-members:
+    :members: execute
     :show-inheritance:
 
 SolarModel Calculations

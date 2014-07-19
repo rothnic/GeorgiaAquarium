@@ -1,6 +1,6 @@
 __author__ = 'Nick'
 from Pedestrian import PedestrianModel
-import pytest
+from Common.AttributeTools.io import print_outputs
 
 def test_samples():
     ped = PedestrianModel()
@@ -17,3 +17,8 @@ def test_samples():
         yearlyStepsOut.append(ped.yearlyStepsPerTile)
 
     assert min(yearlyStepsOut) > 0
+
+def run_tests_with_print():
+    comp = PedestrianModel()
+    comp.execute()
+    print_outputs(comp)

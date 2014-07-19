@@ -71,13 +71,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="wind.html#id1">Wind Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a></li>
@@ -125,18 +124,27 @@ units. The primary OpenMDAO element that would be executed is the Solar Model Co
 which is can be loaded by other OpenMDAO structures for automated execution.</p>
 <div class="section" id="solarmodel-class-input-attributes">
 <h3><em>SolarModel Class Input Attributes</em><a class="headerlink" href="#solarmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>    panelRating = Float(280.0, iotype=&#39;in&#39;, desc=&#39;panel rating&#39;)
-    panelEff = Float(0.17, iotype=&#39;in&#39;, desc=&#39;panel efficiency&#39;)
-    sunRadianceScalar = Float(1.0, iotype=&#39;in&#39;, desc=&#39;uncertainty around radiance&#39;)
-    surfaceArea = Float(558.0, iotype=&#39;in&#39;, desc=&#39;number of panels&#39;)
-    circuitLoss = Float(0.7, iotype=&#39;in&#39;, desc=&#39;circuit power loss&#39;)
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">panelRating</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">280.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel rating&#39;</span><span class="p">)</span>
+    <span class="n">panelEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.17</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel efficiency&#39;</span><span class="p">)</span>
+    <span class="n">sunRadianceScalar</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;uncertainty around radiance&#39;</span><span class="p">)</span>
+    <span class="n">surfaceArea</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">558.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;number of panels&#39;</span><span class="p">)</span>
+    <span class="n">circuitLoss</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;circuit power loss&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="solarmodel-class-output-attributes">
 <h3><em>SolarModel Class Output Attributes</em><a class="headerlink" href="#solarmodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>    totalkWh = Float(110000.0, iotype=&#39;out&#39;, desc=&#39;yearly power output&#39;)
-    solarCapitalCost = Float(150000.0, iotype=&#39;out&#39;, desc=&#39;investment cost&#39;)
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">110000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output&#39;</span><span class="p">)</span>
+    <span class="n">solarCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">150000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="windmodel-class-constants">
+<h3><em>WindModel Class Constants</em><a class="headerlink" href="#windmodel-class-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">panelSize</span> <span class="o">=</span> <span class="mf">1.42</span>         <span class="c">#: Fixed value for panel size in square meters</span>
+    <span class="n">maxSurfaceArea</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c">#: Maximum area in square meters available for installation</span>
+    <span class="n">sunDataTable</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">solarAtl2010.csv&#39;</span><span class="p">)</span> <span class="c">#: CSV table of solar data read into Pandas object</span>
+    <span class="n">sunData</span> <span class="o">=</span> <span class="n">sunDataTable</span><span class="p">[</span><span class="s">&quot;irradiance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>          <span class="c">#: Solar irradiance data read from sunDataTable</span>
 </pre></div>
 </div>
 </div>
@@ -162,35 +170,6 @@ execution is complete, it will read total power and total initial capital cost i
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sources.Solar.Solar.SolarModel.maxSurfaceArea">
-<tt class="descname">maxSurfaceArea</tt><em class="property"> = 1000.0</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.maxSurfaceArea" title="Permalink to this definition">¶</a></dt>
-<dd><p>Maximum area in square meters available for installation</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sources.Solar.Solar.SolarModel.panelSize">
-<tt class="descname">panelSize</tt><em class="property"> = 1.42</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.panelSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fixed value for panel size in square meters</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sources.Solar.Solar.SolarModel.path">
-<tt class="descname">path</tt><em class="property"> = 'C:\\Users\\Nick\\.openmdao\\gui\\projects\\GeorgiaAquarium\\Energy\\Sources\\Solar'</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sources.Solar.Solar.SolarModel.sunData">
-<tt class="descname">sunData</tt><em class="property"> = array([0, 0, 0, ..., 0, 0, 0], dtype=int64)</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.sunData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Solar irradiance data read from sunDataTable</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sources.Solar.Solar.SolarModel.sunDataTable">
-<tt class="descname">sunDataTable</tt><em class="property"> =             date      time  irradiance  irrUnc 0       1/1/2010      1:00           0       0 1       1/1/2010      2:00           0       0 2       1/1/2010      3:00           0       0 3       1/1/2010      4:00           0       0 4       1/1/2010      5:00           0       0 5       1/1/2010      6:00           0       0 6       1/1/2010      7:00           0       0 7       1/1/2010      8:00           1      24 8       1/1/2010      9:00          36      24 9       1/1/2010     10:00          75      24 10      1/1/2010     11:00         281      24 11      1/1/2010     12:00         472      24 12      1/1/2010     13:00         445      24 13      1/1/2010     14:00         536      24 14      1/1/2010     15:00         465      24 15      1/1/2010     16:00         325      24 16      1/1/2010     17:00         153      24 17      1/1/2010     18:00          17      24 18      1/1/2010     19:00           0       0 19      1/1/2010     20:00           0       0 20      1/1/2010     21:00           0       0 21      1/1/2010     22:00           0       0 22      1/1/2010     23:00           0       0 23      1/1/2010  24:00:00           0       0 24      1/2/2010      1:00           0       0 25      1/2/2010      2:00           0       0 26      1/2/2010      3:00           0       0 27      1/2/2010      4:00           0       0 28      1/2/2010      5:00           0       0 29      1/2/2010      6:00           0       0 ...          ...       ...         ...     ... 8730  12/30/2010     19:00           0       0 8731  12/30/2010     20:00           0       0 8732  12/30/2010     21:00           0       0 8733  12/30/2010     22:00           0       0 8734  12/30/2010     23:00           0       0 8735  12/30/2010  24:00:00           0       0 8736  12/31/2010      1:00           0       0 8737  12/31/2010      2:00           0       0 8738  12/31/2010      3:00           0       0 8739  12/31/2010      4:00           0       0 8740  12/31/2010      5:00           0       0 8741  12/31/2010      6:00           0       0 8742  12/31/2010      7:00           0       0 8743  12/31/2010      8:00           1      24 8744  12/31/2010      9:00          81      24 8745  12/31/2010     10:00         174      24 8746  12/31/2010     11:00         286      24 8747  12/31/2010     12:00         459      24 8748  12/31/2010     13:00         553      24 8749  12/31/2010     14:00         489      24 8750  12/31/2010     15:00         369      24 8751  12/31/2010     16:00         231      24 8752  12/31/2010     17:00         125      24 8753  12/31/2010     18:00           9      24 8754  12/31/2010     19:00           0       0 8755  12/31/2010     20:00           0       0 8756  12/31/2010     21:00           0       0 8757  12/31/2010     22:00           0       0 8758  12/31/2010     23:00           0       0 8759  12/31/2010  24:00:00           0       0  [8760 rows x 4 columns]</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.sunDataTable" title="Permalink to this definition">¶</a></dt>
-<dd><p>CSV table of solar data read into Pandas object</p>
 </dd></dl>
 
 </dd></dl>

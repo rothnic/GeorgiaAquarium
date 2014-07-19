@@ -16,11 +16,13 @@ def calc_power(bladeLength, turbineEff, airDensity, turbineCount, circuitLoss, w
     R = 287.058J/(kgK)
     T = absolute temperature
 
-    :param windSpeed:
-    :param bladeLength: meters
-    :param turbineEff:
-    :param airDensity:
-    :return:
+    :param bladeLength: Length of turbine blades in meters
+    :param turbineEff: Rated efficiency of the wind turbine motor
+    :param airDensity: Uncertainty around the density of the air
+    :param turbineCount: The integer quantity of the number of turbines purchased
+    :param circuitLoss: A percentage reduction of the power production that would be usable between 0 and 1
+    :param windData: A numpy array of hourly wind speeds for an entire year
+    :return: Total power generated for an entire year
 
     '''
     powerMult = (0.5 * airDensity * turbineCount * turbineEff * circuitLoss * pi * (bladeLength ** 2)) / 1000.0
@@ -49,4 +51,12 @@ def calc_power_fast(windData, powerMult, theRange):
 
 #@jit
 def calc_cost(windCostPerWatt, turbineRating, turbineCount):
+    '''
+    Computes the total initial capital cost for a configuration of the system.
+
+    :param windCostPerWatt: Cost in relation to the power rating of the wind turbine
+    :param turbineRating: The power rating of the chosen wind turbine in watts
+    :param turbineCount: The integer quantity of the number of turbines chosen for a design of the system
+    :return: Total initial capital cost of the considered configuration in dollars
+    '''
     return windCostPerWatt * turbineRating * turbineCount

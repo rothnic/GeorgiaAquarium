@@ -16,7 +16,7 @@ from Common.AttributeTools.io import print_outputs
 
 class WindModel(Component):
     # get our current directory
-    path = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.dirname(os.path.realpath(__file__)) #: Will automatically read the current path of the user
 
     # set up inputs
     turbineCount = Float(3.0, iotype='in', desc='turbine count')
@@ -33,10 +33,19 @@ class WindModel(Component):
     windCapitalCost = Float(1.0, iotype='out', desc='investment cost ($)')
 
     # set up constants
-    windDataTable = pd.read_csv(path + '\\windAtl.csv')
-    windData = windDataTable["windSpeed"].values
+    windDataTable = pd.read_csv(path + '\\windAtl.csv') #: Pandas table read from a csv file, windAtl.csv
+    windData = windDataTable["windSpeed"].values        #: Only the wind speed column from the windDataTable
 
+    # primary model method
     def execute(self):
+        '''
+        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,
+        OpenMDAO will write new values into the model's inputs, then will call this execute method. After the
+        execution is complete, it will read total power and total initial capital cost information from it.
+
+        :returns: None
+        '''
+
         # Calculate power
         self.totalkWh = calc_power(
             self.bladeLength,

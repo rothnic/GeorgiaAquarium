@@ -50,14 +50,9 @@ class PedestrianModel(Component):
         """
         self.yearlyStepsPerTile = self.model.sim(self.pedsPerHourOn, self.pedsPerHourOff)
 
-
-def run_tests():
-    comp = PedestrianModel()
-    comp.execute()
-    print_outputs(comp)
-
-
 if __name__ == "__main__":
     # Module test routine, executes when this python file is ran independently
     # For example, using Pycharm, right click while editing and select Run
-    run_tests()
+    from test_pedestrian import test_samples, run_tests_with_print
+    run_tests_with_print()
+    test_samples()

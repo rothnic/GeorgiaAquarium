@@ -127,7 +127,7 @@
 
 
 <span class="c"># @jit</span>
-<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Solar.calc_solar.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">panelRating</span><span class="p">,</span> <span class="n">panelEff</span><span class="p">,</span> <span class="n">sunRadianceScalar</span><span class="p">,</span> <span class="n">surfaceArea</span><span class="p">,</span> <span class="n">circuitLoss</span><span class="p">,</span> <span class="n">sunData</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.calc_solar.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">panelRating</span><span class="p">,</span> <span class="n">panelEff</span><span class="p">,</span> <span class="n">sunRadianceScalar</span><span class="p">,</span> <span class="n">surfaceArea</span><span class="p">,</span> <span class="n">circuitLoss</span><span class="p">,</span> <span class="n">sunData</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Calculates the total yearly power for the solar panel system. Utilizes a separate vectorized function for most of</span>
 <span class="sd">    the computation. This function computes as much of the calculation as possible so that there is only a single</span>
@@ -149,7 +149,7 @@
 
 
 <span class="c"># @jit</span></div>
-<div class="viewcode-block" id="calc_power_fast"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Solar.calc_solar.calc_power_fast">[docs]</a><span class="k">def</span> <span class="nf">calc_power_fast</span><span class="p">(</span><span class="n">sunData</span><span class="p">,</span> <span class="n">multValue</span><span class="p">,</span> <span class="n">theRange</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_power_fast"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.calc_solar.calc_power_fast">[docs]</a><span class="k">def</span> <span class="nf">calc_power_fast</span><span class="p">(</span><span class="n">sunData</span><span class="p">,</span> <span class="n">multValue</span><span class="p">,</span> <span class="n">theRange</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Computes the total yearly power for the solar panel system. Uses numba just-in-time compilation to LLVM code to</span>
 <span class="sd">    speed up the array operation 1000 times.</span>
@@ -170,7 +170,7 @@
 
 
 <span class="c">#@jit</span></div>
-<div class="viewcode-block" id="calc_cost"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Solar.calc_solar.calc_cost">[docs]</a><span class="k">def</span> <span class="nf">calc_cost</span><span class="p">(</span><span class="n">panelEff</span><span class="p">,</span> <span class="n">surfaceArea</span><span class="p">,</span> <span class="n">panelRating</span><span class="p">,</span> <span class="n">numPanels</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_cost"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.calc_solar.calc_cost">[docs]</a><span class="k">def</span> <span class="nf">calc_cost</span><span class="p">(</span><span class="n">panelEff</span><span class="p">,</span> <span class="n">surfaceArea</span><span class="p">,</span> <span class="n">panelRating</span><span class="p">,</span> <span class="n">numPanels</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Computes the cost of the solar design based on the solar cost per watt, panel rating in watts, and the number of</span>
 <span class="sd">    panels that are chosen. Solar cost per watt is calculated based on a model that was developed from NREL System</span>
@@ -189,7 +189,7 @@
 
 
 <span class="c">#@jit</span></div>
-<div class="viewcode-block" id="calc_num_panels"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Solar.calc_solar.calc_num_panels">[docs]</a><span class="k">def</span> <span class="nf">calc_num_panels</span><span class="p">(</span><span class="n">surfaceArea</span><span class="p">,</span> <span class="n">panelSize</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_num_panels"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.calc_solar.calc_num_panels">[docs]</a><span class="k">def</span> <span class="nf">calc_num_panels</span><span class="p">(</span><span class="n">surfaceArea</span><span class="p">,</span> <span class="n">panelSize</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Finds the number of panels that will fit in the desired area.</span>
 

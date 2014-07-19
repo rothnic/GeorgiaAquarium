@@ -133,7 +133,7 @@
 
 <div class="viewcode-block" id="WindModel"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.Wind.WindModel">[docs]</a><span class="k">class</span> <span class="nc">WindModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
     <span class="c"># get our current directory</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span> <span class="c">#: Will automatically read the current path of the user</span>
 
     <span class="c"># set up inputs</span>
     <span class="n">turbineCount</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine count&#39;</span><span class="p">)</span>
@@ -150,10 +150,19 @@
     <span class="n">windCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost ($)&#39;</span><span class="p">)</span>
 
     <span class="c"># set up constants</span>
-    <span class="n">windDataTable</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">windAtl.csv&#39;</span><span class="p">)</span>
-    <span class="n">windData</span> <span class="o">=</span> <span class="n">windDataTable</span><span class="p">[</span><span class="s">&quot;windSpeed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">windDataTable</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">windAtl.csv&#39;</span><span class="p">)</span> <span class="c">#: Pandas table read from a csv file, windAtl.csv</span>
+    <span class="n">windData</span> <span class="o">=</span> <span class="n">windDataTable</span><span class="p">[</span><span class="s">&quot;windSpeed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>        <span class="c">#: Only the wind speed column from the windDataTable</span>
 
+    <span class="c"># primary model method</span>
 <div class="viewcode-block" id="WindModel.execute"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.Wind.WindModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,</span>
+<span class="sd">        OpenMDAO will write new values into the model&#39;s inputs, then will call this execute method. After the</span>
+<span class="sd">        execution is complete, it will read total power and total initial capital cost information from it.</span>
+
+<span class="sd">        :returns: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
         <span class="c"># Calculate power</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">totalkWh</span> <span class="o">=</span> <span class="n">calc_power</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bladeLength</span><span class="p">,</span>

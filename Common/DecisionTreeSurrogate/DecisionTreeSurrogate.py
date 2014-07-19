@@ -1,24 +1,19 @@
 __author__ = 'Nick'
 
+import cPickle as pickle
+
 import numpy as np
 import pandas as pd
-import neurolab as nl
 from scipy import stats
-from sklearn.cross_validation import cross_val_score
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from sklearn import gaussian_process
-from sklearn.ensemble.partial_dependence import plot_partial_dependence
-import cPickle as pickle
-import os
+
 
 class DecisionTreeSurrogate:
     def __init__(self, trainingFile, inputCols, outputCols, regressorFile=None):
-        path = os.path.dirname(os.path.realpath(__file__))
 
         self.inputCols = inputCols
         self.outputCols = outputCols
-        self.trainData = pd.read_csv(os.path.join(path, trainingFile))
+        self.trainData = pd.read_csv(trainingFile)
         self.regressor = None
         self.inputData = None
         self.outputData = None
@@ -47,8 +42,6 @@ class DecisionTreeSurrogate:
                 print "p_value: " + str(p_value)
                 print "std_err: " + str(std_err)
                 print ""
-            with open("decisionTreeSurrogate.p", "wb") as handle:
-                pickle.dump(self.regressor, handle)
             return out
 
     def train(self, n_estimators):
@@ -62,6 +55,9 @@ class DecisionTreeSurrogate:
 
         # Fit regressor to inputs/outputs
         self.regressor.fit(self.inputData, self.outputData)
+
+        with open("decisionTreeSurrogate.p", "wb") as handle:
+            pickle.dump(self.regressor, handle)
 
     def sim(self, inValue):
         # Ensure we already have trained regressorwork before trying to sim
