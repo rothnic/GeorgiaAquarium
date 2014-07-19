@@ -77,7 +77,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../triboelectric.html">Triboelectric Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../pedestrian.html">Pedestrian Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../cost.html">Cost Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../AnalysisComponents.html">Analysis Components</a></li>
 </ul>
@@ -118,17 +123,17 @@
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
 <span class="c"># Simple test for solar model</span>
 
-
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-
-<span class="kn">from</span> <span class="nn">Energy.Sources.Solar.calc_solar</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">Energy.Sources.Solar.Solar</span> <span class="kn">import</span> <span class="n">SolarModel</span><span class="p">,</span> <span class="n">SolarOptimization</span>
+<span class="kn">from</span> <span class="nn">calc_solar</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Solar</span> <span class="kn">import</span> <span class="n">SolarModel</span><span class="p">,</span> <span class="n">SolarOptimization</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">print_outputs</span>
 
-<span class="n">path</span> <span class="o">=</span> <span class="s">&quot;C:\Users\Nick\.openmdao\gui\projects\GeorgiaAquarium\Energy\Sources\Solar\solarAtl2010.csv&quot;</span>
-<span class="n">sunData0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>
-                       <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">,</span> <span class="s">&quot;time&quot;</span><span class="p">],</span>
-                       <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">])</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;USERNAME&#39;</span><span class="p">)</span>
+<span class="n">projectPath</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">.openmdao</span><span class="se">\\</span><span class="s">gui</span><span class="se">\\</span><span class="s">projects</span><span class="se">\\</span><span class="s">GeorgiaAquarium</span><span class="se">\\</span><span class="s">Energy</span><span class="se">\\</span><span class="s">Sources</span><span class="se">\\</span><span class="s">Solar</span><span class="se">\\</span><span class="s">solarAtl2010.csv&#39;</span>
+
+<span class="n">sunpath</span> <span class="o">=</span>  <span class="s">&#39;c:</span><span class="se">\\</span><span class="s">Users</span><span class="se">\\</span><span class="s">&#39;</span> <span class="o">+</span> <span class="n">user</span> <span class="o">+</span> <span class="n">projectPath</span>
+<span class="n">sunData0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sunpath</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">,</span> <span class="s">&quot;time&quot;</span><span class="p">],</span><span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;date&quot;</span><span class="p">])</span>
 <span class="n">sunData</span> <span class="o">=</span> <span class="n">sunData0</span><span class="p">[</span><span class="s">&quot;irradiance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
 
@@ -141,7 +146,7 @@
 </div>
 <div class="viewcode-block" id="test_solar_non_neg"><a class="viewcode-back" href="../../../../solar.html#Energy.Sources.Solar.test_solar.test_solar_non_neg">[docs]</a><span class="k">def</span> <span class="nf">test_solar_non_neg</span><span class="p">():</span>
     <span class="n">numPanels</span> <span class="o">=</span> <span class="n">calc_num_panels</span><span class="p">(</span><span class="mf">148.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
-    <span class="n">cost</span> <span class="o">=</span> <span class="n">calc_cost</span><span class="p">(</span><span class="mf">1.17</span><span class="p">,</span> <span class="mi">183</span><span class="p">,</span> <span class="n">numPanels</span><span class="p">)</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">calc_cost</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">numPanels</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">cost</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="k">assert</span> <span class="n">numPanels</span> <span class="o">%</span> <span class="n">numPanels</span> <span class="o">==</span> <span class="mi">0</span>
 </div>

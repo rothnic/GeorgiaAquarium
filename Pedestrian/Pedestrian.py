@@ -23,8 +23,22 @@ class PedestrianModel(Component):
     # set up outputs
     yearlyStepsPerTile = Float(47180.0, iotype='out', desc='yearly power output')
 
+    # set up constants
+    offDays = 236      #: number of off season days in one year
+    onDays = 139       #: number of on season days in one year
+
+    # primary model method
     def __init__(self):
-        super(PedestrianModel, self).__init__()
+        '''
+        Extend the OpenMDAO component init method only so that we don't have to reload the model file each time it is
+        executed. This might be considered bad practice, but is necessary to reduce run time. There could be a better
+        way to avoid this problem.
+
+        :return: Initialized OpenMDAO SurrogateModel component object
+        '''
+        # ToDo: See if there is a better way to initialize the surrogate without having to extend the constructor
+
+        super(PedestrianModel, self).__init__() #: Execute the parent OpenMDAO Component method, then do our own
 
         # Get full paths to file co-located with this one
         defaults = setup_defaults()
@@ -33,9 +47,11 @@ class PedestrianModel(Component):
         netFile = os.path.join(path, defaults['netFile'])
 
         # Initialize surrogate model
-        self.model = PedSurrogate(trainingFile=trainingFile, inputCols=defaults['inputCols'],
+        self.model = PedSurrogate(offDays=self.offDays, onDays=self.onDays,
+                                  trainingFile=trainingFile, inputCols=defaults['inputCols'],
                                   outputCols=defaults['outputCols'], netFile=netFile)
 
+    # primary model method
     def execute(self):
         """
         Execute is the primary method that every openMDAO component must implement. Each time the model is ran by
