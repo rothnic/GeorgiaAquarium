@@ -59,7 +59,8 @@
             <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../Intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../oceanvoyager.html">Ocean Voyager Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../oceanvoyager.html#module-Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../solar.html">Solar Model</a><ul>
@@ -85,6 +86,11 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../cost.html">Cost Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../AnalysisComponents.html">Analysis Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
 </ul>
 
         
@@ -160,7 +166,7 @@
     <span class="n">doProteinUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
     <span class="n">doSandUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
 
-    <span class="c"># Set up outputs</span>
+    <span class="c"># set up outputs</span>
     <span class="c"># potential constraints</span>
     <span class="n">proteinHead</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">25.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
     <span class="n">totalFlowSand</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">63000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total gallons per minute sand filters&#39;</span><span class="p">)</span>
@@ -182,6 +188,7 @@
     <span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">315000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
 
     <span class="c"># set up constants</span>
+    <span class="c"># constant values representing the current settings of sand and protein systems of Ocean Voyager</span>
     <span class="n">numProteinPumps</span> <span class="o">=</span> <span class="mi">34</span>
     <span class="n">numSandPumps</span> <span class="o">=</span> <span class="mi">36</span>
     <span class="n">currentSandPumpKw</span> <span class="o">=</span> <span class="mf">1230.24</span>
@@ -201,7 +208,17 @@
     <span class="n">currentSandDnCircuitLoss</span> <span class="o">=</span> <span class="mf">0.54</span>
     <span class="n">currentSandDatCircuitLoss</span> <span class="o">=</span> <span class="mf">0.33</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c"># primary model init</span>
+<div class="viewcode-block" id="OceanVoyagerModel.__init__"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Extend the OpenMDAO component init method only so that we don&#39;t have to reload the surrogate model files each</span>
+<span class="sd">        time it is executed. This might be considered bad practice, but is necessary to reduce run time. There could</span>
+<span class="sd">        be a better way to avoid this problem.</span>
+
+<span class="sd">        :return: Initialized OpenMDAO component object with protein and sand surrogate models loaded</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># ToDo: See if there is a better way to initialize the surrogate without having to extend the constructor</span>
+
         <span class="nb">super</span><span class="p">(</span><span class="n">OceanVoyagerModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
 
         <span class="c"># Protein Skimmers Surrogate Model</span>
@@ -210,9 +227,15 @@
         <span class="c"># Sand Filters Surrogate Model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sand_surrogate</span> <span class="o">=</span> <span class="n">init_sand_filter_surrogate</span><span class="p">()</span>
 
-
+    <span class="c"># primary model method</span></div>
 <div class="viewcode-block" id="OceanVoyagerModel.execute"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># Initial setup</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,</span>
+<span class="sd">        OpenMDAO will write new values into the model&#39;s inputs, then will call this execute method. After the</span>
+<span class="sd">        execution is complete, it will read total power and total initial capital cost information from it.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
 
         <span class="c"># Add all protein skimmer related inputs into a list for input into surrogate</span>
         <span class="n">inputsProtein</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">proteinRatedSpeed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lossMultiplier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proteinRatedEff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratedHead</span><span class="p">,</span>
@@ -290,18 +313,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proteinCapitalCost</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sandCapitalCost</span>
 
 </div></div>
-<div class="viewcode-block" id="run_tests"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.run_tests">[docs]</a><span class="k">def</span> <span class="nf">run_tests</span><span class="p">():</span>
-    <span class="c"># Module test routine, only executes when this python is ran independently</span>
-    <span class="c"># For example, using Pycharm, right click while editing and select Run</span>
-    <span class="n">comp</span> <span class="o">=</span> <span class="n">OceanVoyagerModel</span><span class="p">()</span>
-    <span class="n">comp</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-    <span class="n">print_outputs</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
-
-</div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="c"># Module test routine, executes when this python file is ran independently</span>
     <span class="c"># For example, using Pycharm, right click while editing and select Run</span>
-    <span class="n">run_tests</span><span class="p">()</span>
+    <span class="kn">from</span> <span class="nn">test_ocean_voyager</span> <span class="kn">import</span> <span class="n">test_ov_openmdao_model</span>
+    <span class="n">test_ov_openmdao_model</span><span class="p">()</span>
 </pre></div>
 
           </div>

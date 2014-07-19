@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Georgia Aquarium Energy Model's documentation!
-=========================================================
+Georgia Aquarium Energy Model documentation
+===========================================
 
 Contents:
 
@@ -19,7 +19,7 @@ Contents:
    pedestrian
    cost
    AnalysisComponents
-   Common
+   common
 
 
 Indices and tables

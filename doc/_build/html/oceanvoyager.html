@@ -60,7 +60,8 @@
             <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Ocean Voyager Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#oceanvoyager-tests">OceanVoyager Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="solar.html">Solar Model</a><ul>
@@ -78,9 +79,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
 </ul>
 
         
@@ -117,112 +128,134 @@
             
   <div class="section" id="ocean-voyager-model">
 <h1>Ocean Voyager Model<a class="headerlink" href="#ocean-voyager-model" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager">
-<span id="oceanvoyager-component"></span><h2>OceanVoyager Component<a class="headerlink" href="#module-Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager" title="Permalink to this headline">¶</a></h2>
-<p>/Energy/Sinks/Exhibits/OceanVoyager/OceanVoyager.py</p>
+<div class="section" id="oceanvoyager-component">
+<h2>OceanVoyager Component<a class="headerlink" href="#oceanvoyager-component" title="Permalink to this headline">¶</a></h2>
+<p>The ocean voyager model component is developed in OpenMDAO, but the calculation functions have been developed as
+stand-alone units. The primary OpenMDAO element that would be executed is the OceanVoyagerModel Component,
+which is can be loaded by other OpenMDAO structures for automated execution.</p>
+<div class="section" id="oceanvoyager-class-input-attributes">
+<h3><em>OceanVoyager Class Input Attributes</em><a class="headerlink" href="#oceanvoyager-class-input-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">proteinRatedSpeed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
+    <span class="n">lossMultiplier</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;loss multiplier&#39;</span><span class="p">)</span>
+    <span class="n">proteinRatedEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump efficiency&#39;</span><span class="p">)</span>
+    <span class="n">ratedHead</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated head&#39;</span><span class="p">)</span>
+    <span class="n">ratedFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1300.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated flow&#39;</span><span class="p">)</span>
+    <span class="n">referenceArea</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;reference area&#39;</span><span class="p">)</span>
+    <span class="n">runSpeed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump actual run speed&#39;</span><span class="p">)</span>
+    <span class="n">pumpModificationUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump modification cost&#39;</span><span class="p">)</span>
+    <span class="n">pumpFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1669.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated flow&#39;</span><span class="p">)</span>
+    <span class="n">pumpRatedHead</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">76.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated head&#39;</span><span class="p">)</span>
+    <span class="n">pumpRatedRpm</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1074.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
+    <span class="n">pumpRunRpm</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump actual run speed&#39;</span><span class="p">)</span>
+    <span class="n">pumpEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.79</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump efficiency&#39;</span><span class="p">)</span>
+    <span class="n">flowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.54</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
+    <span class="n">heatExchFlowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">5.06</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
+    <span class="n">heatExchValveOpen</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;loss multiplier&#39;</span><span class="p">)</span>
+    <span class="n">denitFLowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.54</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump efficiency&#39;</span><span class="p">)</span>
+    <span class="n">ozoneFlowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.57</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated head&#39;</span><span class="p">)</span>
+    <span class="n">ozoneValveOpen</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated flow&#39;</span><span class="p">)</span>
+    <span class="n">denitValveOpen</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;reference area&#39;</span><span class="p">)</span>
+    <span class="n">deaerationFlowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump actual run speed&#39;</span><span class="p">)</span>
+    <span class="n">doProteinUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
+    <span class="n">doSandUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="oceanvoyager-class-output-attributes">
+<h3><em>OceanVoyager Class Output Attributes</em><a class="headerlink" href="#oceanvoyager-class-output-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="c"># potential constraints</span>
+    <span class="n">proteinHead</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">25.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">totalFlowSand</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">63000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total gallons per minute sand filters&#39;</span><span class="p">)</span>
+    <span class="n">totalFlowProtein</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total gallons per minute protein skimmers&#39;</span><span class="p">)</span>
+    <span class="n">heatExchFlow1</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">heatExchFlow2</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">denitFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">8000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">bypassFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">45500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">sandFilterFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;flow through one of the sand filters&#39;</span><span class="p">)</span>
+
+    <span class="c"># power</span>
+    <span class="n">totalPowerSand</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1350.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power used for sand filters&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerProtein</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power used for protein skimmers&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerUsed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output&#39;</span><span class="p">)</span>
+
+    <span class="c"># cost</span>
+    <span class="n">proteinCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">153000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
+    <span class="n">sandCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">162000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
+    <span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">315000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="oceanvoyager-class-constants">
+<h3><em>OceanVoyager Class Constants</em><a class="headerlink" href="#oceanvoyager-class-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="c"># constant values representing the current settings of sand and protein systems of Ocean Voyager</span>
+    <span class="n">numProteinPumps</span> <span class="o">=</span> <span class="mi">34</span>
+    <span class="n">numSandPumps</span> <span class="o">=</span> <span class="mi">36</span>
+    <span class="n">currentSandPumpKw</span> <span class="o">=</span> <span class="mf">1230.24</span>
+    <span class="n">currentProteinPumpKw</span> <span class="o">=</span> <span class="mf">580.95</span>
+    <span class="n">currentProteinRatedSpeed</span> <span class="o">=</span> <span class="mi">1180</span>
+    <span class="n">currentProteinRatedFlow</span> <span class="o">=</span> <span class="mi">1960</span>
+    <span class="n">currentProteinRatedEff</span> <span class="o">=</span> <span class="mi">69</span>
+    <span class="n">currentProteinRatedHead</span> <span class="o">=</span> <span class="mi">31</span>
+    <span class="n">currentProteinCircuitLoss</span> <span class="o">=</span> <span class="mi">150</span>
+    <span class="n">currentSandRatedSpeed</span> <span class="o">=</span> <span class="mi">1006</span>
+    <span class="n">currentSandRatedFlow</span> <span class="o">=</span> <span class="mi">1316</span>
+    <span class="n">currentSandRatedEff</span> <span class="o">=</span> <span class="mi">73</span>
+    <span class="n">currentSandRatedHead</span> <span class="o">=</span> <span class="mi">53</span>
+    <span class="n">currentSandCircuitLoss</span> <span class="o">=</span> <span class="mf">3.54</span>
+    <span class="n">currentSandHxCircuitLoss</span> <span class="o">=</span> <span class="mf">5.06</span>
+    <span class="n">currentSandOzCircuitLoss</span> <span class="o">=</span> <span class="mf">0.57</span>
+    <span class="n">currentSandDnCircuitLoss</span> <span class="o">=</span> <span class="mf">0.54</span>
+    <span class="n">currentSandDatCircuitLoss</span> <span class="o">=</span> <span class="mf">0.33</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="oceanvoyager-class-definition">
+<h3><em>OceanVoyager Class Definition</em><a class="headerlink" href="#oceanvoyager-class-definition" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel">
 <em class="property">class </em><tt class="descclassname">Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.</tt><tt class="descname">OceanVoyagerModel</tt><a class="reference internal" href="_modules/Energy/Sinks/Exhibits/OceanVoyager/OceanVoyager.html#OceanVoyagerModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinCircuitLoss">
-<tt class="descname">currentProteinCircuitLoss</tt><em class="property"> = 150</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinCircuitLoss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinPumpKw">
-<tt class="descname">currentProteinPumpKw</tt><em class="property"> = 580.95</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinPumpKw" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinRatedEff">
-<tt class="descname">currentProteinRatedEff</tt><em class="property"> = 69</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinRatedEff" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinRatedFlow">
-<tt class="descname">currentProteinRatedFlow</tt><em class="property"> = 1960</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinRatedFlow" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinRatedHead">
-<tt class="descname">currentProteinRatedHead</tt><em class="property"> = 31</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinRatedHead" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinRatedSpeed">
-<tt class="descname">currentProteinRatedSpeed</tt><em class="property"> = 1180</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentProteinRatedSpeed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandCircuitLoss">
-<tt class="descname">currentSandCircuitLoss</tt><em class="property"> = 3.54</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandCircuitLoss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandDatCircuitLoss">
-<tt class="descname">currentSandDatCircuitLoss</tt><em class="property"> = 0.33</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandDatCircuitLoss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandDnCircuitLoss">
-<tt class="descname">currentSandDnCircuitLoss</tt><em class="property"> = 0.54</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandDnCircuitLoss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandHxCircuitLoss">
-<tt class="descname">currentSandHxCircuitLoss</tt><em class="property"> = 5.06</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandHxCircuitLoss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandOzCircuitLoss">
-<tt class="descname">currentSandOzCircuitLoss</tt><em class="property"> = 0.57</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandOzCircuitLoss" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandPumpKw">
-<tt class="descname">currentSandPumpKw</tt><em class="property"> = 1230.24</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandPumpKw" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandRatedEff">
-<tt class="descname">currentSandRatedEff</tt><em class="property"> = 73</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandRatedEff" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandRatedFlow">
-<tt class="descname">currentSandRatedFlow</tt><em class="property"> = 1316</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandRatedFlow" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandRatedHead">
-<tt class="descname">currentSandRatedHead</tt><em class="property"> = 53</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandRatedHead" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandRatedSpeed">
-<tt class="descname">currentSandRatedSpeed</tt><em class="property"> = 1006</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.currentSandRatedSpeed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<dl class="method">
+<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sinks/Exhibits/OceanVoyager/OceanVoyager.html#OceanVoyagerModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extend the OpenMDAO component init method only so that we don&#8217;t have to reload the surrogate model files each
+time it is executed. This might be considered bad practice, but is necessary to reduce run time. There could
+be a better way to avoid this problem.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Initialized OpenMDAO component object with protein and sand surrogate models loaded</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.execute">
 <tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sinks/Exhibits/OceanVoyager/OceanVoyager.html#OceanVoyagerModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.execute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.numProteinPumps">
-<tt class="descname">numProteinPumps</tt><em class="property"> = 34</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.numProteinPumps" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.numSandPumps">
-<tt class="descname">numSandPumps</tt><em class="property"> = 36</em><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.numSandPumps" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,
+OpenMDAO will write new values into the model&#8217;s inputs, then will call this execute method. After the
+execution is complete, it will read total power and total initial capital cost information from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
+</div>
+</div>
+<div class="section" id="oceanvoyager-tests">
+<h2>OceanVoyager Tests<a class="headerlink" href="#oceanvoyager-tests" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.run_tests">
-<tt class="descclassname">Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.</tt><tt class="descname">run_tests</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sinks/Exhibits/OceanVoyager/OceanVoyager.html#run_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.run_tests" title="Permalink to this definition">¶</a></dt>
+<dt id="Energy.Sinks.Exhibits.OceanVoyager.test_ocean_voyager.test_ov_openmdao_model">
+<tt class="descclassname">Energy.Sinks.Exhibits.OceanVoyager.test_ocean_voyager.</tt><tt class="descname">test_ov_openmdao_model</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sinks/Exhibits/OceanVoyager/test_ocean_voyager.html#test_ov_openmdao_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sinks.Exhibits.OceanVoyager.test_ocean_voyager.test_ov_openmdao_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

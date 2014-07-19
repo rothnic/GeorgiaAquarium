@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Common.DecisionTreeSurrogate.DecisionTreeSurrogate &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../solar.html">Solar Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../solar.html#solarmodel-component">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../solar.html#solarmodel-calculations">SolarModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../solar.html#solarmodel-optimization">SolarModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../solar.html#solarmodel-tests">SolarModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AnalysisComponents.html">Analysis Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>Common.DecisionTreeSurrogate.DecisionTreeSurrogate</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for Common.DecisionTreeSurrogate.DecisionTreeSurrogate</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
+
+<span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+
+
+<div class="viewcode-block" id="DecisionTreeSurrogate"><a class="viewcode-back" href="../../../common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate">[docs]</a><span class="k">class</span> <span class="nc">DecisionTreeSurrogate</span><span class="p">:</span>
+<div class="viewcode-block" id="DecisionTreeSurrogate.__init__"><a class="viewcode-back" href="../../../common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainingFile</span><span class="p">,</span> <span class="n">inputCols</span><span class="p">,</span> <span class="n">outputCols</span><span class="p">,</span> <span class="n">regressorFile</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Constructor for DecisionTreeSurrogate, which wraps the scikit-learn</span>
+<span class="sd">        :class:`~sklearn.ensemble.RandomForestRegressor` class. This class generates many dicision trees with random</span>
+<span class="sd">        configurations to avoid overfitting the model to the training data.</span>
+
+<span class="sd">        :param trainingFile: String location of the training CSV file, which must include column headers</span>
+<span class="sd">        :param inputCols: List of strings corresponding to the input column names</span>
+<span class="sd">        :param outputCols: List of strings corresponding to the output column names</span>
+<span class="sd">        :param regressorFile: (optional) String location of trained and pickled model. This is saved on training \</span>
+<span class="sd">        completion.</span>
+<span class="sd">        :return: Initialized DecisionTreeSurrogate object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputCols</span> <span class="o">=</span> <span class="n">inputCols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputCols</span> <span class="o">=</span> <span class="n">outputCols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">trainingFile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputData</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputData</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c"># Load regressor if we have a saved regressor file</span>
+        <span class="k">if</span> <span class="n">regressorFile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">regressorFile</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DecisionTreeSurrogate.test"><a class="viewcode-back" href="../../../common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.test">[docs]</a>    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Executes the testing of the model with the scipy :func:`~scipy.stats.linregress` function. This prints out</span>
+<span class="sd">        the results for each output to the console.</span>
+
+<span class="sd">        :return: None, prints to console</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># ToDo: determine why cross_val_score fails when testing surrogate model (see commented out code)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputData</span><span class="p">)</span>
+            <span class="c"># scores = cross_val_score(self.regressor, self.inputData, self.outputData, cv=20, scoring=&#39;r2&#39;)</span>
+            <span class="c"># print &quot;Cross Validation for Trained Model&quot;</span>
+            <span class="c"># print &quot;Mean: &quot; + str(scores.mean())</span>
+            <span class="c"># print &quot;Std: &quot; + str(scores.std()*2)</span>
+            <span class="c"># print &quot;&quot;</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">outCol</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputCols</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputData</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">out</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+                <span class="k">print</span> <span class="s">&quot;Training for &quot;</span> <span class="o">+</span> <span class="n">outCol</span>
+                <span class="k">print</span> <span class="s">&quot;slope: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">slope</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;intercept: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">intercept</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;r_value: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">r_value</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;p_value: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p_value</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;std_err: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">std_err</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">out</span>
+</div>
+<div class="viewcode-block" id="DecisionTreeSurrogate.train"><a class="viewcode-back" href="../../../common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_estimators</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Trains the surrogate model with the initialized input and output data, given the number of estimators to use.</span>
+<span class="sd">        This is used as an input to the :class:`~sklearn.ensemble.RandomForestRegressor` initializer, and controls</span>
+<span class="sd">        the number of decision trees created by the random forest tree.</span>
+
+<span class="sd">        :param n_estimators: number of decision trees for training, :note: can increase run time</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># Select only input columns from pandas dataframe as numpy array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainData</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">inputCols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainData</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">outputCols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="c"># Create decision tree regressor object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c"># Fit regressor to inputs/outputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputData</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;decisionTreeSurrogate.p&quot;</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DecisionTreeSurrogate.sim"><a class="viewcode-back" href="../../../common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.sim">[docs]</a>    <span class="k">def</span> <span class="nf">sim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inValue</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Executes the trained surrogate model on new input data.</span>
+
+<span class="sd">        :param inValue: An array or list of values with the same length of the list of input columns (inputCols)</span>
+<span class="sd">        :return: An array of values with the same length of the list of output columns (outputCols)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c"># Ensure we already have trained regressor before trying to sim</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">inValue</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputCols</span><span class="p">):</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">inValue</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">out</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span>
+</div>
+<div class="viewcode-block" id="DecisionTreeSurrogate.print_sim"><a class="viewcode-back" href="../../../common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.print_sim">[docs]</a>    <span class="k">def</span> <span class="nf">print_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inValues</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A simple method that wil print out the value of the array, inValues, with the corresponding output value.</span>
+<span class="sd">        This is primarily used for quickly testing to see how well the trained surrogate works.</span>
+
+<span class="sd">        :param inValues: Array or list of input values to retrieve and print out output values for</span>
+<span class="sd">        :return: None, prints to console</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">inValues</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Input: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; Output: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

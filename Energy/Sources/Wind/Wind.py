@@ -43,7 +43,7 @@ class WindModel(Component):
         OpenMDAO will write new values into the model's inputs, then will call this execute method. After the
         execution is complete, it will read total power and total initial capital cost information from it.
 
-        :returns: None
+        :return: None
         '''
 
         # Calculate power

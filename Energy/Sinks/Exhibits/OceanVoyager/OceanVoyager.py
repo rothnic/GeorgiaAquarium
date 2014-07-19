@@ -38,7 +38,7 @@ class OceanVoyagerModel(Component):
     doProteinUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
     doSandUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
 
-    # Set up outputs
+    # set up outputs
     # potential constraints
     proteinHead = Float(25.0, iotype='out', desc='simulated head')
     totalFlowSand = Float(63000.0, iotype='out', desc='total gallons per minute sand filters')
@@ -60,6 +60,7 @@ class OceanVoyagerModel(Component):
     hydraulicCapitalCost = Float(315000.0, iotype='out', desc='cost of modification')
 
     # set up constants
+    # constant values representing the current settings of sand and protein systems of Ocean Voyager
     numProteinPumps = 34
     numSandPumps = 36
     currentSandPumpKw = 1230.24
@@ -79,7 +80,17 @@ class OceanVoyagerModel(Component):
     currentSandDnCircuitLoss = 0.54
     currentSandDatCircuitLoss = 0.33
 
+    # primary model init
     def __init__(self):
+        '''
+        Extend the OpenMDAO component init method only so that we don't have to reload the surrogate model files each
+        time it is executed. This might be considered bad practice, but is necessary to reduce run time. There could
+        be a better way to avoid this problem.
+
+        :return: Initialized OpenMDAO component object with protein and sand surrogate models loaded
+        '''
+        # ToDo: See if there is a better way to initialize the surrogate without having to extend the constructor
+
         super(OceanVoyagerModel, self).__init__()
 
         # Protein Skimmers Surrogate Model
@@ -88,9 +99,15 @@ class OceanVoyagerModel(Component):
         # Sand Filters Surrogate Model
         self.sand_surrogate = init_sand_filter_surrogate()
 
-
+    # primary model method
     def execute(self):
-        # Initial setup
+        '''
+        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,
+        OpenMDAO will write new values into the model's inputs, then will call this execute method. After the
+        execution is complete, it will read total power and total initial capital cost information from it.
+
+        :return: None
+        '''
 
         # Add all protein skimmer related inputs into a list for input into surrogate
         inputsProtein = [self.proteinRatedSpeed, self.lossMultiplier, self.proteinRatedEff, self.ratedHead,
@@ -168,15 +185,8 @@ class OceanVoyagerModel(Component):
         self.hydraulicCapitalCost = self.proteinCapitalCost + self.sandCapitalCost
 
 
-def run_tests():
-    # Module test routine, only executes when this python is ran independently
-    # For example, using Pycharm, right click while editing and select Run
-    comp = OceanVoyagerModel()
-    comp.execute()
-    print_outputs(comp)
-
-
 if __name__ == "__main__":
     # Module test routine, executes when this python file is ran independently
     # For example, using Pycharm, right click while editing and select Run
-    run_tests()
+    from test_ocean_voyager import test_ov_openmdao_model
+    test_ov_openmdao_model()

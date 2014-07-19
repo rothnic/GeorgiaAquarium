@@ -10,6 +10,18 @@ from sklearn.ensemble import RandomForestRegressor
 
 class DecisionTreeSurrogate:
     def __init__(self, trainingFile, inputCols, outputCols, regressorFile=None):
+        '''
+        Constructor for DecisionTreeSurrogate, which wraps the scikit-learn
+        :class:`~sklearn.ensemble.RandomForestRegressor` class. This class generates many dicision trees with random
+        configurations to avoid overfitting the model to the training data.
+
+        :param trainingFile: String location of the training CSV file, which must include column headers
+        :param inputCols: List of strings corresponding to the input column names
+        :param outputCols: List of strings corresponding to the output column names
+        :param regressorFile: (optional) String location of trained and pickled model. This is saved on training \
+        completion.
+        :return: Initialized DecisionTreeSurrogate object
+        '''
 
         self.inputCols = inputCols
         self.outputCols = outputCols
@@ -24,6 +36,14 @@ class DecisionTreeSurrogate:
                 self.regressor = pickle.load(handle)
 
     def test(self):
+        '''
+        Executes the testing of the model with the scipy :func:`~scipy.stats.linregress` function. This prints out
+        the results for each output to the console.
+
+        :return: None, prints to console
+        '''
+        # ToDo: determine why cross_val_score fails when testing surrogate model (see commented out code)
+
         if self.regressor is not None:
             out = self.regressor.predict(self.inputData)
             # scores = cross_val_score(self.regressor, self.inputData, self.outputData, cv=20, scoring='r2')
@@ -45,8 +65,15 @@ class DecisionTreeSurrogate:
             return out
 
     def train(self, n_estimators):
+        '''
+        Trains the surrogate model with the initialized input and output data, given the number of estimators to use.
+        This is used as an input to the :class:`~sklearn.ensemble.RandomForestRegressor` initializer, and controls
+        the number of decision trees created by the random forest tree.
+
+        :param n_estimators: number of decision trees for training, :note: can increase run time
+        :return: None
+        '''
         # Select only input columns from pandas dataframe as numpy array
-        sz = np.shape(self.trainData.values)
         self.inputData = self.trainData[self.inputCols].values
         self.outputData = self.trainData[self.outputCols].values
 
@@ -60,7 +87,14 @@ class DecisionTreeSurrogate:
             pickle.dump(self.regressor, handle)
 
     def sim(self, inValue):
-        # Ensure we already have trained regressorwork before trying to sim
+        '''
+        Executes the trained surrogate model on new input data.
+
+        :param inValue: An array or list of values with the same length of the list of input columns (inputCols)
+        :return: An array of values with the same length of the list of output columns (outputCols)
+        '''
+
+        # Ensure we already have trained regressor before trying to sim
         if self.regressor is not None and len(inValue) == len(self.inputCols):
             out = self.regressor.predict(inValue)
             return out
@@ -68,5 +102,12 @@ class DecisionTreeSurrogate:
             raise Exception
 
     def print_sim(self, inValues):
+        '''
+        A simple method that wil print out the value of the array, inValues, with the corresponding output value.
+        This is primarily used for quickly testing to see how well the trained surrogate works.
+
+        :param inValues: Array or list of input values to retrieve and print out output values for
+        :return: None, prints to console
+        '''
         for value in inValues:
             print "Input: " + str(value) + " Output: " + str(self.sim(value))
