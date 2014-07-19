@@ -1,3 +1,7 @@
+"""
+   /Energy/Sources/Solar/calc_solar.py
+"""
+
 __author__ = 'Nick'
 
 from math import floor
@@ -5,7 +9,7 @@ from math import floor
 from numba import jit
 
 
-@jit
+# @jit
 def calc_power(panelRating, panelEff, sunRadianceScalar, surfaceArea, circuitLoss, sunData):
     '''
     Calculates the total yearly power for the solar panel system. Utilizes a separate vectorized function for most of
@@ -27,34 +31,47 @@ def calc_power(panelRating, panelEff, sunRadianceScalar, surfaceArea, circuitLos
     return powerOut
 
 
-@jit
+# @jit
 def calc_power_fast(sunData, multValue, theRange):
     '''
     Computes the total yearly power for the solar panel system. Uses numba just-in-time compilation to LLVM code to
     speed up the array operation 1000 times.
+
+    Multiplies value from calc_power by each element in array and aggregates into a sum The formatting of this
+    function and loop are very specific to achieve large speed increase by numba, so make sure that any changes are
+    compatible with numba by comparing run time using ipython %timeit magic from an ipython console.
 
     :param sunData: The solar irradiance array for one year
     :param multValue: The value to multiply each value in the array by
     :param theRange: Length of the input array, input to avoid JIT compilation issues
     :return: Sum off the power output from each day
     '''
-
-    # Multiplies value from calc_power by each element in array and aggregates into a sum
-    # The formatting of this function and loop are very specific to achieve large speed increase by numba,
-    # so make sure that any changes are compatible with numba by comparing run time using ipython %timeit magic from
-    # an ipython console.
     sum = 0
     for i in range(theRange):
         sum += sunData[i] * multValue
     return sum
 
 
-@jit
-def calc_cost(solarCostPerWatt, panelRating, numPanels):
+#@jit
+def calc_cost(panelEff, surfaceArea, panelRating, numPanels):
+    '''
+    Computes the cost of the solar design based on the solar cost per watt, panel rating in watts, and the number of
+    panels that are chosen. Solar cost per watt is calculated based on a model that was developed from NREL System
+    Adviser Model. The most important thing is that the cost increases as the panel efficiency and surface area
+    increases.
+
+    :param panelEff: The efficiency of the panel as a decimal
+    :param surfaceArea: The area of the panel in square meters
+    :param panelRating: The rating in watts for the panel's power generation
+    :param numPanels: The integer number for the quantity of solar panels
+    :return: Total initial capital cost in dollars for this single design configuration
+    '''
+    solarCostPerWatt = -(-68.33333 + 7.5 * panelEff) * surfaceArea * 0.027945
 
     return solarCostPerWatt * numPanels * panelRating
 
-@jit
+
+#@jit
 def calc_num_panels(surfaceArea, panelSize):
     '''
     Finds the number of panels that will fit in the desired area.

@@ -64,10 +64,20 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Solar Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-Energy.Sources.Solar.Solar">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solarmodel-component">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solarmodel-calculations">SolarModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solarmodel-optimization">SolarModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solarmodel-tests">SolarModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#id1">Wind Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a></li>
@@ -108,26 +118,63 @@
             
   <div class="section" id="solar-model">
 <h1>Solar Model<a class="headerlink" href="#solar-model" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-Energy.Sources.Solar.Solar">
-<span id="solarmodel-component"></span><h2>SolarModel Component<a class="headerlink" href="#module-Energy.Sources.Solar.Solar" title="Permalink to this headline">¶</a></h2>
-<p>/Energy/Sources/Solar/Solar.py</p>
+<div class="section" id="solarmodel-component">
+<h2>SolarModel Component<a class="headerlink" href="#solarmodel-component" title="Permalink to this headline">¶</a></h2>
+<p>The solar model component is developed in OpenMDAO, but the calculation functions have been developed as stand-alone
+units. The primary OpenMDAO element that would be executed is the Solar Model Component,
+which is can be loaded by other OpenMDAO structures for automated execution.</p>
+<div class="section" id="solarmodel-class-input-attributes">
+<h3><em>SolarModel Class Input Attributes</em><a class="headerlink" href="#solarmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    panelRating = Float(280.0, iotype=&#39;in&#39;, desc=&#39;panel rating&#39;)
+    panelEff = Float(0.17, iotype=&#39;in&#39;, desc=&#39;panel efficiency&#39;)
+    sunRadianceScalar = Float(1.0, iotype=&#39;in&#39;, desc=&#39;uncertainty around radiance&#39;)
+    surfaceArea = Float(558.0, iotype=&#39;in&#39;, desc=&#39;number of panels&#39;)
+    circuitLoss = Float(0.7, iotype=&#39;in&#39;, desc=&#39;circuit power loss&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="solarmodel-class-output-attributes">
+<h3><em>SolarModel Class Output Attributes</em><a class="headerlink" href="#solarmodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    totalkWh = Float(110000.0, iotype=&#39;out&#39;, desc=&#39;yearly power output&#39;)
+    solarCapitalCost = Float(150000.0, iotype=&#39;out&#39;, desc=&#39;investment cost&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="solarmodel-class-definition">
+<h3><em>SolarModel Class Definition</em><a class="headerlink" href="#solarmodel-class-definition" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="Energy.Sources.Solar.Solar.SolarModel">
 <em class="property">class </em><tt class="descclassname">Energy.Sources.Solar.Solar.</tt><tt class="descname">SolarModel</tt><a class="reference internal" href="_modules/Energy/Sources/Solar/Solar.html#SolarModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<p>The SolarModel is an OpenMDAO component that wraps the actual calculations performed for the solar modeling,
+while defining the input and output attributes.</p>
+<dl class="method">
 <dt id="Energy.Sources.Solar.Solar.SolarModel.execute">
 <tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/Solar.html#SolarModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.execute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,
+OpenMDAO will write new values into the model&#8217;s inputs, then will call this execute method. After the
+execution is complete, it will read total power and total initial capital cost information from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="Energy.Sources.Solar.Solar.SolarModel.maxSurfaceArea">
 <tt class="descname">maxSurfaceArea</tt><em class="property"> = 1000.0</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.maxSurfaceArea" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Maximum area in square meters available for installation</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="Energy.Sources.Solar.Solar.SolarModel.panelSize">
 <tt class="descname">panelSize</tt><em class="property"> = 1.42</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.panelSize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Fixed value for panel size in square meters</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="Energy.Sources.Solar.Solar.SolarModel.path">
@@ -137,47 +184,179 @@
 <dl class="attribute">
 <dt id="Energy.Sources.Solar.Solar.SolarModel.sunData">
 <tt class="descname">sunData</tt><em class="property"> = array([0, 0, 0, ..., 0, 0, 0], dtype=int64)</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.sunData" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Solar irradiance data read from sunDataTable</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="Energy.Sources.Solar.Solar.SolarModel.sunDataTable">
 <tt class="descname">sunDataTable</tt><em class="property"> =             date      time  irradiance  irrUnc 0       1/1/2010      1:00           0       0 1       1/1/2010      2:00           0       0 2       1/1/2010      3:00           0       0 3       1/1/2010      4:00           0       0 4       1/1/2010      5:00           0       0 5       1/1/2010      6:00           0       0 6       1/1/2010      7:00           0       0 7       1/1/2010      8:00           1      24 8       1/1/2010      9:00          36      24 9       1/1/2010     10:00          75      24 10      1/1/2010     11:00         281      24 11      1/1/2010     12:00         472      24 12      1/1/2010     13:00         445      24 13      1/1/2010     14:00         536      24 14      1/1/2010     15:00         465      24 15      1/1/2010     16:00         325      24 16      1/1/2010     17:00         153      24 17      1/1/2010     18:00          17      24 18      1/1/2010     19:00           0       0 19      1/1/2010     20:00           0       0 20      1/1/2010     21:00           0       0 21      1/1/2010     22:00           0       0 22      1/1/2010     23:00           0       0 23      1/1/2010  24:00:00           0       0 24      1/2/2010      1:00           0       0 25      1/2/2010      2:00           0       0 26      1/2/2010      3:00           0       0 27      1/2/2010      4:00           0       0 28      1/2/2010      5:00           0       0 29      1/2/2010      6:00           0       0 ...          ...       ...         ...     ... 8730  12/30/2010     19:00           0       0 8731  12/30/2010     20:00           0       0 8732  12/30/2010     21:00           0       0 8733  12/30/2010     22:00           0       0 8734  12/30/2010     23:00           0       0 8735  12/30/2010  24:00:00           0       0 8736  12/31/2010      1:00           0       0 8737  12/31/2010      2:00           0       0 8738  12/31/2010      3:00           0       0 8739  12/31/2010      4:00           0       0 8740  12/31/2010      5:00           0       0 8741  12/31/2010      6:00           0       0 8742  12/31/2010      7:00           0       0 8743  12/31/2010      8:00           1      24 8744  12/31/2010      9:00          81      24 8745  12/31/2010     10:00         174      24 8746  12/31/2010     11:00         286      24 8747  12/31/2010     12:00         459      24 8748  12/31/2010     13:00         553      24 8749  12/31/2010     14:00         489      24 8750  12/31/2010     15:00         369      24 8751  12/31/2010     16:00         231      24 8752  12/31/2010     17:00         125      24 8753  12/31/2010     18:00           9      24 8754  12/31/2010     19:00           0       0 8755  12/31/2010     20:00           0       0 8756  12/31/2010     21:00           0       0 8757  12/31/2010     22:00           0       0 8758  12/31/2010     23:00           0       0 8759  12/31/2010  24:00:00           0       0  [8760 rows x 4 columns]</em><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarModel.sunDataTable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>CSV table of solar data read into Pandas object</p>
+</dd></dl>
 
 </dd></dl>
 
+</div>
+</div>
+<div class="section" id="solarmodel-calculations">
+<h2>SolarModel Calculations<a class="headerlink" href="#solarmodel-calculations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Energy.Sources.Solar.calc_solar.calc_power">
+<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_power</tt><big>(</big><em>panelRating</em>, <em>panelEff</em>, <em>sunRadianceScalar</em>, <em>surfaceArea</em>, <em>circuitLoss</em>, <em>sunData</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the total yearly power for the solar panel system. Utilizes a separate vectorized function for most of
+the computation. This function computes as much of the calculation as possible so that there is only a single
+value to be multiplied with each component of the array of daily solar data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>panelRating</strong> &#8211; Rated wattage of the solar panel. This can affect the price of the panels</li>
+<li><strong>panelEff</strong> &#8211; Rated efficiency of the panel in turning solar into stored energy</li>
+<li><strong>sunRadianceScalar</strong> &#8211; Uncertainty around how much the sun radiance would vary over many years</li>
+<li><strong>surfaceArea</strong> &#8211; The total desired area of solar panels to be implemented</li>
+<li><strong>circuitLoss</strong> &#8211; Reduces the power production by some uncertain amount based on inefficiencies in circuits</li>
+<li><strong>sunData</strong> &#8211; An array of a single year of solar radiance data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total power generated by solar over a year</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Solar.calc_solar.calc_power_fast">
+<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_power_fast</tt><big>(</big><em>sunData</em>, <em>multValue</em>, <em>theRange</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_power_fast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_power_fast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the total yearly power for the solar panel system. Uses numba just-in-time compilation to LLVM code to
+speed up the array operation 1000 times.</p>
+<p>Multiplies value from calc_power by each element in array and aggregates into a sum The formatting of this
+function and loop are very specific to achieve large speed increase by numba, so make sure that any changes are
+compatible with numba by comparing run time using ipython %timeit magic from an ipython console.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sunData</strong> &#8211; The solar irradiance array for one year</li>
+<li><strong>multValue</strong> &#8211; The value to multiply each value in the array by</li>
+<li><strong>theRange</strong> &#8211; Length of the input array, input to avoid JIT compilation issues</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Sum off the power output from each day</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Solar.calc_solar.calc_cost">
+<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_cost</tt><big>(</big><em>panelEff</em>, <em>surfaceArea</em>, <em>panelRating</em>, <em>numPanels</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the cost of the solar design based on the solar cost per watt, panel rating in watts, and the number of
+panels that are chosen. Solar cost per watt is calculated based on a model that was developed from NREL System
+Adviser Model. The most important thing is that the cost increases as the panel efficiency and surface area
+increases.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>panelEff</strong> &#8211; The efficiency of the panel as a decimal</li>
+<li><strong>surfaceArea</strong> &#8211; The area of the panel in square meters</li>
+<li><strong>panelRating</strong> &#8211; The rating in watts for the panel&#8217;s power generation</li>
+<li><strong>numPanels</strong> &#8211; The integer number for the quantity of solar panels</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total initial capital cost in dollars for this single design configuration</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Solar.calc_solar.calc_num_panels">
+<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_num_panels</tt><big>(</big><em>surfaceArea</em>, <em>panelSize</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_num_panels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_num_panels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the number of panels that will fit in the desired area.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>surfaceArea</strong> &#8211; The surface area where the solar panels are installed</li>
+<li><strong>panelSize</strong> &#8211; The size in square meters of each solar panel</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The number of solar panels for this solution</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="solarmodel-optimization">
+<h2>SolarModel Optimization<a class="headerlink" href="#solarmodel-optimization" title="Permalink to this headline">¶</a></h2>
+<p>An OpenMDAO assembly, configured to use a pyOpt optimization driver, and configured with parameters corresponding to
+the <a class="reference internal" href="#Energy.Sources.Solar.Solar.SolarModel" title="Energy.Sources.Solar.Solar.SolarModel"><tt class="xref py py-class docutils literal"><span class="pre">SolarModel</span></tt></a> inputs. This can be used for testing the model before integration
+with other models.</p>
 <dl class="class">
 <dt id="Energy.Sources.Solar.Solar.SolarOptimization">
 <em class="property">class </em><tt class="descclassname">Energy.Sources.Solar.Solar.</tt><tt class="descname">SolarOptimization</tt><a class="reference internal" href="_modules/Energy/Sources/Solar/Solar.html#SolarOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarOptimization" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements an assembly to contain the SolarModel component, and run optimizations on it stand-alone with the
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.assembly.Assembly</span></tt></p>
+<p>Implements an assembly to contain the SolarModel component, and run optimizations on it stand-alone with the
 pyOpt plugin of optimization drivers. Implements a caserecorder so that you can investigate the results
 afterwards. This assembly will show up automatically when using openmdao gui, or can be used directly in another
 python script as you would use a regular python class.</p>
 <dl class="method">
 <dt id="Energy.Sources.Solar.Solar.SolarOptimization.configure">
 <tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/Solar.html#SolarOptimization.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.Solar.SolarOptimization.configure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This method is used to implement the custom behavior of the SolarOptimization Assembly. OpenMDAO requires
+that you implement this method, and it is used to add the optimization component, the SolarModel,
+and to configure the parameters within the optimization component.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Outputs optimization results to the console and saves all data for inputs and outputs into a CSV         file named &#8216;solar_optimization.csv&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
+</div>
+<div class="section" id="solarmodel-tests">
+<h2>SolarModel Tests<a class="headerlink" href="#solarmodel-tests" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="Energy.Sources.Solar.calc_solar.calc_power">
-<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_power</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_power" title="Permalink to this definition">¶</a></dt>
+<dt id="Energy.Sources.Solar.test_solar.testSolarClean">
+<tt class="descclassname">Energy.Sources.Solar.test_solar.</tt><tt class="descname">testSolarClean</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/test_solar.html#testSolarClean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.test_solar.testSolarClean" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="Energy.Sources.Solar.calc_solar.calc_power_fast">
-<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_power_fast</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_power_fast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_power_fast" title="Permalink to this definition">¶</a></dt>
+<dt id="Energy.Sources.Solar.test_solar.testSolarComp">
+<tt class="descclassname">Energy.Sources.Solar.test_solar.</tt><tt class="descname">testSolarComp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/test_solar.html#testSolarComp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.test_solar.testSolarComp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="Energy.Sources.Solar.calc_solar.calc_cost">
-<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_cost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_cost" title="Permalink to this definition">¶</a></dt>
+<dt id="Energy.Sources.Solar.test_solar.test_solar_non_neg">
+<tt class="descclassname">Energy.Sources.Solar.test_solar.</tt><tt class="descname">test_solar_non_neg</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/test_solar.html#test_solar_non_neg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.test_solar.test_solar_non_neg" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="Energy.Sources.Solar.calc_solar.calc_num_panels">
-<tt class="descclassname">Energy.Sources.Solar.calc_solar.</tt><tt class="descname">calc_num_panels</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/calc_solar.html#calc_num_panels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.calc_solar.calc_num_panels" title="Permalink to this definition">¶</a></dt>
+<dt id="Energy.Sources.Solar.test_solar.test_solar_optimization">
+<tt class="descclassname">Energy.Sources.Solar.test_solar.</tt><tt class="descname">test_solar_optimization</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/test_solar.html#test_solar_optimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.test_solar.test_solar_optimization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Solar.test_solar.run_print_test">
+<tt class="descclassname">Energy.Sources.Solar.test_solar.</tt><tt class="descname">run_print_test</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Solar/test_solar.html#run_print_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Solar.test_solar.run_print_test" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

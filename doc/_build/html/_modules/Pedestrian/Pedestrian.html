@@ -63,10 +63,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../solar.html">Solar Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../solar.html#module-Energy.Sources.Solar.Solar">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../solar.html#solarmodel-component">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../solar.html#solarmodel-calculations">SolarModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../solar.html#solarmodel-optimization">SolarModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../solar.html#solarmodel-tests">SolarModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../wind.html">Wind Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../triboelectric.html">Triboelectric Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pedestrian.html">Pedestrian Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../cost.html">Cost Model</a></li>
@@ -125,11 +134,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c"># set up inputs</span>
-    <span class="n">pedsPerHourOn</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">600.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;pedestrians per hour for on season months&#39;</span><span class="p">)</span>
-    <span class="n">pedsPerHourOff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;pedestrians per hour for off season months&#39;</span><span class="p">)</span>
+    <span class="n">pedsPerHourOn</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">600.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel rating&#39;</span><span class="p">)</span>
+    <span class="n">pedsPerHourOff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel efficiency&#39;</span><span class="p">)</span>
 
     <span class="c"># set up outputs</span>
-    <span class="n">yearlyStepsPerTile</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">47180.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;number of steps per tile per year (avg)&#39;</span><span class="p">)</span>
+    <span class="n">yearlyStepsPerTile</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">47180.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">PedestrianModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>

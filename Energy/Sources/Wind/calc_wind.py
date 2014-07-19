@@ -5,7 +5,7 @@ from math import pi
 from numba import jit
 
 
-@jit
+#@jit
 def calc_power(bladeLength, turbineEff, airDensity, turbineCount, circuitLoss, windData):
     '''
     http://en.wikipedia.org/wiki/Density_of_air
@@ -30,21 +30,23 @@ def calc_power(bladeLength, turbineEff, airDensity, turbineCount, circuitLoss, w
     return powerOut
 
 
-@jit
+#@jit
 def calc_power_fast(windData, powerMult, theRange):
-    """
-    Computes the total yearly power for the solar panel system.
+    '''
+    Computes the total yearly power for the solar panel system. :Note: Uses numba just-in-time compilation to LLVM code
+    to speed up the array operation 1000 times.
 
-    :return: Sum off the power output from each day
-
-    Uses numba just-in-time compilation to LLVM code to speed up the array operation 1000 times.
-    """
+    :param windData: Numpy array of wind on a daily basis
+    :param powerMult: Power factor multiplier from :func:`~Energy.Sources.Wind.calc_wind.calc_power`
+    :param theRange: Size of the array, so we can avoid using Python objects and ensure function compiles to LLVM
+    :return: Sum off the power output from each day for one year
+    '''
     sum = 0
     for i in range(theRange):
         sum += (windData[i] ** 3) * powerMult
     return sum
 
 
-@jit
+#@jit
 def calc_cost(windCostPerWatt, turbineRating, turbineCount):
     return windCostPerWatt * turbineRating * turbineCount

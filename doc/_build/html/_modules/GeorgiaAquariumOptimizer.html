@@ -63,10 +63,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../solar.html">Solar Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../solar.html#module-Energy.Sources.Solar.Solar">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solar.html#solarmodel-component">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solar.html#solarmodel-calculations">SolarModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solar.html#solarmodel-optimization">SolarModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../solar.html#solarmodel-tests">SolarModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../wind.html">Wind Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../triboelectric.html">Triboelectric Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pedestrian.html">Pedestrian Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cost.html">Cost Model</a></li>
@@ -128,7 +137,7 @@
 
         <span class="c"># Create passthroughs to optimizer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.bladeLength&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.proteinRatedEff&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.ratedEff&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.ratedFlow&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.ratedHead&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.ratedSpeed&#39;</span><span class="p">)</span>
@@ -138,7 +147,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.tileCount&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.turbineCount&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.breakEvenYearMean&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.proteinHeadMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.headOutMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.originalEnergyCostMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalEnergyCostMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.totalEnergySavedMean&#39;</span><span class="p">)</span>
@@ -171,11 +180,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;um.pedsPerHourOff&quot;</span><span class="p">,</span> <span class="s">&quot;ga.pedsPerHourOff&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;um.pedsPerHourOn&quot;</span><span class="p">,</span> <span class="s">&quot;ga.pedsPerHourOn&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.breakEvenYear&quot;</span><span class="p">,</span> <span class="s">&quot;ra.breakEvenYearSamp&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.proteinHead&quot;</span><span class="p">,</span> <span class="s">&quot;ra.proteinHeadSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.proteinHead&quot;</span><span class="p">,</span> <span class="s">&quot;ra.headOutSamp&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.originalEnergyCost&quot;</span><span class="p">,</span> <span class="s">&quot;ra.originalEnergyCostSamp&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalEnergyCost&quot;</span><span class="p">,</span> <span class="s">&quot;ra.totalEnergyCostSamp&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalEnergySaved&quot;</span><span class="p">,</span> <span class="s">&quot;ra.totalEnergySavedSamp&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalFlowProtein&quot;</span><span class="p">,</span> <span class="s">&quot;ra.totalFlowProteinSamp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalProteinFlow&quot;</span><span class="p">,</span> <span class="s">&quot;ra.totalProteinFlowSamp&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalInitialInvestment&quot;</span><span class="p">,</span> <span class="s">&quot;ra.totalInitialInvestmentSamp&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalPowerConsumed&quot;</span><span class="p">,</span> <span class="s">&quot;ra.totalPowerConsumedSamp&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;ga.totalPowerProduced&quot;</span><span class="p">,</span> <span class="s">&quot;ra.totalPowerProducedSamp&quot;</span><span class="p">)</span>
@@ -196,7 +205,7 @@
 
         <span class="c"># Setup passthroughs for design variables and expected output values</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.bladeLength&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.proteinRatedSpeed&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.ratedSpeed&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.proteinHead&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.ratedFlow&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.surfaceArea&#39;</span><span class="p">)</span>
@@ -204,13 +213,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.turbineCount&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.runSpeed&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.referenceArea&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ga.proteinRatedEff&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ovm.proteinRatedEff&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.breakEvenYearMean&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.proteinHeadMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.headOutMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.originalEnergyCostMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalEnergyCostMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalEnergySavedMean&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalFlowProteinMean&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalFlowMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalInitialInvestmentMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalPowerConsumedMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.totalPowerProducedMean&#39;</span><span class="p">)</span>
@@ -303,10 +312,6 @@
     <span class="n">gao</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
     <span class="n">gad</span> <span class="o">=</span> <span class="n">GeorgiaAquariumDoe</span><span class="p">()</span>
     <span class="n">gad</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-    <span class="n">gas</span> <span class="o">=</span> <span class="n">GeorgiaAquariumSampler</span><span class="p">()</span>
-    <span class="n">gas</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-    <span class="n">gago</span> <span class="o">=</span> <span class="n">GeorgiaAquariumGlobalOptimization</span><span class="p">()</span>
-    <span class="n">gago</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
 </pre></div>
 
           </div>

@@ -63,10 +63,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="solar.html">Solar Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="solar.html#module-Energy.Sources.Solar.Solar">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar.html#solarmodel-component">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar.html#solarmodel-calculations">SolarModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar.html#solarmodel-optimization">SolarModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar.html#solarmodel-tests">SolarModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a></li>
@@ -128,6 +137,12 @@
   <dt><a href="solar.html#Energy.Sources.Solar.calc_solar.calc_cost">calc_cost() (in module Energy.Sources.Solar.calc_solar)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.calc_wind.calc_cost">(in module Energy.Sources.Wind.calc_wind)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="solar.html#Energy.Sources.Solar.calc_solar.calc_num_panels">calc_num_panels() (in module Energy.Sources.Solar.calc_solar)</a>
   </dt>
@@ -136,10 +151,22 @@
   <dt><a href="solar.html#Energy.Sources.Solar.calc_solar.calc_power">calc_power() (in module Energy.Sources.Solar.calc_solar)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.calc_wind.calc_power">(in module Energy.Sources.Wind.calc_wind)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="solar.html#Energy.Sources.Solar.calc_solar.calc_power_fast">calc_power_fast() (in module Energy.Sources.Solar.calc_solar)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.calc_wind.calc_power_fast">(in module Energy.Sources.Wind.calc_wind)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="solar.html#Energy.Sources.Solar.Solar.SolarOptimization.configure">configure() (Energy.Sources.Solar.Solar.SolarOptimization method)</a>
   </dt>
@@ -259,19 +286,11 @@
   </dt>
 
       
-  <dt><a href="solar.html#module-Energy.Sources.Solar.Solar">Energy.Sources.Solar.Solar (module)</a>
-  </dt>
-
-      
   <dt><a href="triboelectric.html#module-Energy.Sources.Tribo.Tribo">Energy.Sources.Tribo.Tribo (module)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="wind.html#module-Energy.Sources.Wind.Wind">Energy.Sources.Wind.Wind (module)</a>
-  </dt>
-
       
   <dt><a href="cost.html#Cost.Cost.CostModel.execute">execute() (Cost.Cost.CostModel method)</a>
   </dt>
@@ -427,6 +446,12 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="solar.html#Energy.Sources.Solar.test_solar.run_print_test">run_print_test() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
   <dt><a href="cost.html#Cost.Cost.run_tests">run_tests() (in module Cost.Cost)</a>
   </dt>
 
@@ -475,11 +500,27 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="triboelectric.html#Energy.Sources.Tribo.Tribo.TriboModel">TriboModel (class in Energy.Sources.Tribo.Tribo)</a>
+  <dt><a href="solar.html#Energy.Sources.Solar.test_solar.test_solar_non_neg">test_solar_non_neg() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      
+  <dt><a href="solar.html#Energy.Sources.Solar.test_solar.test_solar_optimization">test_solar_optimization() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      
+  <dt><a href="solar.html#Energy.Sources.Solar.test_solar.testSolarClean">testSolarClean() (in module Energy.Sources.Solar.test_solar)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="solar.html#Energy.Sources.Solar.test_solar.testSolarComp">testSolarComp() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.Tribo.TriboModel">TriboModel (class in Energy.Sources.Tribo.Tribo)</a>
+  </dt>
+
       
   <dt><a href="triboelectric.html#Energy.Sources.Tribo.Tribo.TriboOptimization">TriboOptimization (class in Energy.Sources.Tribo.Tribo)</a>
   </dt>

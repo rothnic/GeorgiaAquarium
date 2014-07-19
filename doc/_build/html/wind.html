@@ -30,7 +30,7 @@
   
     <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
         <link rel="next" title="Triboelectric Model" href="triboelectric.html"/>
-        <link rel="prev" title="Models" href="solar.html"/> 
+        <link rel="prev" title="Solar Model" href="solar.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -59,12 +59,24 @@
         
             <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">OceanVoyager Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="solar.html">Models</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="solar.html#module-Energy.Sources.Solar.Solar">Solar Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#module-Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager">OceanVoyager Component</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Wind Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solar.html">Solar Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="solar.html#solarmodel-component">SolarModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar.html#solarmodel-calculations">SolarModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar.html#solarmodel-optimization">SolarModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar.html#solarmodel-tests">SolarModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a></li>
@@ -103,13 +115,40 @@
 </div>
           <div role="main">
             
-  <div class="section" id="module-Energy.Sources.Wind.Wind">
-<span id="wind-model"></span><h1>Wind Model<a class="headerlink" href="#module-Energy.Sources.Wind.Wind" title="Permalink to this headline">¶</a></h1>
-<p>/Energy/Sources/Wind/Wind.py</p>
+  <div class="section" id="wind-model">
+<h1>Wind Model<a class="headerlink" href="#wind-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="windmodel-component">
+<h2>WindModel Component<a class="headerlink" href="#windmodel-component" title="Permalink to this headline">¶</a></h2>
+<p>The solar model component is developed in OpenMDAO, but the calculation functions have been developed as stand-alone
+units. The primary OpenMDAO element that would be executed is the Solar Model Component,
+which is can be loaded by other OpenMDAO structures for automated execution.</p>
+<div class="section" id="windmodel-class-input-attributes">
+<h3><em>WindModel Class Input Attributes</em><a class="headerlink" href="#windmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    turbineCount = Float(3.0, iotype=&#39;in&#39;, desc=&#39;turbine count&#39;)
+    turbineRating = Float(3000.0, iotype=&#39;in&#39;, desc=&#39;turbine power rating (kW)&#39;)
+    turbineEff = Float(0.4, iotype=&#39;in&#39;, desc=&#39;turbine efficiency (percent)&#39;)
+    windSpeedScalar = Float(1.0, iotype=&#39;in&#39;, desc=&#39;uncertainty around wind speed (scalar)&#39;)
+    windCostPerWatt = Float(1.5, iotype=&#39;in&#39;, desc=&#39;wind cost per capacity ($/watt)&#39;)
+    circuitLoss = Float(0.75, iotype=&#39;in&#39;, desc=&#39;circuit power loss (percent)&#39;)
+    airDensity = Float(1.23, iotype=&#39;in&#39;, desc=&#39;air density (kg/m^3)&#39;)
+    bladeLength = Float(1.524, iotype=&#39;in&#39;, desc=&#39;turbine blade length (m)&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="windmodel-class-output-attributes">
+<h3><em>WindModel Class Output Attributes</em><a class="headerlink" href="#windmodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    totalkWh = Float(1.0, iotype=&#39;out&#39;, desc=&#39;yearly power output (kWh)&#39;)
+    windCapitalCost = Float(1.0, iotype=&#39;out&#39;, desc=&#39;investment cost ($)&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="windmodel-class-definition">
+<h3><em>WindModel Class Definition</em><a class="headerlink" href="#windmodel-class-definition" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="Energy.Sources.Wind.Wind.WindModel">
 <em class="property">class </em><tt class="descclassname">Energy.Sources.Wind.Wind.</tt><tt class="descname">WindModel</tt><a class="reference internal" href="_modules/Energy/Sources/Wind/Wind.html#WindModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindModel" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<dl class="method">
 <dt id="Energy.Sources.Wind.Wind.WindModel.execute">
 <tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/Wind.html#WindModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindModel.execute" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -131,10 +170,78 @@
 
 </dd></dl>
 
+</div>
+</div>
+<div class="section" id="windmodel-calculations">
+<h2>WindModel Calculations<a class="headerlink" href="#windmodel-calculations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Energy.Sources.Wind.calc_wind.calc_power">
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_power</tt><big>(</big><em>bladeLength</em>, <em>turbineEff</em>, <em>airDensity</em>, <em>turbineCount</em>, <em>circuitLoss</em>, <em>windData</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_power" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://en.wikipedia.org/wiki/Density_of_air">http://en.wikipedia.org/wiki/Density_of_air</a>
+<a class="reference external" href="http://www.raeng.org.uk/education/diploma/maths/pdf/exemplars_advanced/23_Wind_Turbine.pdf">http://www.raeng.org.uk/education/diploma/maths/pdf/exemplars_advanced/23_Wind_Turbine.pdf</a>
+power = 1/2 (air density) (wind speed in m/sec)^3 ( pi*(blade length)^2) * C
+C = power efficiency (0.35 to 0.45, theoretical max at 0.59)
+(air density) = (absolute pressure) / (R * T)
+R = 287.058J/(kgK)
+T = absolute temperature</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>windSpeed</strong> &#8211; </li>
+<li><strong>bladeLength</strong> &#8211; meters</li>
+<li><strong>turbineEff</strong> &#8211; </li>
+<li><strong>airDensity</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.calc_wind.calc_power_fast">
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_power_fast</tt><big>(</big><em>windData</em>, <em>powerMult</em>, <em>theRange</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_power_fast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_power_fast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the total yearly power for the solar panel system. :Note: Uses numba just-in-time compilation to LLVM code
+to speed up the array operation 1000 times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>windData</strong> &#8211; Numpy array of wind on a daily basis</li>
+<li><strong>powerMult</strong> &#8211; Power factor multiplier from <a class="reference internal" href="#Energy.Sources.Wind.calc_wind.calc_power" title="Energy.Sources.Wind.calc_wind.calc_power"><tt class="xref py py-func docutils literal"><span class="pre">calc_power()</span></tt></a></li>
+<li><strong>theRange</strong> &#8211; Size of the array, so we can avoid using Python objects and ensure function compiles to LLVM</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Sum off the power output from each day for one year</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.calc_wind.calc_cost">
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_cost</tt><big>(</big><em>windCostPerWatt</em>, <em>turbineRating</em>, <em>turbineCount</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="windmodel-optimization">
+<h2>WindModel Optimization<a class="headerlink" href="#windmodel-optimization" title="Permalink to this headline">¶</a></h2>
+<p>An OpenMDAO assembly, configured to use a pyOpt optimization driver, and configured with parameters corresponding to
+the <a class="reference internal" href="#Energy.Sources.Wind.Wind.WindModel" title="Energy.Sources.Wind.Wind.WindModel"><tt class="xref py py-class docutils literal"><span class="pre">WindModel</span></tt></a> inputs. This can be used for testing the model before integration
+with other models.</p>
 <dl class="class">
 <dt id="Energy.Sources.Wind.Wind.WindOptimization">
 <em class="property">class </em><tt class="descclassname">Energy.Sources.Wind.Wind.</tt><tt class="descname">WindOptimization</tt><a class="reference internal" href="_modules/Energy/Sources/Wind/Wind.html#WindOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindOptimization" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements an assembly to contain the WindModel component, and run optimizations on it stand-alone with the
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.assembly.Assembly</span></tt></p>
+<p>Implements an assembly to contain the WindModel component, and run optimizations on it stand-alone with the
 pyOpt plugin of optimization drivers. Implements a caserecorder so that you can investigate the results
 afterwards. This assembly will show up automatically when using openmdao gui, or can be used directly in another
 python script as you would use a regular python class.</p>
@@ -146,6 +253,10 @@ python script as you would use a regular python class.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="windmodel-tests">
+<h2>WindModel Tests<a class="headerlink" href="#windmodel-tests" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
 
 
           </div>
@@ -156,7 +267,7 @@ python script as you would use a regular python class.</p>
         <a href="triboelectric.html" class="btn btn-neutral float-right" title="Triboelectric Model"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="solar.html" class="btn btn-neutral" title="Models"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="solar.html" class="btn btn-neutral" title="Solar Model"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
