@@ -115,6 +115,10 @@
 <li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
 </ul>
 
         
@@ -151,71 +155,6 @@
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<div class="code python highlight-python"><div class="highlight"><pre>import numpy as np
-from numpy.random import randn
-import pandas as pd
-from scipy import stats
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-%matplotlib inline
-</pre></div>
-</div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s">&quot;deep&quot;</span><span class="p">,</span> <span class="n">desat</span><span class="o">=.</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;figure.figsize&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">)})</span>
-</pre></div>
-</div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&#39;cases_2014-07-03_21-25-07.csv&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;um.pedsPerHourOff&quot;</span><span class="p">,</span><span class="s">&quot;um.pedsPerHourOn&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-<div style="max-height:1000px;max-width:1500px;overflow:auto;">
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>um.pedsPerHourOff</th>
-      <th>um.pedsPerHourOn</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td> 141.836735</td>
-      <td>  509.183673</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td> 662.244898</td>
-      <td>  907.142857</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td> 539.795918</td>
-      <td>  447.959184</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td> 631.632653</td>
-      <td> 1152.040816</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td> 417.346939</td>
-      <td>  356.122449</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 2 columns</p>
-</div><div class="code python highlight-python"><div class="highlight"><pre><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;um.pedsPerHourOff&#39;</span><span class="p">],</span> <span class="n">shade</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;um.pedsPerHourOn&#39;</span><span class="p">],</span> <span class="n">shade</span><span class="o">=</span><span class="bp">True</span><span class="p">);</span>
-</pre></div>
-</div>
-<img alt="_images/Output_Analysis_4_0.png" src="_images/Output_Analysis_4_0.png" />
 </div>
 
 

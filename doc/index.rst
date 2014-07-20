@@ -21,7 +21,7 @@ Contents:
    uncertainties
    AnalysisComponents
    common
-
+   analysis
 
 Indices and tables
 ==================
