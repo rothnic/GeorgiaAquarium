@@ -77,18 +77,36 @@
 <li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-tests">WindModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../pedestrian.html">Pedestrian Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../AnalysisComponents.html">Analysis Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#custom-uncertainties-driver">Custom Uncertainties Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../common.html">Common Utilities</a><ul>
@@ -137,14 +155,14 @@
 <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interpolate</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<div class="viewcode-block" id="Distribution"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution">[docs]</a><span class="k">class</span> <span class="nc">Distribution</span><span class="p">:</span>
+<div class="viewcode-block" id="Distribution"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.calc_uncertainties.Distribution">[docs]</a><span class="k">class</span> <span class="nc">Distribution</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    The Distribution class sets up a construct for loading uncertainty data that was generated as user input to</span>
 <span class="sd">    define the probability distribution, interpolating between the given points to create the CDF, then sampling</span>
 <span class="sd">    across the CDF to generate the PDF. The PDF is then used to generate a scipy :class:`~scipy.stats.rv_discrete`</span>
 <span class="sd">    distribution object. The scipy distribution can then be later used for sampling the distribution.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="Distribution.__init__"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probData</span><span class="p">,</span> <span class="n">valueData</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+<div class="viewcode-block" id="Distribution.__init__"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.calc_uncertainties.Distribution.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probData</span><span class="p">,</span> <span class="n">valueData</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Initializes the Distribution object with the user created probability data and the name of the uncertainty</span>
 <span class="sd">        variable that the distribution represents.</span>
@@ -160,7 +178,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">make_cdf</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">make_pdf</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="Distribution.sample"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prob</span><span class="p">):</span>
+<div class="viewcode-block" id="Distribution.sample"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.calc_uncertainties.Distribution.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prob</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Samples the initialized distribution to retrieve the value with an occurrence of the provided probability.</span>
 <span class="sd">        This is referred to as the Percent Point Function. See :meth:`scipy.stats.rv_discrete.ppf` for more</span>
@@ -174,7 +192,7 @@
         <span class="c"># expected to occur at the rate of the probability.</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="Distribution.make_cdf"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution.make_cdf">[docs]</a>    <span class="k">def</span> <span class="nf">make_cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Distribution.make_cdf"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.calc_uncertainties.Distribution.make_cdf">[docs]</a>    <span class="k">def</span> <span class="nf">make_cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Generates a CDF from user provided data by using the :func:`scipy.interpolate.splmake` function</span>
 
@@ -182,7 +200,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cdf</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splmake</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valueData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probData</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="Distribution.make_pdf"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution.make_pdf">[docs]</a>    <span class="k">def</span> <span class="nf">make_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Distribution.make_pdf"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.calc_uncertainties.Distribution.make_pdf">[docs]</a>    <span class="k">def</span> <span class="nf">make_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Generates a PDF from the spline-interpolated CDF. This method crudely calculates the derivative of the CDF by</span>
 <span class="sd">        calculating the change in likelihood across the distribution. Next, it provides the bins used for sampling</span>

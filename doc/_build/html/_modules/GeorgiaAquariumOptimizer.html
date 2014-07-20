@@ -77,18 +77,36 @@
 <li class="toctree-l2"><a class="reference internal" href="../wind.html#windmodel-tests">WindModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../pedestrian.html">Pedestrian Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../AnalysisComponents.html">Analysis Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../AnalysisComponents.html#custom-uncertainties-driver">Custom Uncertainties Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../common.html">Common Utilities</a><ul>
@@ -146,7 +164,7 @@
 <span class="kn">import</span> <span class="nn">GeorgiaAquarium</span> <span class="kn">as</span> <span class="nn">ga</span>
 
 <div class="viewcode-block" id="GeorgiaAquariumGlobalOptimization"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization">[docs]</a><span class="k">class</span> <span class="nc">GeorgiaAquariumGlobalOptimization</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
-<div class="viewcode-block" id="GeorgiaAquariumGlobalOptimization.configure"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c"># Create wrapper for sampler so we only see the final averaged output from the LHS runs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;gas&#39;</span><span class="p">,</span> <span class="n">GeorgiaAquariumSampler</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;gas&#39;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -178,9 +196,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.year30RoiMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;gas.year5RoiMean&#39;</span><span class="p">)</span>
 
-</div></div>
+</div>
 <div class="viewcode-block" id="GeorgiaAquariumSampler"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler">[docs]</a><span class="k">class</span> <span class="nc">GeorgiaAquariumSampler</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
-<div class="viewcode-block" id="GeorgiaAquariumSampler.configure"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c"># Add components</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;um&#39;</span><span class="p">,</span> <span class="n">UncertaintiesModel</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;ga&#39;</span><span class="p">,</span> <span class="n">ga</span><span class="o">.</span><span class="n">GeorgiaAquarium</span><span class="p">())</span>
@@ -246,14 +264,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.year30RoiMean&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_passthrough</span><span class="p">(</span><span class="s">&#39;ra.year5RoiMean&#39;</span><span class="p">)</span>
 
-</div></div>
+</div>
 <div class="viewcode-block" id="GeorgiaAquariumOptimization"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization">[docs]</a><span class="k">class</span> <span class="nc">GeorgiaAquariumOptimization</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    An assembly to connect the optimizer directly to the Georgia Aquarium model. This can be used to avoid issues</span>
 <span class="sd">    with the uncertainty distributions. After it is found that this assembly is working correctly, the next step</span>
 <span class="sd">    would be to</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="GeorgiaAquariumOptimization.configure"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
 
         <span class="c"># Add components</span>
@@ -283,14 +301,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;ga.totalFlowProtein-66000 &lt; 0&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;ga.totalFlowProtein-60000 &gt; 0&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">printvars</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;ga.totalInitialInvestment&#39;</span><span class="p">,</span> <span class="s">&#39;ga.breakEvenYear&#39;</span><span class="p">,</span> <span class="s">&#39;ga.totalFlowProtein&#39;</span><span class="p">,</span> <span class="s">&#39;ga.year5Roi&#39;</span><span class="p">]</span>
-</div></div>
+</div>
 <div class="viewcode-block" id="GeorgiaAquariumDoe"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumDoe">[docs]</a><span class="k">class</span> <span class="nc">GeorgiaAquariumDoe</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    An assembly to connect the optimizer directly to the Georgia Aquarium model. This can be used to avoid issues</span>
 <span class="sd">    with the uncertainty distributions. After it is found that this assembly is working correctly, the next step</span>
 <span class="sd">    would be to</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-<div class="viewcode-block" id="GeorgiaAquariumDoe.configure"><a class="viewcode-back" href="../AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumDoe.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
 
         <span class="c"># Add components</span>
@@ -322,7 +340,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;DOEgenerator&quot;</span><span class="p">,</span> <span class="n">LatinHypercube</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
 
 
-</div></div>
+</div>
 <span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">gao</span> <span class="o">=</span> <span class="n">GeorgiaAquariumOptimization</span><span class="p">()</span>
     <span class="n">gao</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>

@@ -77,18 +77,36 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-tests">WindModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pedestrian.html">Pedestrian Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../AnalysisComponents.html">Analysis Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#custom-uncertainties-driver">Custom Uncertainties Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../common.html">Common Utilities</a><ul>
@@ -139,7 +157,7 @@
 <span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">get_output_values</span><span class="p">,</span> <span class="n">get_inputs</span><span class="p">,</span> <span class="n">get_outputs</span><span class="p">,</span> <span class="n">get_input_values</span><span class="p">,</span> <span class="n">print_outputs</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<div class="viewcode-block" id="RunAggregator"><a class="viewcode-back" href="../../../AnalysisComponents.html#Common.RunAggregator.RunAggregator.RunAggregator">[docs]</a><span class="k">class</span> <span class="nc">RunAggregator</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<div class="viewcode-block" id="RunAggregator"><a class="viewcode-back" href="../../../uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator">[docs]</a><span class="k">class</span> <span class="nc">RunAggregator</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
 
     <span class="c"># set up inputs</span>
     <span class="n">breakEvenYearSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;break even year sample&#39;</span><span class="p">)</span>
@@ -180,7 +198,7 @@
 
     <span class="c"># initialization</span>
     <span class="c">#Todo improve the speed by not using python dicts</span>
-<div class="viewcode-block" id="RunAggregator.__init__"><a class="viewcode-back" href="../../../AnalysisComponents.html#Common.RunAggregator.RunAggregator.RunAggregator.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RunAggregator.__init__"><a class="viewcode-back" href="../../../uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Extend the OpenMDAO component init method only so that we can keep track of the execution state, collect the</span>
 <span class="sd">        names of our configured outputs, and initialize the dict to store the samples over time.</span>
@@ -198,7 +216,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">output_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 
     <span class="c"># primary method</span></div>
-<div class="viewcode-block" id="RunAggregator.execute"><a class="viewcode-back" href="../../../AnalysisComponents.html#Common.RunAggregator.RunAggregator.RunAggregator.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RunAggregator.execute"><a class="viewcode-back" href="../../../uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,</span>
 <span class="sd">        OpenMDAO will write new values into the components inputs, then will call this execute method. This component</span>

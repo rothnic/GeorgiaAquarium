@@ -77,18 +77,36 @@
 <li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#custom-uncertainties-driver">Custom Uncertainties Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
@@ -167,7 +185,7 @@
   </dt>
 
         
-  <dt><a href="AnalysisComponents.html#Common.RunAggregator.RunAggregator.RunAggregator.__init__">(Common.RunAggregator.RunAggregator.RunAggregator method)</a>
+  <dt><a href="uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.__init__">(Common.RunAggregator.RunAggregator.RunAggregator method)</a>
   </dt>
 
         
@@ -183,11 +201,11 @@
   </dt>
 
         
-  <dt><a href="AnalysisComponents.html#Uncertainties.Uncertainties.UncertaintiesModel.__init__">(Uncertainties.Uncertainties.UncertaintiesModel method)</a>
+  <dt><a href="uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.__init__">(Uncertainties.Uncertainties.UncertaintiesModel method)</a>
   </dt>
 
         
-  <dt><a href="AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution.__init__">(Uncertainties.calc_uncertainties.Distribution method)</a>
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.__init__">(Uncertainties.calc_uncertainties.Distribution method)</a>
   </dt>
 
       </dl></dd>
@@ -203,6 +221,10 @@
 
       <dd><dl>
         
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_cost">(in module Energy.Sources.Tribo.calc_tribo)</a>
+  </dt>
+
+        
   <dt><a href="wind.html#Energy.Sources.Wind.calc_wind.calc_cost">(in module Energy.Sources.Wind.calc_wind)</a>
   </dt>
 
@@ -216,6 +238,10 @@
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_power">(in module Energy.Sources.Tribo.calc_tribo)</a>
+  </dt>
+
         
   <dt><a href="wind.html#Energy.Sources.Wind.calc_wind.calc_power">(in module Energy.Sources.Wind.calc_wind)</a>
   </dt>
@@ -232,11 +258,15 @@
 
       </dl></dd>
       
-  <dt><a href="common.html#module-Common.AttributeTools.io">Common.AttributeTools.io (module)</a>
+  <dt><a href="cost.html#Cost.calc_cost.calc_roi">calc_roi() (in module Cost.calc_cost)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="common.html#module-Common.AttributeTools.io">Common.AttributeTools.io (module)</a>
+  </dt>
+
       
   <dt><a href="solar.html#Energy.Sources.Solar.Solar.SolarOptimization.configure">configure() (Energy.Sources.Solar.Solar.SolarOptimization method)</a>
   </dt>
@@ -255,10 +285,6 @@
   </dt>
 
       </dl></dd>
-      
-  <dt><a href="cost.html#module-Cost.Cost">Cost.Cost (module)</a>
-  </dt>
-
       
   <dt><a href="cost.html#Cost.Cost.CostModel">CostModel (class in Cost.Cost)</a>
   </dt>
@@ -280,7 +306,7 @@
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution">Distribution (class in Uncertainties.calc_uncertainties)</a>
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution">Distribution (class in Uncertainties.calc_uncertainties)</a>
   </dt>
 
   </dl></td>
@@ -290,11 +316,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="triboelectric.html#module-Energy.Sources.Tribo.Tribo">Energy.Sources.Tribo.Tribo (module)</a>
-  </dt>
-
-      
-  <dt><a href="AnalysisComponents.html#Common.RunAggregator.RunAggregator.RunAggregator.execute">execute() (Common.RunAggregator.RunAggregator.RunAggregator method)</a>
+  <dt><a href="uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.execute">execute() (Common.RunAggregator.RunAggregator.RunAggregator method)</a>
   </dt>
 
       <dd><dl>
@@ -323,16 +345,10 @@
   </dt>
 
         
-  <dt><a href="AnalysisComponents.html#Uncertainties.Uncertainties.UncertaintiesModel.execute">(Uncertainties.Uncertainties.UncertaintiesModel method)</a>
+  <dt><a href="uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.execute">(Uncertainties.Uncertainties.UncertaintiesModel method)</a>
   </dt>
 
       </dl></dd>
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="cost.html#Cost.Cost.CostModel.expectedReturn">expectedReturn (Cost.Cost.CostModel attribute)</a>
-  </dt>
-
   </dl></td>
 </tr></table>
 
@@ -360,15 +376,31 @@
 
       </dl></dd>
       
+  <dt><a href="AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumDoe">GeorgiaAquariumDoe (class in GeorgiaAquariumOptimizer)</a>
+  </dt>
+
+      
   <dt><a href="AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization">GeorgiaAquariumGlobalOptimization (class in GeorgiaAquariumOptimizer)</a>
+  </dt>
+
+      
+  <dt><a href="AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization">GeorgiaAquariumOptimization (class in GeorgiaAquariumOptimizer)</a>
+  </dt>
+
+      
+  <dt><a href="AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler">GeorgiaAquariumSampler (class in GeorgiaAquariumOptimizer)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="cost.html#Cost.calc_cost.get_break_even">get_break_even() (in module Cost.calc_cost)</a>
   </dt>
 
       
   <dt><a href="common.html#Common.AttributeTools.io.get_input_values">get_input_values() (in module Common.AttributeTools.io)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="common.html#Common.AttributeTools.io.get_inputs">get_inputs() (in module Common.AttributeTools.io)</a>
   </dt>
@@ -388,13 +420,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="AnalysisComponents.html#Uncertainties.Uncertainties.UncertaintiesModel.init_distributions">init_distributions() (Uncertainties.Uncertainties.UncertaintiesModel method)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="cost.html#Cost.Cost.CostModel.investmentYears">investmentYears (Cost.Cost.CostModel attribute)</a>
+  <dt><a href="uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.init_distributions">init_distributions() (Uncertainties.Uncertainties.UncertaintiesModel method)</a>
   </dt>
 
   </dl></td>
@@ -404,13 +430,13 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution.make_cdf">make_cdf() (Uncertainties.calc_uncertainties.Distribution method)</a>
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.make_cdf">make_cdf() (Uncertainties.calc_uncertainties.Distribution method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution.make_pdf">make_pdf() (Uncertainties.calc_uncertainties.Distribution method)</a>
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.make_pdf">make_pdf() (Uncertainties.calc_uncertainties.Distribution method)</a>
   </dt>
 
   </dl></td>
@@ -434,15 +460,17 @@
   </dt>
 
   </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="cost.html#Cost.calc_cost.original_energy_cost">original_energy_cost() (in module Cost.calc_cost)</a>
+  </dt>
+
+  </dl></td>
 </tr></table>
 
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="cost.html#Cost.Cost.CostModel.path">path (Cost.Cost.CostModel attribute)</a>
-  </dt>
-
       
   <dt><a href="pedestrian.html#Pedestrian.Pedestrian.PedestrianModel">PedestrianModel (class in Pedestrian.Pedestrian)</a>
   </dt>
@@ -488,15 +516,9 @@
 
       </dl></dd>
       
-  <dt><a href="cost.html#Cost.Cost.run_tests">run_tests() (in module Cost.Cost)</a>
+  <dt><a href="AnalysisComponents.html#GeorgiaAquarium.run_tests">run_tests() (in module GeorgiaAquarium)</a>
   </dt>
 
-      <dd><dl>
-        
-  <dt><a href="AnalysisComponents.html#GeorgiaAquarium.run_tests">(in module GeorgiaAquarium)</a>
-  </dt>
-
-      </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
@@ -504,7 +526,7 @@
   </dt>
 
       
-  <dt><a href="AnalysisComponents.html#Common.RunAggregator.RunAggregator.RunAggregator">RunAggregator (class in Common.RunAggregator.RunAggregator)</a>
+  <dt><a href="uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator">RunAggregator (class in Common.RunAggregator.RunAggregator)</a>
   </dt>
 
   </dl></td>
@@ -514,7 +536,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="AnalysisComponents.html#Uncertainties.calc_uncertainties.Distribution.sample">sample() (Uncertainties.calc_uncertainties.Distribution method)</a>
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.sample">sample() (Uncertainties.calc_uncertainties.Distribution method)</a>
   </dt>
 
       
@@ -566,7 +588,23 @@
 
       </dl></dd>
       
+  <dt><a href="cost.html#Cost.test_cost.test_break_even">test_break_even() (in module Cost.test_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.test_cost.test_cost_component">test_cost_component() (in module Cost.test_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.test_cost.test_model_with_print">test_model_with_print() (in module Cost.test_cost)</a>
+  </dt>
+
+      
   <dt><a href="oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.test_ocean_voyager.test_ov_openmdao_model">test_ov_openmdao_model() (in module Energy.Sinks.Exhibits.OceanVoyager.test_ocean_voyager)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.test_cost.test_roi">test_roi() (in module Cost.test_cost)</a>
   </dt>
 
       
@@ -582,7 +620,15 @@
   </dt>
 
       
-  <dt><a href="AnalysisComponents.html#Uncertainties.test_uncertainties.test_uncertainties_component">test_uncertainties_component() (in module Uncertainties.test_uncertainties)</a>
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.test_tribo.test_tribo_openmdao_model">test_tribo_openmdao_model() (in module Energy.Sources.Tribo.test_tribo)</a>
+  </dt>
+
+      
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.test_tribo.test_tribo_optimization">test_tribo_optimization() (in module Energy.Sources.Tribo.test_tribo)</a>
+  </dt>
+
+      
+  <dt><a href="uncertainties.html#Uncertainties.test_uncertainties.test_uncertainties_component">test_uncertainties_component() (in module Uncertainties.test_uncertainties)</a>
   </dt>
 
       
@@ -605,6 +651,30 @@
 
       
   <dt><a href="solar.html#Energy.Sources.Solar.test_solar.testSolarComp">testSolarComp() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_capital_cost">total_capital_cost() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_energy_consumed">total_energy_consumed() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_energy_cost">total_energy_cost() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_energy_produced">total_energy_produced() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_energy_saved">total_energy_saved() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_utility">total_utility() (in module Cost.calc_cost)</a>
   </dt>
 
       
@@ -636,7 +706,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="AnalysisComponents.html#Uncertainties.Uncertainties.UncertaintiesModel">UncertaintiesModel (class in Uncertainties.Uncertainties)</a>
+  <dt><a href="uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel">UncertaintiesModel (class in Uncertainties.Uncertainties)</a>
   </dt>
 
   </dl></td>

@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Energy.Sources.Wind.calc_wind &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  <title>Energy.Sources.Tribo.calc_tribo &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
   
 
   
@@ -139,7 +139,7 @@
       
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
       
-    <li>Energy.Sources.Wind.calc_wind</li>
+    <li>Energy.Sources.Tribo.calc_tribo</li>
       <li class="wy-breadcrumbs-aside">
         
       </li>
@@ -148,69 +148,51 @@
 </div>
           <div role="main">
             
-  <h1>Source code for Energy.Sources.Wind.calc_wind</h1><div class="highlight"><pre>
+  <h1>Source code for Energy.Sources.Tribo.calc_tribo</h1><div class="highlight"><pre>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
 
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span>
 
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
 
 
 <span class="c">#@jit</span>
-<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.calc_wind.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">bladeLength</span><span class="p">,</span> <span class="n">turbineEff</span><span class="p">,</span> <span class="n">airDensity</span><span class="p">,</span> <span class="n">turbineCount</span><span class="p">,</span> <span class="n">circuitLoss</span><span class="p">,</span> <span class="n">windData</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">tileCount</span><span class="p">,</span> <span class="n">pedStepsPerTile</span><span class="p">,</span> <span class="n">tileEff</span><span class="p">,</span> <span class="n">tilekWh</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    http://en.wikipedia.org/wiki/Density_of_air</span>
-<span class="sd">    http://www.raeng.org.uk/education/diploma/maths/pdf/exemplars_advanced/23_Wind_Turbine.pdf</span>
-<span class="sd">    power = 1/2 (air density) (wind speed in m/sec)^3 ( pi*(blade length)^2) * C</span>
-<span class="sd">    C = power efficiency (0.35 to 0.45, theoretical max at 0.59)</span>
-<span class="sd">    (air density) = (absolute pressure) / (R * T)</span>
-<span class="sd">    R = 287.058J/(kgK)</span>
-<span class="sd">    T = absolute temperature</span>
+<span class="sd">    Calc_power computes the total number of steps that will occur across all tiles for this given design</span>
+<span class="sd">    configuration. The total number of steps is affected by the number of tiles and the pedestrian model that</span>
+<span class="sd">    simulates both on and off season steps per tile.</span>
 
-<span class="sd">    :param bladeLength: Length of turbine blades in meters</span>
-<span class="sd">    :param turbineEff: Rated efficiency of the wind turbine motor</span>
-<span class="sd">    :param airDensity: Uncertainty around the density of the air</span>
-<span class="sd">    :param turbineCount: The integer quantity of the number of turbines purchased</span>
-<span class="sd">    :param circuitLoss: A percentage reduction of the power production that would be usable between 0 and 1</span>
-<span class="sd">    :param windData: A numpy array of hourly wind speeds for an entire year</span>
-<span class="sd">    :return: Total power generated for an entire year</span>
-
+<span class="sd">    :param tileCount: A design variable for how many tiles you would want to purchase</span>
+<span class="sd">    :param pedStepsPerTile: An uncertainty for the number of expected steps per tile over a year</span>
+<span class="sd">    :param tileEff: The amount of actual useful energy based on the claimed</span>
+<span class="sd">    :param tilekWh: The claimed power return when one person steps on a tile</span>
+<span class="sd">    :return: The total energy generated in a year for the input design configuration</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">powerMult</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">airDensity</span> <span class="o">*</span> <span class="n">turbineCount</span> <span class="o">*</span> <span class="n">turbineEff</span> <span class="o">*</span> <span class="n">circuitLoss</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">bladeLength</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="mf">1000.0</span>
-    <span class="n">powerOut</span> <span class="o">=</span> <span class="n">calc_power_fast</span><span class="p">(</span><span class="n">windData</span><span class="p">,</span> <span class="n">powerMult</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">windData</span><span class="p">))</span>
-
-    <span class="c"># sum and return days</span>
-    <span class="k">return</span> <span class="n">powerOut</span>
+    <span class="k">return</span> <span class="n">tileCount</span> <span class="o">*</span> <span class="n">pedStepsPerTile</span> <span class="o">*</span> <span class="n">tileEff</span> <span class="o">*</span> <span class="n">tilekWh</span>
 
 
 <span class="c">#@jit</span></div>
-<div class="viewcode-block" id="calc_power_fast"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.calc_wind.calc_power_fast">[docs]</a><span class="k">def</span> <span class="nf">calc_power_fast</span><span class="p">(</span><span class="n">windData</span><span class="p">,</span> <span class="n">powerMult</span><span class="p">,</span> <span class="n">theRange</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_cost"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_cost">[docs]</a><span class="k">def</span> <span class="nf">calc_cost</span><span class="p">(</span><span class="n">tileUnitCost</span><span class="p">,</span> <span class="n">tileCount</span><span class="p">,</span> <span class="n">mgtTileUnitCost</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Computes the total yearly power for the solar panel system. :Note: Uses numba just-in-time compilation to LLVM code</span>
-<span class="sd">    to speed up the array operation 1000 times.</span>
+<span class="sd">    Calc_cost computes the cost of a triboelectric system based on the PedGen pricing model. There are affects to</span>
+<span class="sd">    cost based on the number of units you purchase, which affects how many management tiles are needed as well.</span>
 
-<span class="sd">    :param windData: Numpy array of wind on a daily basis</span>
-<span class="sd">    :param powerMult: Power factor multiplier from :func:`~Energy.Sources.Wind.calc_wind.calc_power`</span>
-<span class="sd">    :param theRange: Size of the array, so we can avoid using Python objects and ensure function compiles to LLVM</span>
-<span class="sd">    :return: Sum off the power output from each day for one year</span>
+<span class="sd">    :param tileUnitCost: A cost per regular tile type when purchased in bulk</span>
+<span class="sd">    :param tileCount: The whole number count of tiles to be installed</span>
+<span class="sd">    :param mgtTileUnitCost: The cost per management tile</span>
+<span class="sd">    :return: The cost of purchasing and installation of the tribo system</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">theRange</span><span class="p">):</span>
-        <span class="nb">sum</span> <span class="o">+=</span> <span class="p">(</span><span class="n">windData</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">powerMult</span>
-    <span class="k">return</span> <span class="nb">sum</span>
 
+    <span class="c"># Get number of times</span>
+    <span class="n">numMgtTiles</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">tileCount</span> <span class="o">/</span> <span class="mi">50</span><span class="p">)</span>
 
-<span class="c">#@jit</span></div>
-<div class="viewcode-block" id="calc_cost"><a class="viewcode-back" href="../../../../wind.html#Energy.Sources.Wind.calc_wind.calc_cost">[docs]</a><span class="k">def</span> <span class="nf">calc_cost</span><span class="p">(</span><span class="n">windCostPerWatt</span><span class="p">,</span> <span class="n">turbineRating</span><span class="p">,</span> <span class="n">turbineCount</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Computes the total initial capital cost for a configuration of the system.</span>
+    <span class="c"># Change pricing factor based on number of tiles</span>
+    <span class="k">if</span> <span class="n">tileCount</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">tileUnitCost</span> <span class="o">=</span> <span class="n">tileUnitCost</span> <span class="o">*</span> <span class="mf">1.5</span>
 
-<span class="sd">    :param windCostPerWatt: Cost in relation to the power rating of the wind turbine</span>
-<span class="sd">    :param turbineRating: The power rating of the chosen wind turbine in watts</span>
-<span class="sd">    :param turbineCount: The integer quantity of the number of turbines chosen for a design of the system</span>
-<span class="sd">    :return: Total initial capital cost of the considered configuration in dollars</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">return</span> <span class="n">windCostPerWatt</span> <span class="o">*</span> <span class="n">turbineRating</span> <span class="o">*</span> <span class="n">turbineCount</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">tileUnitCost</span> <span class="o">*</span> <span class="n">tileCount</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">numMgtTiles</span> <span class="o">*</span> <span class="n">mgtTileUnitCost</span><span class="p">)</span>
+        </div>
 </pre></div>
 
           </div>

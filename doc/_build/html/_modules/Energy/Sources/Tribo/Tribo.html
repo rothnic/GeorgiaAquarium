@@ -77,18 +77,36 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../wind.html#windmodel-tests">WindModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../pedestrian.html">Pedestrian Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../AnalysisComponents.html">Analysis Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../AnalysisComponents.html#custom-uncertainties-driver">Custom Uncertainties Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../common.html">Common Utilities</a><ul>
@@ -157,7 +175,11 @@
 <span class="sd">    time, like 1 second. You can use this to calculate what that is in kWh. This can be used with the yearly steps</span>
 <span class="sd">    per tile to provide some performance output for a design decision on the number of tiles, along with the cost</span>
 <span class="sd">    impact of that decision.</span>
+
+<span class="sd">    Relies on input values from the :class:`~Pedestrian.Pedestrian.PedestrianModel` for use in calculating the power</span>
+<span class="sd">    generation.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="c"># set up inputs</span>
     <span class="n">tileCount</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;number of tiles&#39;</span><span class="p">)</span>
     <span class="n">pedStepsPerTile</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">260000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;expected steps per tile&#39;</span><span class="p">)</span>
@@ -170,8 +192,20 @@
     <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
     <span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">40000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost ($)&#39;</span><span class="p">)</span>
 
+    <span class="c"># set up constants</span>
+    <span class="c"># None</span>
 
+    <span class="c"># primary model method</span>
 <div class="viewcode-block" id="TriboModel.execute"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.Tribo.TriboModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The method for an OpenMDAO component that is required to be filled out with the internal behavior,</span>
+<span class="sd">        and is called each time OpenMDAO has changed the input values. After execution, the new output values are</span>
+<span class="sd">        then read from the component. This component executes to functions; one to calculate power, and one to</span>
+<span class="sd">        calculate the initial capital cost associated with the configuration of the input values.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
         <span class="c"># Calculate power</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">totalkWh</span> <span class="o">=</span> <span class="n">calc_power</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tileCount</span><span class="p">,</span>
@@ -195,6 +229,14 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="TriboOptimization.configure"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.Tribo.TriboOptimization.configure">[docs]</a>    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This method must be filled in with the desired configuration for any custom OpenMDAO Assembly. This Assembly</span>
+<span class="sd">        is used to load the :class:`~Energy.Sources.Tribo.Tribo.TriboModel` for execution, sets up a :mod:`pyOpt`</span>
+<span class="sd">        optimizer, configures a CSV recorder to record inputs and outputs to tribo_optimization.csv, then configures</span>
+<span class="sd">        parameters, an objective, and a constraint. This isolated optimization can be used to ensure the model is</span>
+<span class="sd">        working correctly before integrating it into a larger model.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
         <span class="c"># Add the pyOpt driver and case recorder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;driver&quot;</span><span class="p">,</span> <span class="n">pyopt_driver</span><span class="o">.</span><span class="n">pyOptDriver</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">csvcase</span><span class="o">.</span><span class="n">CSVCaseRecorder</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;tribo_optimization.csv&#39;</span><span class="p">))</span>

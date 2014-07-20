@@ -29,7 +29,7 @@
 
   
     <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
-        <link rel="next" title="Analysis Components" href="AnalysisComponents.html"/>
+        <link rel="next" title="Uncertainties Driver" href="uncertainties.html"/>
         <link rel="prev" title="Pedestrian Model" href="pedestrian.html"/> 
 
   
@@ -78,16 +78,31 @@
 <li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Cost Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#custom-uncertainties-driver">Custom Uncertainties Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
 </ul>
@@ -131,38 +146,310 @@
 </div>
           <div role="main">
             
-  <div class="section" id="module-Cost.Cost">
-<span id="cost-model"></span><h1>Cost Model<a class="headerlink" href="#module-Cost.Cost" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="cost-model">
+<h1>Cost Model<a class="headerlink" href="#cost-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="costmodel-component">
+<h2>CostModel Component<a class="headerlink" href="#costmodel-component" title="Permalink to this headline">¶</a></h2>
+<p>The Cost Model developed as an OpenMDAO component, which defines inputs, outputs, and calls calculation functions.</p>
+<div class="section" id="costmodel-class-input-attributes">
+<h3><em>CostModel Class Input Attributes</em><a class="headerlink" href="#costmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">100000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of making change to hydraulics&#39;</span><span class="p">)</span>
+    <span class="n">windCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">100000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of implementing wind energy&#39;</span><span class="p">)</span>
+    <span class="n">solarCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">100000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of implementing solar energy&#39;</span><span class="p">)</span>
+    <span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">100000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of implementing tribo energy&#39;</span><span class="p">)</span>
+    <span class="n">elecUtilityRate</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of electricity&#39;</span><span class="p">)</span>
+    <span class="n">baselineTotalPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">27765028.90</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total GA power use&#39;</span><span class="p">)</span>
+    <span class="n">baselineOceanVoyPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">19948604.08</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total ocean voyager power use&#39;</span><span class="p">)</span>
+    <span class="n">hydraulicPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">19648604.08</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total ocean voyager power use&#39;</span><span class="p">)</span>
+    <span class="n">yearlyPowerProducedSolar</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;solar power produced for given investment&#39;</span><span class="p">)</span>
+    <span class="n">yearlyPowerProducedWind</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wind power produced for given investment&#39;</span><span class="p">)</span>
+    <span class="n">yearlyPowerProducedTribo</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;tribo power produced for given investment&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="costmodel-class-output-attributes">
+<h3><em>CostModel Class Output Attributes</em><a class="headerlink" href="#costmodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">totalPowerProduced</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output for GA&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerConsumed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output for GA&#39;</span><span class="p">)</span>
+    <span class="n">totalInitialInvestment</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergyCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;what is paid for energy to a utility company&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergySaved</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much energy we saved with modifications, excluding produced&#39;</span><span class="p">)</span>
+    <span class="n">originalEnergyCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;what we would have paid for energy to a utility company&#39;</span><span class="p">)</span>
+    <span class="n">breakEvenYear</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year at which we break even for investment&#39;</span><span class="p">)</span>
+    <span class="n">year1Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 1&#39;</span><span class="p">)</span>
+    <span class="n">year5Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 5&#39;</span><span class="p">)</span>
+    <span class="n">year10Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 10&#39;</span><span class="p">)</span>
+    <span class="n">year20Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 20&#39;</span><span class="p">)</span>
+    <span class="n">year30Roi</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;how much we make for the investment in year 30&#39;</span><span class="p">)</span>
+    <span class="n">totalUtility</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;overall, how good is the solution?&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="costmodel-class-constants">
+<h3><em>CostModel Class Constants</em><a class="headerlink" href="#costmodel-class-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">expectedReturn</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c"># S&amp;P 500 average return</span>
+    <span class="n">investmentYears</span> <span class="o">=</span> <span class="mi">10</span> <span class="c"># Number of years to wait before comparing which decision to make</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="costmodel-class-definition">
+<h3><em>CostModel Class Definition</em><a class="headerlink" href="#costmodel-class-definition" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="Cost.Cost.CostModel">
 <em class="property">class </em><tt class="descclassname">Cost.Cost.</tt><tt class="descname">CostModel</tt><a class="reference internal" href="_modules/Cost/Cost.html#CostModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.Cost.CostModel" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<p>The CostModel exists as an integrating component between the various possible improvements and the aquarium
+and exhibits. This architecture allows for each improvement and exhibit to implement a very straightforward
+interface of producing power measures and capital investment costs for the given design configuration. The
+CostModel aggregates all of these values up and provides the overall comparison metrics of the entire design.</p>
+<dl class="method">
 <dt id="Cost.Cost.CostModel.execute">
 <tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Cost/Cost.html#CostModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.Cost.CostModel.execute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Cost.Cost.CostModel.expectedReturn">
-<tt class="descname">expectedReturn</tt><em class="property"> = 0.1</em><a class="headerlink" href="#Cost.Cost.CostModel.expectedReturn" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Cost.Cost.CostModel.investmentYears">
-<tt class="descname">investmentYears</tt><em class="property"> = 10</em><a class="headerlink" href="#Cost.Cost.CostModel.investmentYears" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Cost.Cost.CostModel.path">
-<tt class="descname">path</tt><em class="property"> = 'C:\\Users\\Nick\\.openmdao\\gui\\projects\\GeorgiaAquarium\\Cost'</em><a class="headerlink" href="#Cost.Cost.CostModel.path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Implements the behavior portion of the OpenMDAO component. Each time all of the models are executed with this
+method, all of the energy consumed, produced, and the capital invested is used to compare against the current
+operations of the Georgia Aquarium. With these values, the cost model provides how much was saved,
+the break even year, the return on investment over many years, and the total utility of the design.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
+</div>
+</div>
+<div class="section" id="costmodel-calculations">
+<h2>CostModel Calculations<a class="headerlink" href="#costmodel-calculations" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="Cost.Cost.run_tests">
-<tt class="descclassname">Cost.Cost.</tt><tt class="descname">run_tests</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Cost/Cost.html#run_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.Cost.run_tests" title="Permalink to this definition">¶</a></dt>
+<dt id="Cost.calc_cost.total_energy_produced">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">total_energy_produced</tt><big>(</big><em>yearlyPowerProducedSolar</em>, <em>yearlyPowerProducedTribo</em>, <em>yearlyPowerProducedWind</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#total_energy_produced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.total_energy_produced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sums up the energy produced from all components with this design configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>yearlyPowerProducedSolar</strong> &#8211; Solar power production in kWh</li>
+<li><strong>yearlyPowerProducedTribo</strong> &#8211; Tribo power production in kWh</li>
+<li><strong>yearlyPowerProducedWind</strong> &#8211; Wind power production in kWh</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total power production in kWh</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Cost.calc_cost.total_energy_consumed">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">total_energy_consumed</tt><big>(</big><em>baselineTotalPowerUse</em>, <em>totalEnergySaved</em>, <em>totalPowerProduced</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#total_energy_consumed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.total_energy_consumed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total energy consumed by all of the power consuming components for this design configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>baselineTotalPowerUse</strong> &#8211; Power use of aquarium in the nominal configuration, no changes</li>
+<li><strong>totalEnergySaved</strong> &#8211; Total energy that was saved, when compared to nominal case</li>
+<li><strong>totalPowerProduced</strong> &#8211; Total energy consumed in kWh for one year with this design configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Cost.calc_cost.total_energy_cost">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">total_energy_cost</tt><big>(</big><em>elecUtilityRate</em>, <em>totalPowerConsumed</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#total_energy_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.total_energy_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the energy cost for this design configuration considering the power usage and savings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>elecUtilityRate</strong> &#8211; Cost per kWh in dollars</li>
+<li><strong>totalPowerConsumed</strong> &#8211; Total power consumed over the entire year for this design configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total cost in dollars for energy for the entire year</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Cost.calc_cost.original_energy_cost">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">original_energy_cost</tt><big>(</big><em>elecUtilityRate</em>, <em>baselineTotalPowerUse</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#original_energy_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.original_energy_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the energy cost for the nominal cost without modifications to anything, for comparison to the current
+design.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>elecUtilityRate</strong> &#8211; Cost per kWh in dollars</li>
+<li><strong>baselineTotalPowerUse</strong> &#8211; The total power use for one year in the nominal configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The total power cost for in one year for the nominal configuration</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Cost.calc_cost.total_energy_saved">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">total_energy_saved</tt><big>(</big><em>hydraulicPowerUse</em>, <em>baselineOceanVoyPowerUse</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#total_energy_saved"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.total_energy_saved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total energy saved in comparison between the baseline case and the current configuration of the design.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hydraulicPowerUse</strong> &#8211; The power use in kWh for this design for an entire year</li>
+<li><strong>baselineOceanVoyPowerUse</strong> &#8211; The power use in kWh for an entire year for the nominal configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total energy saved for this configuration over the nominal case in one year in kWh</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Cost.calc_cost.calc_roi">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">calc_roi</tt><big>(</big><em>totalInitialInvestment</em>, <em>totalEnergyCost</em>, <em>originalEnergyCost</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#calc_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.calc_roi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the return on investment for each year, for 100 years. This can be used to sample the return on
+investment at any desired year.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>totalInitialInvestment</strong> &#8211; Total cost of the changes that have been made for the initial year in dollars</li>
+<li><strong>totalEnergyCost</strong> &#8211; Total cost of the energy for this configuration for one year in dollars</li>
+<li><strong>originalEnergyCost</strong> &#8211; The energy cost for one year in dollars for the nominal case</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a> of 100 return on investment values in dollars, associated with each year</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Cost.calc_cost.get_break_even">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">get_break_even</tt><big>(</big><em>totalInitialInvestment</em>, <em>totalEnergyCost</em>, <em>originalEnergyCost</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#get_break_even"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.get_break_even" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the point at which we break even for the initial investment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>totalInitialInvestment</strong> &#8211; Total cost in dollars for this design configuration.</li>
+<li><strong>totalEnergyCost</strong> &#8211; Total energy cost in dollars for the year in dollars</li>
+<li><strong>originalEnergyCost</strong> &#8211; Cost of energy for one year in dollars for the nominal configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The year where we break even for the investment based on the savings</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Cost.calc_cost.total_capital_cost">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">total_capital_cost</tt><big>(</big><em>solarCapitalCost</em>, <em>triboCapitalCost</em>, <em>windCapitalCost</em>, <em>hydraulicCapitalCost</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#total_capital_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.total_capital_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the total cost of this design configuration investment based on all changes that were made.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>solarCapitalCost</strong> &#8211; Total investment cost for solar in dollars</li>
+<li><strong>triboCapitalCost</strong> &#8211; Total investment cost for tribo in dollars</li>
+<li><strong>windCapitalCost</strong> &#8211; Total investment cost for wind in dollars</li>
+<li><strong>hydraulicCapitalCost</strong> &#8211; Total investment cost for hydraulics in dollars</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The total investment cost for this design configuration in dollars</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Cost.calc_cost.total_utility">
+<tt class="descclassname">Cost.calc_cost.</tt><tt class="descname">total_utility</tt><big>(</big><em>futureRoi</em>, <em>expectedReturn</em>, <em>investmentYears</em>, <em>totalInitialInvestment</em><big>)</big><a class="reference internal" href="_modules/Cost/calc_cost.html#total_utility"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.calc_cost.total_utility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the total utility of this configuration based on current and future returns. This should provide a way
+to compare solutions together that might provide very little initial turns, but really good future returns,
+and vice-versa.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>futureRoi</strong> &#8211; The return on investment for the year that we are interested in</li>
+<li><strong>expectedReturn</strong> &#8211; The return percentage if we were to just invest the money instead</li>
+<li><strong>investmentYears</strong> &#8211; The number of years to look into the future for the investment returns</li>
+<li><strong>totalInitialInvestment</strong> &#8211; The total investment required for this current design configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The total utility of this design (no units)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="costmodel-tests">
+<h2>CostModel Tests<a class="headerlink" href="#costmodel-tests" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Cost.test_cost.test_model_with_print">
+<tt class="descclassname">Cost.test_cost.</tt><tt class="descname">test_model_with_print</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Cost/test_cost.html#test_model_with_print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.test_cost.test_model_with_print" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="function">
+<dt id="Cost.test_cost.test_roi">
+<tt class="descclassname">Cost.test_cost.</tt><tt class="descname">test_roi</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Cost/test_cost.html#test_roi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.test_cost.test_roi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Cost.test_cost.test_break_even">
+<tt class="descclassname">Cost.test_cost.</tt><tt class="descname">test_break_even</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Cost/test_cost.html#test_break_even"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.test_cost.test_break_even" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Cost.test_cost.test_cost_component">
+<tt class="descclassname">Cost.test_cost.</tt><tt class="descname">test_cost_component</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Cost/test_cost.html#test_cost_component"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Cost.test_cost.test_cost_component" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 </div>
 
 
@@ -171,7 +458,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="AnalysisComponents.html" class="btn btn-neutral float-right" title="Analysis Components"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="uncertainties.html" class="btn btn-neutral float-right" title="Uncertainties Driver"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="pedestrian.html" class="btn btn-neutral" title="Pedestrian Model"><span class="fa fa-arrow-circle-left"></span> Previous</a>

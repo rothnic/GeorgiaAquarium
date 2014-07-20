@@ -18,6 +18,7 @@ Contents:
    triboelectric
    pedestrian
    cost
+   uncertainties
    AnalysisComponents
    common
 

@@ -3,6 +3,12 @@ __author__ = 'Nick'
 from calc_cost import *
 from Cost import CostModel
 from Common.AttributeTools.io import get_output_values
+from Common.AttributeTools.io import print_outputs
+
+def test_model_with_print():
+    comp = CostModel()
+    comp.execute()
+    print_outputs(comp)
 
 def test_roi():
     output = calc_roi(1000.0, 100000.0, 100001.0)

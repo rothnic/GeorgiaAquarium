@@ -5,7 +5,7 @@ from math import ceil
 from numba import jit
 
 
-@jit
+#@jit
 def calc_power(tileCount, pedStepsPerTile, tileEff, tilekWh):
     '''
     Calc_power computes the total number of steps that will occur across all tiles for this given design
@@ -21,7 +21,7 @@ def calc_power(tileCount, pedStepsPerTile, tileEff, tilekWh):
     return tileCount * pedStepsPerTile * tileEff * tilekWh
 
 
-@jit
+#@jit
 def calc_cost(tileUnitCost, tileCount, mgtTileUnitCost):
     '''
     Calc_cost computes the cost of a triboelectric system based on the PedGen pricing model. There are affects to

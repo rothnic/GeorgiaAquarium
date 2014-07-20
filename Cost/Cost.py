@@ -11,6 +11,13 @@ from Common.AttributeTools.io import print_outputs
 from calc_cost import *
 
 class CostModel(Component):
+    '''
+    The CostModel exists as an integrating component between the various possible improvements and the aquarium
+    and exhibits. This architecture allows for each improvement and exhibit to implement a very straightforward
+    interface of producing power measures and capital investment costs for the given design configuration. The
+    CostModel aggregates all of these values up and provides the overall comparison metrics of the entire design.
+    '''
+
     # get our current directory
     path = os.path.dirname(os.path.realpath(__file__))
 
@@ -46,9 +53,16 @@ class CostModel(Component):
     expectedReturn = 0.1 # S&P 500 average return
     investmentYears = 10 # Number of years to wait before comparing which decision to make
 
+    # primary model method
     def execute(self):
-        # Initial setup
+        '''
+        Implements the behavior portion of the OpenMDAO component. Each time all of the models are executed with this
+        method, all of the energy consumed, produced, and the capital invested is used to compare against the current
+        operations of the Georgia Aquarium. With these values, the cost model provides how much was saved,
+        the break even year, the return on investment over many years, and the total utility of the design.
 
+        :return: None
+        '''
 
         # Calculate total power produced
         self.totalPowerProduced = total_energy_produced(self.yearlyPowerProducedSolar,
@@ -88,13 +102,12 @@ class CostModel(Component):
         self.totalUtility = total_utility(self.year10Roi, self.expectedReturn, self.investmentYears,
                                           self.totalInitialInvestment)
 
-def run_tests():
-    comp = CostModel()
-    comp.execute()
-    print_outputs(comp)
-
 
 if __name__ == "__main__":
     # Module test routine, executes when this python file is ran independently
     # For example, using Pycharm, right click while editing and select Run
-    run_tests()
+    from test_cost import *
+    test_break_even()
+    test_cost_component()
+    test_model_with_print()
+    test_roi()

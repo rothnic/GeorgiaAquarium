@@ -77,18 +77,36 @@
 <li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-tests">WindModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../triboelectric.html">Triboelectric Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../pedestrian.html">Pedestrian Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../cost.html">Cost Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../AnalysisComponents.html">Analysis Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#custom-uncertainties-driver">Custom Uncertainties Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../common.html">Common Utilities</a><ul>
@@ -143,7 +161,7 @@
 <span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">get_outputs</span>
 
 
-<div class="viewcode-block" id="UncertaintiesModel"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.Uncertainties.UncertaintiesModel">[docs]</a><span class="k">class</span> <span class="nc">UncertaintiesModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+<div class="viewcode-block" id="UncertaintiesModel"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel">[docs]</a><span class="k">class</span> <span class="nc">UncertaintiesModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
     <span class="c"># set up inputs</span>
     <span class="n">pedsPerHourOn_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour on season distribution sample point&#39;</span><span class="p">)</span>
     <span class="n">pedsPerHourOff_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour off season distribution sample point&#39;</span><span class="p">)</span>
@@ -173,7 +191,7 @@
     <span class="c"># None defined</span>
 
     <span class="c"># initialization</span>
-<div class="viewcode-block" id="UncertaintiesModel.__init__"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.Uncertainties.UncertaintiesModel.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="UncertaintiesModel.__init__"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        The constructor of the OpenMDAO component is extended to initialize a :class:`list` to contain the</span>
 <span class="sd">        distributions, then it loads the CSV file containing the uncertainties data, then initializes the</span>
@@ -190,7 +208,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">init_distributions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
 
     <span class="c"># primary component method</span></div>
-<div class="viewcode-block" id="UncertaintiesModel.execute"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.Uncertainties.UncertaintiesModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="UncertaintiesModel.execute"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        The primary method that OpenMDAO requires that you populate for any component with the behavior you want the</span>
 <span class="sd">        component to have. In this case, the component is just a grouping of uncertainty variable distributions. It</span>
@@ -212,7 +230,7 @@
             <span class="n">probInput</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">output</span> <span class="o">+</span> <span class="s">&quot;_prob&quot;</span><span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">probInput</span><span class="p">))</span>
 </div>
-<div class="viewcode-block" id="UncertaintiesModel.init_distributions"><a class="viewcode-back" href="../../AnalysisComponents.html#Uncertainties.Uncertainties.UncertaintiesModel.init_distributions">[docs]</a>    <span class="k">def</span> <span class="nf">init_distributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="UncertaintiesModel.init_distributions"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.init_distributions">[docs]</a>    <span class="k">def</span> <span class="nf">init_distributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Inits probability and associated values from a provided CSV file. This enables you to defined the uncertain</span>
 <span class="sd">        variables by cumulative distribution functions in two columns for each variable. One defines the variable</span>

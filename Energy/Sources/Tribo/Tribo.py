@@ -24,7 +24,11 @@ class TriboModel(Component):
     time, like 1 second. You can use this to calculate what that is in kWh. This can be used with the yearly steps
     per tile to provide some performance output for a design decision on the number of tiles, along with the cost
     impact of that decision.
+
+    Relies on input values from the :class:`~Pedestrian.Pedestrian.PedestrianModel` for use in calculating the power
+    generation.
     '''
+
     # set up inputs
     tileCount = Float(20.0, iotype='in', desc='number of tiles')
     pedStepsPerTile = Float(260000.0, iotype='in', desc='expected steps per tile')
@@ -37,8 +41,20 @@ class TriboModel(Component):
     totalkWh = Float(1.0, iotype='out', desc='yearly power output (kWh)')
     triboCapitalCost = Float(40000.0, iotype='out', desc='investment cost ($)')
 
+    # set up constants
+    # None
 
+    # primary model method
     def execute(self):
+        '''
+        The method for an OpenMDAO component that is required to be filled out with the internal behavior,
+        and is called each time OpenMDAO has changed the input values. After execution, the new output values are
+        then read from the component. This component executes to functions; one to calculate power, and one to
+        calculate the initial capital cost associated with the configuration of the input values.
+
+        :return: None
+        '''
+
         # Calculate power
         self.totalkWh = calc_power(
             self.tileCount,
@@ -62,6 +78,14 @@ class TriboOptimization(Assembly):
     '''
 
     def configure(self):
+        '''
+        This method must be filled in with the desired configuration for any custom OpenMDAO Assembly. This Assembly
+        is used to load the :class:`~Energy.Sources.Tribo.Tribo.TriboModel` for execution, sets up a :mod:`pyOpt`
+        optimizer, configures a CSV recorder to record inputs and outputs to tribo_optimization.csv, then configures
+        parameters, an objective, and a constraint. This isolated optimization can be used to ensure the model is
+        working correctly before integrating it into a larger model.
+        '''
+
         # Add the pyOpt driver and case recorder
         self.replace("driver", pyopt_driver.pyOptDriver())
         self.driver.recorders.append(csvcase.CSVCaseRecorder(filename='tribo_optimization.csv'))
