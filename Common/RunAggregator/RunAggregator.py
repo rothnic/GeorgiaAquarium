@@ -42,19 +42,55 @@ class RunAggregator(Component):
     year20RoiMean = Float(500.0, iotype='out', desc='year 20 ROI mean')
     year30RoiMean = Float(500.0, iotype='out', desc='year 30 ROI mean')
 
-    exec_num = 0.0
+    # set up constants
+    # None defined
 
+    # initialization
     #Todo improve the speed by not using python dicts
     def __init__(self):
+        '''
+        Extend the OpenMDAO component init method only so that we can keep track of the execution state, collect the
+        names of our configured outputs, and initialize the dict to store the samples over time.
+
+        :return: Initialized OpenMDAO component object
+        '''
+        # ToDo: See if there is a way to turn this into a reusable component
         super(RunAggregator, self).__init__()
+        self.exec_num = 0.0
+
         self.output_names = get_outputs(self)
 
         self.outputs = {}
         for output_name in self.output_names:
             self.outputs[output_name] = np.array([])
 
-
+    # primary method
     def execute(self):
+        '''
+        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,
+        OpenMDAO will write new values into the components inputs, then will call this execute method. This component
+        is different from the other model components because it exists simply to work with the Uncertainties model.
+        The RunAggregator sit at a higher level than the GeorgiaAquarium assembly so that for each set of design
+        variables, we can execute the GeorgiaAquarium model many times. During this time, the design variables do not
+        change, but the uncertainties do change due to the sampling of them with a Latin Hypercube driver. We can
+        execute the model like with without the RunAggregator, but the higher-level optimization component would only
+        observe the last value.
+
+        The RunAggregator observes all outputs from the samples associated with a single configuration of design
+        variables and many samples across the uncertainties. For each output of the GeorgiaAquarium model,
+        the RunAggregator stores the values in a python :class:`dict`, with a key equal to the name of the variable
+        appended with "Mean", with a value of a :class:`~numpy.array` of length equal to the number of configured
+        latin hypercube samples. Each time the RunAggregator is executed, the mean of the array is stored into the
+        RunAggregator's output attributes.
+
+        This component combined with the Uncertainties model replaces the functionality implemented in the Phoenix
+        Integration ModelCenter Latin Hypercube driver combined with the cumulative distribution function excel
+        spreadsheet, that has been used with it by Georgia Tech's PMASE program. Both of the components try to
+        incorporate uncertainties into the model execution as a separate concept to design variables, allowing the
+        model to converge to an expected value with enough runs.
+
+        :returns: None
+        '''
 
         # Get the values from last run
         self.inputs = get_input_values(self)
@@ -68,16 +104,11 @@ class RunAggregator(Component):
         self.exec_num += 1.0
 
 
-def run_tests():
-    import random as rand
-
-    agg = RunAggregator()
-    inputs = get_inputs(agg)
-    for count in xrange(1, 10, 1):
-        for input in inputs:
-            setattr(agg, input, np.float(rand.randrange(20, 200)))
-        agg.execute()
-        print_outputs(agg)
-
 if __name__=="__main__":
-    run_tests()
+    '''
+    A module testing routine, executes when this python file is ran independently. For example, using Pycharm,
+    right click while editing and select Run. The tests called below are alternatively ran automatically by pytest
+    from test_aggregator if configured to do so within Pycharm.
+    '''
+    from test_aggregator import test_meaning
+    test_meaning()

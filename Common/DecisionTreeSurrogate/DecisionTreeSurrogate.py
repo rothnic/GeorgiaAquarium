@@ -1,3 +1,7 @@
+"""
+   /Common/DecisionTreeSurrogate/DecisionTreeSurrogate.py
+"""
+
 __author__ = 'Nick'
 
 import cPickle as pickle

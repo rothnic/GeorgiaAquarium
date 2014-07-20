@@ -86,7 +86,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Analysis Components</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#custom-uncertainties-driver">Custom Uncertainties Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
@@ -126,8 +131,360 @@
 </div>
           <div role="main">
             
-  <div class="section" id="module-GeorgiaAquarium">
-<span id="analysis-components"></span><h1>Analysis Components<a class="headerlink" href="#module-GeorgiaAquarium" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="analysis-components">
+<h1>Analysis Components<a class="headerlink" href="#analysis-components" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="custom-uncertainties-driver">
+<h2>Custom Uncertainties Driver<a class="headerlink" href="#custom-uncertainties-driver" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>This component is used to wrap the model we are trying to optimize, and can be useful when there is little to no data
+that exists on some set of uncertain variables, but it is also a certainty that it is
+not a single finite value. For example, let&#8217;s say that for some reason we have no access to wind data. Instead of
+choosing a value, we can instead represent the distribution by asking ourselves a series of questions,
+which results in generating a cumulative distribution function (CDF). Afterwards,
+we can use the CDF while optimizing the system design to generate all possible outcomes,
+which then enables us to select the outcome that is most likely to product the best results.</div></blockquote>
+<div class="section" id="uncertainties-component">
+<h3><em>Uncertainties Component</em><a class="headerlink" href="#uncertainties-component" title="Permalink to this headline">¶</a></h3>
+<p>The Uncertainties Component is the part of the Uncertainties Driver that creates Distributions from stored
+user-provided information that best represents the actual distribution.</p>
+<div class="section" id="uncertainties-class-input-attributes">
+<h4><em>Uncertainties Class Input Attributes</em><a class="headerlink" href="#uncertainties-class-input-attributes" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">pedsPerHourOn_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour on season distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">pedsPerHourOff_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour off season distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">tileUnitCost_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of a tribo tile distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">elecUtilityRate_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of electricity distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">panelEff_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in conversion of sun energy distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">circuitLoss_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in collecting electrical energy distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">turbineEff_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in collecting electrical energy distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">baselineOceanVoyPowerUse_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span><span class="n">desc</span><span class="o">=</span><span class="s">&#39;current power use per year for OV distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">baselineTotalPowerUse_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;current power use per year for total aquarium &#39;</span>
+                                                              <span class="s">&#39;distribution sample point&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="uncertainties-class-output-attributes">
+<h4><em>Uncertainties Class Output Attributes</em><a class="headerlink" href="#uncertainties-class-output-attributes" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">pedsPerHourOn</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">600.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour on season distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">pedsPerHourOff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour off season distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">tileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of a tribo tile distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">elecUtilityRate</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of electricity distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">panelEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.23</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in conversion of sun energy distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">circuitLoss</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.30</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in collecting electrical energy distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">turbineEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.367</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in collecting electrical energy distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">baselineOceanVoyPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">17265306.1224</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;current power use per year for OV &#39;</span>
+                                                                       <span class="s">&#39;distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">baselineTotalPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">27465306.1224</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;current power use per year for total &#39;</span>
+                                                                    <span class="s">&#39;aquarium distribution sample value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="uncertainties-class-constants">
+<h4><em>Uncertainties Class Constants</em><a class="headerlink" href="#uncertainties-class-constants" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="c"># None defined</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="uncertainties-class-definition">
+<h4><em>Uncertainties Class Definition</em><a class="headerlink" href="#uncertainties-class-definition" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="Uncertainties.Uncertainties.UncertaintiesModel">
+<em class="property">class </em><tt class="descclassname">Uncertainties.Uncertainties.</tt><tt class="descname">UncertaintiesModel</tt><a class="reference internal" href="_modules/Uncertainties/Uncertainties.html#UncertaintiesModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.Uncertainties.UncertaintiesModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<dl class="method">
+<dt id="Uncertainties.Uncertainties.UncertaintiesModel.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Uncertainties/Uncertainties.html#UncertaintiesModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.Uncertainties.UncertaintiesModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor of the OpenMDAO component is extended to initialize a <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> to contain the
+distributions, then it loads the CSV file containing the uncertainties data, then initializes the
+<a class="reference internal" href="#Uncertainties.calc_uncertainties.Distribution" title="Uncertainties.calc_uncertainties.Distribution"><tt class="xref py py-class docutils literal"><span class="pre">Uncertainties.calc_uncertainties.Distribution</span></tt></a> objects, and stores them in the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Uncertainties.Uncertainties.UncertaintiesModel.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Uncertainties/Uncertainties.html#UncertaintiesModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.Uncertainties.UncertaintiesModel.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>The primary method that OpenMDAO requires that you populate for any component with the behavior you want the
+component to have. In this case, the component is just a grouping of uncertainty variable distributions. It
+is possible to integrate this capability into the each model, but this provides a way to consolidate them
+into one location.</p>
+<p>On each execution, this component loops through all saved distributions, then samples them with a probability
+value (Percent Point Function) to retrieve the value that occurs at the given probability. The values are
+stored into the output attributes of the UncertaintiesModel component. See
+<a class="reference internal" href="#Uncertainties.calc_uncertainties.Distribution" title="Uncertainties.calc_uncertainties.Distribution"><tt class="xref py py-class docutils literal"><span class="pre">Uncertainties.calc_uncertainties.Distribution</span></tt></a> for more information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Uncertainties.Uncertainties.UncertaintiesModel.init_distributions">
+<tt class="descname">init_distributions</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="_modules/Uncertainties/Uncertainties.html#UncertaintiesModel.init_distributions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.Uncertainties.UncertaintiesModel.init_distributions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inits probability and associated values from a provided CSV file. This enables you to defined the uncertain
+variables by cumulative distribution functions in two columns for each variable. One defines the variable
+probabilities and must match the Uncertainties component configured input name with an appended &#8216;_prob&#8217;.
+Second is a column with the associated values, with a column name that matches the output name configured on
+the Uncertainties component. Example table of a normal-like distribution below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="58%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">myUncertainty_prob</th>
+<th class="head">myUncertainty</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>10</td>
+</tr>
+<tr class="row-odd"><td>0.25</td>
+<td>15</td>
+</tr>
+<tr class="row-even"><td>0.5</td>
+<td>30</td>
+</tr>
+<tr class="row-odd"><td>0.75</td>
+<td>45</td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>50</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The CSV file can include many uncertainties input as pairs of columns, and each does not need to         have equal rows.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; Location of the CSV file to load</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None, saves distributions into a python <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="distribution-class">
+<h4><em>Distribution Class</em><a class="headerlink" href="#distribution-class" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="Uncertainties.calc_uncertainties.Distribution">
+<em class="property">class </em><tt class="descclassname">Uncertainties.calc_uncertainties.</tt><tt class="descname">Distribution</tt><big>(</big><em>probData</em>, <em>valueData</em>, <em>output</em><big>)</big><a class="reference internal" href="_modules/Uncertainties/calc_uncertainties.html#Distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.calc_uncertainties.Distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Distribution class sets up a construct for loading uncertainty data that was generated as user input to
+define the probability distribution, interpolating between the given points to create the CDF, then sampling
+across the CDF to generate the PDF. The PDF is then used to generate a scipy <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_discrete.html#scipy.stats.rv_discrete" title="(in SciPy v0.14.0)"><tt class="xref py py-class docutils literal"><span class="pre">rv_discrete</span></tt></a>
+distribution object. The scipy distribution can then be later used for sampling the distribution.</p>
+<dl class="method">
+<dt id="Uncertainties.calc_uncertainties.Distribution.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>probData</em>, <em>valueData</em>, <em>output</em><big>)</big><a class="reference internal" href="_modules/Uncertainties/calc_uncertainties.html#Distribution.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.calc_uncertainties.Distribution.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the Distribution object with the user created probability data and the name of the uncertainty
+variable that the distribution represents.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>probData</strong> &#8211; A <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a> of probabilities for the uncertainty</li>
+<li><strong>valueData</strong> &#8211; A <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a> of values associated with the probabilities for the uncertainty</li>
+<li><strong>output</strong> &#8211; The name of the uncertainty as a string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">initialized Distribution object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Uncertainties.calc_uncertainties.Distribution.make_cdf">
+<tt class="descname">make_cdf</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Uncertainties/calc_uncertainties.html#Distribution.make_cdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.calc_uncertainties.Distribution.make_cdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a CDF from user provided data by using the <tt class="xref py py-func docutils literal"><span class="pre">scipy.interpolate.splmake()</span></tt> function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">representation of the spline interpolated CDF that was initialized into the Distribution object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Uncertainties.calc_uncertainties.Distribution.make_pdf">
+<tt class="descname">make_pdf</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Uncertainties/calc_uncertainties.html#Distribution.make_pdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.calc_uncertainties.Distribution.make_pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a PDF from the spline-interpolated CDF. This method crudely calculates the derivative of the CDF by
+calculating the change in likelihood across the distribution. Next, it provides the bins used for sampling
+the CDF, along with the the difference in probability between the bins to <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_discrete.html#scipy.stats.rv_discrete" title="(in SciPy v0.14.0)"><tt class="xref py py-class docutils literal"><span class="pre">rv_discrete</span></tt></a>,
+and in return receives the <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_discrete.html#scipy.stats.rv_discrete" title="(in SciPy v0.14.0)"><tt class="xref py py-class docutils literal"><span class="pre">rv_discrete</span></tt></a> object, then saves it into the
+<a class="reference internal" href="#Uncertainties.calc_uncertainties.Distribution" title="Uncertainties.calc_uncertainties.Distribution"><tt class="xref py py-class docutils literal"><span class="pre">Distribution</span></tt></a> object for later sampling using the
+<a class="reference internal" href="#Uncertainties.calc_uncertainties.Distribution.sample" title="Uncertainties.calc_uncertainties.Distribution.sample"><tt class="xref py py-meth docutils literal"><span class="pre">sample()</span></tt></a> method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Uncertainties.calc_uncertainties.Distribution.sample">
+<tt class="descname">sample</tt><big>(</big><em>prob</em><big>)</big><a class="reference internal" href="_modules/Uncertainties/calc_uncertainties.html#Distribution.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.calc_uncertainties.Distribution.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Samples the initialized distribution to retrieve the value with an occurrence of the provided probability.
+This is referred to as the Percent Point Function. See <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_discrete.ppf.html#scipy.stats.rv_discrete.ppf" title="(in SciPy v0.14.0)"><tt class="xref py py-meth docutils literal"><span class="pre">scipy.stats.rv_discrete.ppf()</span></tt></a> for more
+information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prob</strong> &#8211; Value between 0 and 1, representing the probability of occurrence of the returned value</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The value associated with the provided probability</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="uncertainties-class-tests">
+<h4><em>Uncertainties Class Tests</em><a class="headerlink" href="#uncertainties-class-tests" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="Uncertainties.test_uncertainties.test_uncertainties_component">
+<tt class="descclassname">Uncertainties.test_uncertainties.</tt><tt class="descname">test_uncertainties_component</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Uncertainties/test_uncertainties.html#test_uncertainties_component"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Uncertainties.test_uncertainties.test_uncertainties_component" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="run-aggregator-component">
+<h3><em>Run Aggregator Component</em><a class="headerlink" href="#run-aggregator-component" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="run-aggregator-class-input-attributes">
+<h4><em>Run Aggregator Class Input Attributes</em><a class="headerlink" href="#run-aggregator-class-input-attributes" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">breakEvenYearSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;break even year sample&#39;</span><span class="p">)</span>
+    <span class="n">headOutSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;head out sample&#39;</span><span class="p">)</span>
+    <span class="n">originalEnergyCostSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;original/baseline energy cost sample&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergyCostSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total energy cost sample&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergySavedSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total energy saved sample&#39;</span><span class="p">)</span>
+    <span class="n">totalFlowProteinSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total flow sample&#39;</span><span class="p">)</span>
+    <span class="n">totalInitialInvestmentSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total initial investment sample&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerConsumedSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total power consumed sample&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerProducedSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total power produced sample&#39;</span><span class="p">)</span>
+    <span class="n">totalUtilitySamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total utility sample&#39;</span><span class="p">)</span>
+    <span class="n">year1RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 1 ROI sample&#39;</span><span class="p">)</span>
+    <span class="n">year5RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 5 ROI sample&#39;</span><span class="p">)</span>
+    <span class="n">year10RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 10 ROI sample&#39;</span><span class="p">)</span>
+    <span class="n">year20RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 20 ROI sample&#39;</span><span class="p">)</span>
+    <span class="n">year30RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 30 ROI sample&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-aggregator-class-output-attributes">
+<h4><em>Run Aggregator Class Output Attributes</em><a class="headerlink" href="#run-aggregator-class-output-attributes" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">breakEvenYearMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;break even year mean&#39;</span><span class="p">)</span>
+    <span class="n">headOutMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;head out mean&#39;</span><span class="p">)</span>
+    <span class="n">originalEnergyCostMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;original/baseline energy cost mean&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergyCostMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total energy cost mean&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergySavedMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total energy saved mean&#39;</span><span class="p">)</span>
+    <span class="n">totalFlowProteinwMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total flow mean&#39;</span><span class="p">)</span>
+    <span class="n">totalInitialInvestmentMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total initial investment mean&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerConsumedMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total power consumed mean&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerProducedMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total power produced mean&#39;</span><span class="p">)</span>
+    <span class="n">totalUtilityMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total utility mean&#39;</span><span class="p">)</span>
+    <span class="n">year1RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 1 ROI mean&#39;</span><span class="p">)</span>
+    <span class="n">year5RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 5 ROI mean&#39;</span><span class="p">)</span>
+    <span class="n">year10RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 10 ROI mean&#39;</span><span class="p">)</span>
+    <span class="n">year20RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 20 ROI mean&#39;</span><span class="p">)</span>
+    <span class="n">year30RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 30 ROI mean&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-aggregator-class-constants">
+<h4><em>Run Aggregator Class Constants</em><a class="headerlink" href="#run-aggregator-class-constants" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="c"># None defined</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-aggregator-class-definition">
+<h4><em>Run Aggregator Class Definition</em><a class="headerlink" href="#run-aggregator-class-definition" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="Common.RunAggregator.RunAggregator.RunAggregator">
+<em class="property">class </em><tt class="descclassname">Common.RunAggregator.RunAggregator.</tt><tt class="descname">RunAggregator</tt><a class="reference internal" href="_modules/Common/RunAggregator/RunAggregator.html#RunAggregator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.RunAggregator.RunAggregator.RunAggregator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<dl class="method">
+<dt id="Common.RunAggregator.RunAggregator.RunAggregator.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/RunAggregator/RunAggregator.html#RunAggregator.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.RunAggregator.RunAggregator.RunAggregator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extend the OpenMDAO component init method only so that we can keep track of the execution state, collect the
+names of our configured outputs, and initialize the dict to store the samples over time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Initialized OpenMDAO component object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.RunAggregator.RunAggregator.RunAggregator.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/RunAggregator/RunAggregator.html#RunAggregator.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.RunAggregator.RunAggregator.RunAggregator.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,
+OpenMDAO will write new values into the components inputs, then will call this execute method. This component
+is different from the other model components because it exists simply to work with the Uncertainties model.
+The RunAggregator sit at a higher level than the GeorgiaAquarium assembly so that for each set of design
+variables, we can execute the GeorgiaAquarium model many times. During this time, the design variables do not
+change, but the uncertainties do change due to the sampling of them with a Latin Hypercube driver. We can
+execute the model like with without the RunAggregator, but the higher-level optimization component would only
+observe the last value.</p>
+<p>The RunAggregator observes all outputs from the samples associated with a single configuration of design
+variables and many samples across the uncertainties. For each output of the GeorgiaAquarium model,
+the RunAggregator stores the values in a python <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></a>, with a key equal to the name of the variable
+appended with &#8220;Mean&#8221;, with a value of a <tt class="xref py py-class docutils literal"><span class="pre">array</span></tt> of length equal to the number of configured
+latin hypercube samples. Each time the RunAggregator is executed, the mean of the array is stored into the
+RunAggregator&#8217;s output attributes.</p>
+<p>This component combined with the Uncertainties model replaces the functionality implemented in the Phoenix
+Integration ModelCenter Latin Hypercube driver combined with the cumulative distribution function excel
+spreadsheet, that has been used with it by Georgia Tech&#8217;s PMASE program. Both of the components try to
+incorporate uncertainties into the model execution as a separate concept to design variables, allowing the
+model to converge to an expected value with enough runs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="module-GeorgiaAquarium">
+<span id="georgia-aquarium-model"></span><h2>Georgia Aquarium Model<a class="headerlink" href="#module-GeorgiaAquarium" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="GeorgiaAquarium.GeorgiaAquarium">
 <em class="property">class </em><tt class="descclassname">GeorgiaAquarium.</tt><tt class="descname">GeorgiaAquarium</tt><a class="reference internal" href="_modules/GeorgiaAquarium.html#GeorgiaAquarium"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquarium.GeorgiaAquarium" title="Permalink to this definition">¶</a></dt>
@@ -143,52 +500,15 @@
 <tt class="descclassname">GeorgiaAquarium.</tt><tt class="descname">run_tests</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/GeorgiaAquarium.html#run_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquarium.run_tests" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<span class="target" id="module-GeorgiaAquariumOptimizer"></span><dl class="class">
-<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumDoe">
-<em class="property">class </em><tt class="descclassname">GeorgiaAquariumOptimizer.</tt><tt class="descname">GeorgiaAquariumDoe</tt><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumDoe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumDoe" title="Permalink to this definition">¶</a></dt>
-<dd><p>An assembly to connect the optimizer directly to the Georgia Aquarium model. This can be used to avoid issues
-with the uncertainty distributions. After it is found that this assembly is working correctly, the next step
-would be to</p>
-<dl class="method">
-<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumDoe.configure">
-<tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumDoe.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumDoe.configure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+</div>
+<div class="section" id="georgia-aquarium-global-optimization">
+<h2>Georgia Aquarium Global Optimization<a class="headerlink" href="#georgia-aquarium-global-optimization" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization">
 <em class="property">class </em><tt class="descclassname">GeorgiaAquariumOptimizer.</tt><tt class="descname">GeorgiaAquariumGlobalOptimization</tt><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumGlobalOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
-<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization.configure">
-<tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumGlobalOptimization.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization.configure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-<dl class="class">
-<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization">
-<em class="property">class </em><tt class="descclassname">GeorgiaAquariumOptimizer.</tt><tt class="descname">GeorgiaAquariumOptimization</tt><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization" title="Permalink to this definition">¶</a></dt>
-<dd><p>An assembly to connect the optimizer directly to the Georgia Aquarium model. This can be used to avoid issues
-with the uncertainty distributions. After it is found that this assembly is working correctly, the next step
-would be to</p>
-<dl class="method">
-<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization.configure">
-<tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumOptimization.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization.configure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumSampler">
-<em class="property">class </em><tt class="descclassname">GeorgiaAquariumOptimizer.</tt><tt class="descname">GeorgiaAquariumSampler</tt><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
-<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumSampler.configure">
-<tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumSampler.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler.configure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+</div>
 </div>
 
 

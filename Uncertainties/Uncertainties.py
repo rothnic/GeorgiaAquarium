@@ -7,7 +7,7 @@ from openmdao.lib.datatypes.api import Float
 import pandas as pd
 
 from calc_uncertainties import Distribution
-from Common.AttributeTools.io import get_outputs, print_outputs
+from Common.AttributeTools.io import get_outputs
 
 
 class UncertaintiesModel(Component):
@@ -23,7 +23,6 @@ class UncertaintiesModel(Component):
     baselineTotalPowerUse_prob = Float(0.5, iotype='in', desc='current power use per year for total aquarium '
                                                               'distribution sample point')
 
-
     # set up outputs
     pedsPerHourOn = Float(600.0, iotype='out', desc='avg peds per hour on season distribution sample value')
     pedsPerHourOff = Float(500.0, iotype='out', desc='avg peds per hour off season distribution sample value')
@@ -36,17 +35,44 @@ class UncertaintiesModel(Component):
                                                                        'distribution sample value')
     baselineTotalPowerUse = Float(27465306.1224, iotype='out', desc='current power use per year for total '
                                                                     'aquarium distribution sample value')
-    distributions = []
 
+    # set up constants
+    # None defined
+
+    # initialization
     def __init__(self):
+        '''
+        The constructor of the OpenMDAO component is extended to initialize a :class:`list` to contain the
+        distributions, then it loads the CSV file containing the uncertainties data, then initializes the
+        :class:`Uncertainties.calc_uncertainties.Distribution` objects, and stores them in the list.
+
+        :return: None
+        '''
         super(UncertaintiesModel, self).__init__()
         # set up constants
+        self.distributions = []
         path = os.path.dirname(os.path.realpath(__file__))
         self.my_outputs = get_outputs(self)
         self.filename = path + '\\uncertainties.csv'
         self.init_distributions(self.filename)
 
+    # primary component method
     def execute(self):
+        '''
+        The primary method that OpenMDAO requires that you populate for any component with the behavior you want the
+        component to have. In this case, the component is just a grouping of uncertainty variable distributions. It
+        is possible to integrate this capability into the each model, but this provides a way to consolidate them
+        into one location.
+
+        On each execution, this component loops through all saved distributions, then samples them with a probability
+        value (Percent Point Function) to retrieve the value that occurs at the given probability. The values are
+        stored into the output attributes of the UncertaintiesModel component. See
+        :class:`Uncertainties.calc_uncertainties.Distribution` for more information.
+
+        :return: None
+        '''
+        # ToDo: Determine if it would be better to integrate this capability into individual model components
+
         # Loop through and sample all of my uncertainties
         for dist in self.distributions:
             # Get latest value from input probabilities
@@ -55,10 +81,29 @@ class UncertaintiesModel(Component):
 
     def init_distributions(self, filename):
         '''
-        Inits probability and associated values from CSV
-        :param output:
-        :return:
+        Inits probability and associated values from a provided CSV file. This enables you to defined the uncertain
+        variables by cumulative distribution functions in two columns for each variable. One defines the variable
+        probabilities and must match the Uncertainties component configured input name with an appended '_prob'.
+        Second is a column with the associated values, with a column name that matches the output name configured on
+        the Uncertainties component. Example table of a normal-like distribution below:
+
+        ================== =============
+        myUncertainty_prob myUncertainty
+        ================== =============
+        0                  10
+        0.25               15
+        0.5                30
+        0.75               45
+        1                  50
+        ================== =============
+
+        .. note:: The CSV file can include many uncertainties input as pairs of columns, and each does not need to \
+        have equal rows.
+
+        :param filename: Location of the CSV file to load
+        :return: None, saves distributions into a python :class:`list`
         '''
+
         # Read in the CSV file
         table = pd.read_csv(filename)
 
@@ -78,16 +123,8 @@ class UncertaintiesModel(Component):
             else:
                 raise NameError
 
-
-def run_tests():
-    # Module test routine, only executes when this python is ran independently
-    # For example, using Pycharm, right click while editing and select Run
-    comp = UncertaintiesModel()
-    comp.execute()
-    print_outputs(comp)
-
-
 if __name__ == "__main__":
     # Module test routine, executes when this python file is ran independently
     # For example, using Pycharm, right click while editing and select Run
-    run_tests()
+    from test_uncertainties import test_uncertainties_component
+    test_uncertainties_component()

@@ -14,7 +14,7 @@ Surrogate Model Tools
 *Neural Network (Ffnet) Surrogate*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. autoclass:: Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate
-    :members: __init__,test,train,sim,save,load,print_sim
+    :members: __init__,test,train,sim,print_sim
 
 *Neural Network (Neurolab) Surrogate*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

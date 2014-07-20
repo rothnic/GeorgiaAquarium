@@ -1,3 +1,6 @@
+"""
+   /Pedestrian/Pedestrian.py
+"""
 __author__ = 'Nick'
 
 import os
