@@ -90,6 +90,11 @@
 <li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
@@ -161,6 +166,7 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
@@ -170,6 +176,7 @@
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#W"><strong>W</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -182,6 +189,14 @@
       <dd><dl>
         
   <dt><a href="common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.__init__">(Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="lighting.html#Common.Lighting.Lighting.LightingModel.__init__">(Common.Lighting.Lighting.LightingModel method)</a>
+  </dt>
+
+        
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.__init__">(Common.Lighting.calc_lighting.Lights method)</a>
   </dt>
 
         
@@ -320,10 +335,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.execute">execute() (Common.RunAggregator.RunAggregator.RunAggregator method)</a>
+  <dt><a href="lighting.html#Common.Lighting.Lighting.LightingModel.execute">execute() (Common.Lighting.Lighting.LightingModel method)</a>
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.execute">(Common.RunAggregator.RunAggregator.RunAggregator method)</a>
+  </dt>
+
         
   <dt><a href="cost.html#Cost.Cost.CostModel.execute">(Cost.Cost.CostModel method)</a>
   </dt>
@@ -428,6 +447,28 @@
   </dt>
 
   </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.initial_cost">initial_cost (Common.Lighting.calc_lighting.Lights attribute)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.Lighting.LightingModel">LightingModel (class in Common.Lighting.Lighting)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights">Lights (class in Common.Lighting.calc_lighting)</a>
+  </dt>
+
+  </dl></td>
 </tr></table>
 
 <h2 id="M">M</h2>
@@ -483,8 +524,16 @@
   <dt><a href="pedestrian.html#Pedestrian.calc_ped.PedSurrogate">PedSurrogate (class in Pedestrian.calc_ped)</a>
   </dt>
 
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.power_per_year">power_per_year (Common.Lighting.calc_lighting.Lights attribute)</a>
+  </dt>
+
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.print_config">print_config() (Common.Lighting.calc_lighting.Lights method)</a>
+  </dt>
+
       
   <dt><a href="common.html#Common.AttributeTools.io.print_outputs">print_outputs() (in module Common.AttributeTools.io)</a>
   </dt>
@@ -510,6 +559,14 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.recurrance_period">recurrance_period (Common.Lighting.calc_lighting.Lights attribute)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.recurring_cost">recurring_cost (Common.Lighting.calc_lighting.Lights attribute)</a>
+  </dt>
+
+      
   <dt><a href="solar.html#Energy.Sources.Solar.test_solar.run_print_test">run_print_test() (in module Energy.Sources.Solar.test_solar)</a>
   </dt>
 
@@ -519,12 +576,12 @@
   </dt>
 
       </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="AnalysisComponents.html#GeorgiaAquarium.run_tests">run_tests() (in module GeorgiaAquarium)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="pedestrian.html#Pedestrian.test_pedestrian.run_tests_with_print">run_tests_with_print() (in module Pedestrian.test_pedestrian)</a>
   </dt>
@@ -541,6 +598,10 @@
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.sample">sample() (Uncertainties.calc_uncertainties.Distribution method)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.setup_tests">setup_tests() (in module Common.Lighting.test_lighting)</a>
   </dt>
 
       
@@ -600,6 +661,30 @@
   </dt>
 
       
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lighting_model">test_lighting_model() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_cost">test_lights_cost() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_initial">test_lights_initial() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_power_year">test_lights_power_year() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_recurrance">test_lights_recurrance() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_yearly_cost">test_lights_yearly_cost() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
   <dt><a href="cost.html#Cost.test_cost.test_model_with_print">test_model_with_print() (in module Cost.test_cost)</a>
   </dt>
 
@@ -627,6 +712,8 @@
   <dt><a href="triboelectric.html#Energy.Sources.Tribo.test_tribo.test_tribo_openmdao_model">test_tribo_openmdao_model() (in module Energy.Sources.Tribo.test_tribo)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="triboelectric.html#Energy.Sources.Tribo.test_tribo.test_tribo_optimization">test_tribo_optimization() (in module Energy.Sources.Tribo.test_tribo)</a>
   </dt>
@@ -639,8 +726,6 @@
   <dt><a href="wind.html#Energy.Sources.Wind.test_wind.test_wind_component">test_wind_component() (in module Energy.Sources.Wind.test_wind)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="wind.html#Energy.Sources.Wind.test_wind.test_wind_optimization">test_wind_optimization() (in module Energy.Sources.Wind.test_wind)</a>
   </dt>
@@ -727,6 +812,16 @@
   <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="wind.html#Energy.Sources.Wind.Wind.WindOptimization">WindOptimization (class in Energy.Sources.Wind.Wind)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.yearly_cost">yearly_cost() (Common.Lighting.calc_lighting.Lights method)</a>
   </dt>
 
   </dl></td>

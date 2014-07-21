@@ -6,19 +6,28 @@ from numba import jit
 
 
 #@jit
-def calc_power(tileCount, pedStepsPerTile, tileEff, tilekWh):
+def calc_power(tileCount, pedStepsPerTile, tileEff, tilePower, timePerStep):
     '''
     Calc_power computes the total number of steps that will occur across all tiles for this given design
     configuration. The total number of steps is affected by the number of tiles and the pedestrian model that
     simulates both on and off season steps per tile.
 
+    .. note:: The vendor advertises watts generated per step, not kWh. So we convert to energy by assuming a step \
+    generates power at the stated power for a fixed period of time, timePerStep
+
     :param tileCount: A design variable for how many tiles you would want to purchase
     :param pedStepsPerTile: An uncertainty for the number of expected steps per tile over a year
     :param tileEff: The amount of actual useful energy based on the claimed
-    :param tilekWh: The claimed power return when one person steps on a tile
+    :param tilePower: The claimed power return when one person steps on a tile
+    :param timePerStep: The duration of power generation for one step
     :return: The total energy generated in a year for the input design configuration
     '''
-    return tileCount * pedStepsPerTile * tileEff * tilekWh
+
+    minutesPerHour = 60.0
+    secondsPerMinute = 60.0
+    timeFactor = (timePerStep/(minutesPerHour * secondsPerMinute))
+
+    return tileCount * pedStepsPerTile * tileEff * tilePower * timePerStep * timeFactor
 
 
 #@jit

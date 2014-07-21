@@ -91,6 +91,11 @@
 <li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
@@ -164,7 +169,7 @@
     <span class="n">tileEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;tribo efficiency (percent)&#39;</span><span class="p">)</span>
     <span class="n">tileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;unit cost of a single tile&#39;</span><span class="p">)</span>
     <span class="n">mgtTileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;unit cost of a management tile&#39;</span><span class="p">)</span>
-    <span class="n">tilekWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0000019</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;power produced per step (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">tilePower</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.007</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wattage produced per step (kWh)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -177,7 +182,8 @@
 </div>
 <div class="section" id="tribomodel-class-constants">
 <h3><em>TriboModel Class Constants</em><a class="headerlink" href="#tribomodel-class-constants" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>    <span class="c"># None</span>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="c"># timePerStep and wattsPerStep were used to calculate the expected value</span>
+    <span class="n">timePerStep</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c">#: The duration of power generation for one step</span>
 </pre></div>
 </div>
 </div>
@@ -224,10 +230,14 @@ calculate the initial capital cost associated with the configuration of the inpu
 <h2>TriboModel Calculations<a class="headerlink" href="#tribomodel-calculations" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="Energy.Sources.Tribo.calc_tribo.calc_power">
-<tt class="descclassname">Energy.Sources.Tribo.calc_tribo.</tt><tt class="descname">calc_power</tt><big>(</big><em>tileCount</em>, <em>pedStepsPerTile</em>, <em>tileEff</em>, <em>tilekWh</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Tribo/calc_tribo.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.calc_tribo.calc_power" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">Energy.Sources.Tribo.calc_tribo.</tt><tt class="descname">calc_power</tt><big>(</big><em>tileCount</em>, <em>pedStepsPerTile</em>, <em>tileEff</em>, <em>tilePower</em>, <em>timePerStep</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Tribo/calc_tribo.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.calc_tribo.calc_power" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calc_power computes the total number of steps that will occur across all tiles for this given design
 configuration. The total number of steps is affected by the number of tiles and the pedestrian model that
 simulates both on and off season steps per tile.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The vendor advertises watts generated per step, not kWh. So we convert to energy by assuming a step     generates power at the stated power for a fixed period of time, timePerStep</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -236,7 +246,8 @@ simulates both on and off season steps per tile.</p>
 <li><strong>tileCount</strong> &#8211; A design variable for how many tiles you would want to purchase</li>
 <li><strong>pedStepsPerTile</strong> &#8211; An uncertainty for the number of expected steps per tile over a year</li>
 <li><strong>tileEff</strong> &#8211; The amount of actual useful energy based on the claimed</li>
-<li><strong>tilekWh</strong> &#8211; The claimed power return when one person steps on a tile</li>
+<li><strong>tilePower</strong> &#8211; The claimed power return when one person steps on a tile</li>
+<li><strong>timePerStep</strong> &#8211; The duration of power generation for one step</li>
 </ul>
 </td>
 </tr>

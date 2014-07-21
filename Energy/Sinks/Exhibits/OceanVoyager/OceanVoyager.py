@@ -3,17 +3,22 @@
 """
 
 from openmdao.main.api import Component
-from openmdao.lib.datatypes.api import Float, Enum
+from openmdao.lib.datatypes.api import Float, Array
 
 from Common.AttributeTools.io import print_outputs
 from Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic import init_protein_skimmer_surrogate
 from Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic import init_sand_filter_surrogate
 from Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic import calc_protein_power, calc_sand_power
 from Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic import calc_protein_cost, calc_sand_cost
+from Common.Lighting.Lighting import LightingModel
+from Common.Lighting.calc_lighting import Lights
+from numpy import float as numpy_float
+import numpy as np
 
 
 class OceanVoyagerModel(Component):
     # set up inputs
+    # protein skimmer model
     proteinRatedSpeed = Float(800.0, iotype='in', desc='electric pump speed rating')
     lossMultiplier = Float(20.0, iotype='in', desc='loss multiplier')
     proteinRatedEff = Float(0.6, iotype='in', desc='electric pump efficiency')
@@ -22,6 +27,9 @@ class OceanVoyagerModel(Component):
     referenceArea = Float(0.1, iotype='in', desc='reference area')
     runSpeed = Float(800.0, iotype='in', desc='electric pump actual run speed')
     pumpModificationUnitCost = Float(3500.0, iotype='in', desc='electric pump modification cost')
+    doProteinUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
+
+    # sand filter model
     pumpFlow = Float(1669.0, iotype='in', desc='electric pump rated flow')
     pumpRatedHead = Float(76.0, iotype='in', desc='electric pump rated head')
     pumpRatedRpm = Float(1074.0, iotype='in', desc='electric pump speed rating')
@@ -35,8 +43,10 @@ class OceanVoyagerModel(Component):
     ozoneValveOpen = Float(0.1, iotype='in', desc='electric pump rated flow')
     denitValveOpen = Float(0.1, iotype='in', desc='reference area')
     deaerationFlowLossCoef = Float(0.3, iotype='in', desc='electric pump actual run speed')
-    doProteinUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
     doSandUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
+
+    # lighting model
+    numBulbs = Float(1.0, iotype='in', desc='number of bulbs to replace')
 
     # set up outputs
     # potential constraints
@@ -52,24 +62,38 @@ class OceanVoyagerModel(Component):
     # power
     totalPowerSand = Float(1350.0, iotype='out', desc='yearly power used for sand filters')
     totalPowerProtein = Float(1.0, iotype='out', desc='yearly power used for protein skimmers')
+    yearlykWhNominal = Float(1.0, iotype='out', desc='yearly power usage for lighting (nominal)')
+    yearlykWh = Float(1.0, iotype='out', desc='yearly power usage for lighting (new configuration)')
     totalPowerUsed = Float(1.0, iotype='out', desc='yearly power output')
 
     # cost
     proteinCapitalCost = Float(153000.0, iotype='out', desc='cost of modification')
     sandCapitalCost = Float(162000.0, iotype='out', desc='cost of modification')
+    yearlyHydraulicCapitalCost = Array(np.array([[360000.0, 0.0, 6000, 0.0, 0.0, 6000, 0.0, 0.0, 6000, 0.0]]),
+                                 dtype=numpy_float, shape=(1, 10), iotype='out',
+                                 desc='hydraulic costs for 10 years')
     hydraulicCapitalCost = Float(315000.0, iotype='out', desc='cost of modification')
 
+    # lighting nominal
+    recurringCostsNominal = Array(np.array([[0.0, 0.0, 6000, 0.0, 0.0, 6000, 0.0, 0.0, 6000, 0.0]]), dtype=numpy_float,
+                                  shape=(1, 10), iotype='out', desc='lighting recurring costs for 10 years')
+    # lighting new costs
+    recurringCosts = Array(np.array([[0.0, 0.0, 6000, 0.0, 0.0, 6000, 0.0, 0.0, 6000, 0.0]]), dtype=numpy_float,
+                           shape=(1, 10), iotype='out', desc='lighting recurring costs for 10 years, new config')
+
     # set up constants
-    # constant values representing the current settings of sand and protein systems of Ocean Voyager
+    # protein skimmer
     numProteinPumps = 34
-    numSandPumps = 36
-    currentSandPumpKw = 1230.24
     currentProteinPumpKw = 580.95
     currentProteinRatedSpeed = 1180
     currentProteinRatedFlow = 1960
     currentProteinRatedEff = 69
     currentProteinRatedHead = 31
     currentProteinCircuitLoss = 150
+
+    # sand filter
+    numSandPumps = 36
+    currentSandPumpKw = 1230.24
     currentSandRatedSpeed = 1006
     currentSandRatedFlow = 1316
     currentSandRatedEff = 73
@@ -79,6 +103,18 @@ class OceanVoyagerModel(Component):
     currentSandOzCircuitLoss = 0.57
     currentSandDnCircuitLoss = 0.54
     currentSandDatCircuitLoss = 0.33
+
+    # lighting
+    currentNumLights = 40.0
+    currentBulbWatts = 1000.0  # watts
+    currentBulbCost = 180.0    # dollars
+    currentBulbLife = 10000    # hours
+    hoursPerDay = 12           # hours lights are on each day
+    scaleRatio = 1.5           # number of new lights required per old
+    newLightWatts = 120
+    newLightCost = 712
+    newLightLife = 50000
+
 
     # primary model init
     def __init__(self):
@@ -98,6 +134,14 @@ class OceanVoyagerModel(Component):
 
         # Sand Filters Surrogate Model
         self.sand_surrogate = init_sand_filter_surrogate()
+
+        # Init light models
+        lsOld = Lights([self.currentNumLights], [1], [self.currentBulbLife], [self.currentBulbCost],
+                       [self.currentBulbLife], [self.hoursPerDay], [True]) # Old Lights config
+        lsNew = Lights([self.currentNumLights], [self.scaleRatio], [self.newLightWatts], [self.newLightCost],
+                       [self.newLightLife], [self.hoursPerDay], [False]) # New Lights config
+        self.lightModel = LightingModel(lsNew, lsOld)
+        self.lightModel.execute()
 
     # primary model method
     def execute(self):
@@ -177,13 +221,23 @@ class OceanVoyagerModel(Component):
             self.totalPowerSand = self.currentSandPumpKw * 24 * 365
             self.sandCapitalCost = 0.0
 
+
+        # Execute lighting model
+        self.lightModel.numBulbs = self.numBulbs
+        self.lightModel.execute()
+        self.recurringCostsNominal = self.lightModel.nominalRecurring
+        self.yearlykWhNominal = self.lightModel.nominalkWh
+        self.yearlykWh = self.lightModel.yearlykWh
+
         # Total calculations
         # Here we are aggregating up all of the modeled elements of the OceanVoyager exhibit and combining them into
         # a single set of outputs. If more components were modeled, this is where the aggregation of the various
         # attributes would be performed.
-        self.totalPowerUsed = self.totalPowerProtein + self.totalPowerSand
-        self.hydraulicCapitalCost = self.proteinCapitalCost + self.sandCapitalCost
+        self.totalPowerUsed = self.totalPowerProtein + self.totalPowerSand + self.lightModel.yearlykWh
 
+        self.yearlyHydraulicCapitalCost = self.recurringCosts
+        self.hydraulicCapitalCost = self.yearlyHydraulicCapitalCost[0,0] + self.proteinCapitalCost + \
+                                    self.sandCapitalCost
 
 if __name__ == "__main__":
     # Module test routine, executes when this python file is ran independently

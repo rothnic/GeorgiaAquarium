@@ -74,7 +74,7 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('tb.tileCount')
         self.create_passthrough('tb.tileEff')
         self.create_passthrough('tb.tileUnitCost')
-        self.create_passthrough('tb.tilekWh')
+        self.create_passthrough('tb.tilePower')
         self.create_passthrough('tb.triboCapitalCost')
 
         # Ocean Voyager Model In

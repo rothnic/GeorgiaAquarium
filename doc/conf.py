@@ -281,4 +281,5 @@ intersphinx_mapping = {'python': ('http://docs.python.org/', None),
                        'ffnet': ('http://ffnet.sourceforge.net/', None),
                        'neurolab': ('http://pythonhosted.org/neurolab/', None),
                        'numpy':('http://docs.scipy.org/doc/numpy/', None),
-                       'pyOpt': ('http://www.pyopt.org/', None)}
+                       'pyOpt': ('http://www.pyopt.org/', None),
+                       'pandas': ('http://pandas.pydata.org/pandas-docs/stable/', None)}

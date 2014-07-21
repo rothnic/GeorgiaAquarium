@@ -17,6 +17,7 @@ Contents:
    wind
    triboelectric
    pedestrian
+   lighting
    cost
    uncertainties
    AnalysisComponents

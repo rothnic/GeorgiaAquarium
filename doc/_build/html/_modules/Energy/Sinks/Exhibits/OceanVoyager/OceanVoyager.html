@@ -90,6 +90,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../cost.html">Cost Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../cost.html#costmodel-component">CostModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
@@ -158,17 +163,22 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">openmdao.main.api</span> <span class="kn">import</span> <span class="n">Component</span>
-<span class="kn">from</span> <span class="nn">openmdao.lib.datatypes.api</span> <span class="kn">import</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.datatypes.api</span> <span class="kn">import</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Array</span>
 
 <span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">print_outputs</span>
 <span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic</span> <span class="kn">import</span> <span class="n">init_protein_skimmer_surrogate</span>
 <span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic</span> <span class="kn">import</span> <span class="n">init_sand_filter_surrogate</span>
 <span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic</span> <span class="kn">import</span> <span class="n">calc_protein_power</span><span class="p">,</span> <span class="n">calc_sand_power</span>
 <span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic</span> <span class="kn">import</span> <span class="n">calc_protein_cost</span><span class="p">,</span> <span class="n">calc_sand_cost</span>
+<span class="kn">from</span> <span class="nn">Common.Lighting.Lighting</span> <span class="kn">import</span> <span class="n">LightingModel</span>
+<span class="kn">from</span> <span class="nn">Common.Lighting.calc_lighting</span> <span class="kn">import</span> <span class="n">Lights</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="nb">float</span> <span class="k">as</span> <span class="n">numpy_float</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 
 <div class="viewcode-block" id="OceanVoyagerModel"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel">[docs]</a><span class="k">class</span> <span class="nc">OceanVoyagerModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
     <span class="c"># set up inputs</span>
+    <span class="c"># protein skimmer model</span>
     <span class="n">proteinRatedSpeed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
     <span class="n">lossMultiplier</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;loss multiplier&#39;</span><span class="p">)</span>
     <span class="n">proteinRatedEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump efficiency&#39;</span><span class="p">)</span>
@@ -177,6 +187,9 @@
     <span class="n">referenceArea</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;reference area&#39;</span><span class="p">)</span>
     <span class="n">runSpeed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump actual run speed&#39;</span><span class="p">)</span>
     <span class="n">pumpModificationUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump modification cost&#39;</span><span class="p">)</span>
+    <span class="n">doProteinUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
+
+    <span class="c"># sand filter model</span>
     <span class="n">pumpFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1669.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated flow&#39;</span><span class="p">)</span>
     <span class="n">pumpRatedHead</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">76.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated head&#39;</span><span class="p">)</span>
     <span class="n">pumpRatedRpm</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1074.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
@@ -190,8 +203,10 @@
     <span class="n">ozoneValveOpen</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated flow&#39;</span><span class="p">)</span>
     <span class="n">denitValveOpen</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;reference area&#39;</span><span class="p">)</span>
     <span class="n">deaerationFlowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump actual run speed&#39;</span><span class="p">)</span>
-    <span class="n">doProteinUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
     <span class="n">doSandUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
+
+    <span class="c"># lighting model</span>
+    <span class="n">numBulbs</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;number of bulbs to replace&#39;</span><span class="p">)</span>
 
     <span class="c"># set up outputs</span>
     <span class="c"># potential constraints</span>
@@ -207,24 +222,38 @@
     <span class="c"># power</span>
     <span class="n">totalPowerSand</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1350.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power used for sand filters&#39;</span><span class="p">)</span>
     <span class="n">totalPowerProtein</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power used for protein skimmers&#39;</span><span class="p">)</span>
+    <span class="n">yearlykWhNominal</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power usage for lighting (nominal)&#39;</span><span class="p">)</span>
+    <span class="n">yearlykWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power usage for lighting (new configuration)&#39;</span><span class="p">)</span>
     <span class="n">totalPowerUsed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output&#39;</span><span class="p">)</span>
 
     <span class="c"># cost</span>
     <span class="n">proteinCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">153000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
     <span class="n">sandCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">162000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
+    <span class="n">yearlyHydraulicCapitalCost</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">360000.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]),</span>
+                                 <span class="n">dtype</span><span class="o">=</span><span class="n">numpy_float</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span>
+                                 <span class="n">desc</span><span class="o">=</span><span class="s">&#39;hydraulic costs for 10 years&#39;</span><span class="p">)</span>
     <span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">315000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
 
+    <span class="c"># lighting nominal</span>
+    <span class="n">recurringCostsNominal</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy_float</span><span class="p">,</span>
+                                  <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;lighting recurring costs for 10 years&#39;</span><span class="p">)</span>
+    <span class="c"># lighting new costs</span>
+    <span class="n">recurringCosts</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy_float</span><span class="p">,</span>
+                           <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;lighting recurring costs for 10 years, new config&#39;</span><span class="p">)</span>
+
     <span class="c"># set up constants</span>
-    <span class="c"># constant values representing the current settings of sand and protein systems of Ocean Voyager</span>
+    <span class="c"># protein skimmer</span>
     <span class="n">numProteinPumps</span> <span class="o">=</span> <span class="mi">34</span>
-    <span class="n">numSandPumps</span> <span class="o">=</span> <span class="mi">36</span>
-    <span class="n">currentSandPumpKw</span> <span class="o">=</span> <span class="mf">1230.24</span>
     <span class="n">currentProteinPumpKw</span> <span class="o">=</span> <span class="mf">580.95</span>
     <span class="n">currentProteinRatedSpeed</span> <span class="o">=</span> <span class="mi">1180</span>
     <span class="n">currentProteinRatedFlow</span> <span class="o">=</span> <span class="mi">1960</span>
     <span class="n">currentProteinRatedEff</span> <span class="o">=</span> <span class="mi">69</span>
     <span class="n">currentProteinRatedHead</span> <span class="o">=</span> <span class="mi">31</span>
     <span class="n">currentProteinCircuitLoss</span> <span class="o">=</span> <span class="mi">150</span>
+
+    <span class="c"># sand filter</span>
+    <span class="n">numSandPumps</span> <span class="o">=</span> <span class="mi">36</span>
+    <span class="n">currentSandPumpKw</span> <span class="o">=</span> <span class="mf">1230.24</span>
     <span class="n">currentSandRatedSpeed</span> <span class="o">=</span> <span class="mi">1006</span>
     <span class="n">currentSandRatedFlow</span> <span class="o">=</span> <span class="mi">1316</span>
     <span class="n">currentSandRatedEff</span> <span class="o">=</span> <span class="mi">73</span>
@@ -234,6 +263,18 @@
     <span class="n">currentSandOzCircuitLoss</span> <span class="o">=</span> <span class="mf">0.57</span>
     <span class="n">currentSandDnCircuitLoss</span> <span class="o">=</span> <span class="mf">0.54</span>
     <span class="n">currentSandDatCircuitLoss</span> <span class="o">=</span> <span class="mf">0.33</span>
+
+    <span class="c"># lighting</span>
+    <span class="n">currentNumLights</span> <span class="o">=</span> <span class="mf">40.0</span>
+    <span class="n">currentBulbWatts</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c"># watts</span>
+    <span class="n">currentBulbCost</span> <span class="o">=</span> <span class="mf">180.0</span>    <span class="c"># dollars</span>
+    <span class="n">currentBulbLife</span> <span class="o">=</span> <span class="mi">10000</span>    <span class="c"># hours</span>
+    <span class="n">hoursPerDay</span> <span class="o">=</span> <span class="mi">12</span>           <span class="c"># hours lights are on each day</span>
+    <span class="n">scaleRatio</span> <span class="o">=</span> <span class="mf">1.5</span>           <span class="c"># number of new lights required per old</span>
+    <span class="n">newLightWatts</span> <span class="o">=</span> <span class="mi">120</span>
+    <span class="n">newLightCost</span> <span class="o">=</span> <span class="mi">712</span>
+    <span class="n">newLightLife</span> <span class="o">=</span> <span class="mi">50000</span>
+
 
     <span class="c"># primary model init</span>
 <div class="viewcode-block" id="OceanVoyagerModel.__init__"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -253,6 +294,14 @@
 
         <span class="c"># Sand Filters Surrogate Model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sand_surrogate</span> <span class="o">=</span> <span class="n">init_sand_filter_surrogate</span><span class="p">()</span>
+
+        <span class="c"># Init light models</span>
+        <span class="n">lsOld</span> <span class="o">=</span> <span class="n">Lights</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">currentNumLights</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currentBulbLife</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currentBulbCost</span><span class="p">],</span>
+                       <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currentBulbLife</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hoursPerDay</span><span class="p">],</span> <span class="p">[</span><span class="bp">True</span><span class="p">])</span> <span class="c"># Old Lights config</span>
+        <span class="n">lsNew</span> <span class="o">=</span> <span class="n">Lights</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">currentNumLights</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scaleRatio</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">newLightWatts</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">newLightCost</span><span class="p">],</span>
+                       <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">newLightLife</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hoursPerDay</span><span class="p">],</span> <span class="p">[</span><span class="bp">False</span><span class="p">])</span> <span class="c"># New Lights config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span> <span class="o">=</span> <span class="n">LightingModel</span><span class="p">(</span><span class="n">lsNew</span><span class="p">,</span> <span class="n">lsOld</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
 
     <span class="c"># primary model method</span></div>
 <div class="viewcode-block" id="OceanVoyagerModel.execute"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -332,13 +381,23 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerSand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandPumpKw</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sandCapitalCost</span> <span class="o">=</span> <span class="mf">0.0</span>
 
+
+        <span class="c"># Execute lighting model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">numBulbs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numBulbs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recurringCostsNominal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">nominalRecurring</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yearlykWhNominal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">nominalkWh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yearlykWh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">yearlykWh</span>
+
         <span class="c"># Total calculations</span>
         <span class="c"># Here we are aggregating up all of the modeled elements of the OceanVoyager exhibit and combining them into</span>
         <span class="c"># a single set of outputs. If more components were modeled, this is where the aggregation of the various</span>
         <span class="c"># attributes would be performed.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerUsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerProtein</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerSand</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proteinCapitalCost</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sandCapitalCost</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerUsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerProtein</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerSand</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">yearlykWh</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">yearlyHydraulicCapitalCost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recurringCosts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yearlyHydraulicCapitalCost</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">proteinCapitalCost</span> <span class="o">+</span> \
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">sandCapitalCost</span>
 </div></div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="c"># Module test routine, executes when this python file is ran independently</span>

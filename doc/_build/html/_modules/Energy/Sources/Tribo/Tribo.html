@@ -90,6 +90,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../cost.html">Cost Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../cost.html#costmodel-component">CostModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
@@ -190,14 +195,15 @@
     <span class="n">tileEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;tribo efficiency (percent)&#39;</span><span class="p">)</span>
     <span class="n">tileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;unit cost of a single tile&#39;</span><span class="p">)</span>
     <span class="n">mgtTileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;unit cost of a management tile&#39;</span><span class="p">)</span>
-    <span class="n">tilekWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.0000019</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;power produced per step (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">tilePower</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.007</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wattage produced per step (kWh)&#39;</span><span class="p">)</span>
 
     <span class="c"># set up outputs</span>
     <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
     <span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">40000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost ($)&#39;</span><span class="p">)</span>
 
     <span class="c"># set up constants</span>
-    <span class="c"># None</span>
+    <span class="c"># timePerStep and wattsPerStep were used to calculate the expected value</span>
+    <span class="n">timePerStep</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c">#: The duration of power generation for one step</span>
 
     <span class="c"># primary model method</span>
 <div class="viewcode-block" id="TriboModel.execute"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.Tribo.TriboModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -215,7 +221,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">tileCount</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pedStepsPerTile</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tileEff</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tilekWh</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tilePower</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timePerStep</span><span class="p">)</span>
 
         <span class="c"># Calculate cost</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">calc_cost</span><span class="p">(</span>
@@ -251,7 +258,7 @@
         <span class="c"># Add the parameters to be used in optimization</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;tm.tileCount&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;tm.tileEff&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=.</span><span class="mi">7</span><span class="p">,</span> <span class="n">high</span><span class="o">=.</span><span class="mi">98</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;tm.tilekWh&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=.</span><span class="mo">0001</span><span class="p">,</span> <span class="n">high</span><span class="o">=.</span><span class="mo">01</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;tm.tilePower&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=.</span><span class="mo">0001</span><span class="p">,</span> <span class="n">high</span><span class="o">=.</span><span class="mo">01</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_objective</span><span class="p">(</span><span class="s">&#39;-tm.totalkWh&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;tm.triboCapitalCost &lt;= 400000.0&#39;</span><span class="p">)</span>

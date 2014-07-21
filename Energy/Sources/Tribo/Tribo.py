@@ -35,14 +35,15 @@ class TriboModel(Component):
     tileEff = Float(0.9, iotype='in', desc='tribo efficiency (percent)')
     tileUnitCost = Float(800.0, iotype='in', desc='unit cost of a single tile')
     mgtTileUnitCost = Float(3000.0, iotype='in', desc='unit cost of a management tile')
-    tilekWh = Float(0.0000019, iotype='in', desc='power produced per step (kWh)')
+    tilePower = Float(0.007, iotype='in', desc='wattage produced per step (kWh)')
 
     # set up outputs
     totalkWh = Float(1.0, iotype='out', desc='yearly power output (kWh)')
     triboCapitalCost = Float(40000.0, iotype='out', desc='investment cost ($)')
 
     # set up constants
-    # None
+    # timePerStep and wattsPerStep were used to calculate the expected value
+    timePerStep = 1.0  #: The duration of power generation for one step
 
     # primary model method
     def execute(self):
@@ -60,7 +61,8 @@ class TriboModel(Component):
             self.tileCount,
             self.pedStepsPerTile,
             self.tileEff,
-            self.tilekWh)
+            self.tilePower,
+            self.timePerStep)
 
         # Calculate cost
         self.triboCapitalCost = calc_cost(
@@ -96,7 +98,7 @@ class TriboOptimization(Assembly):
         # Add the parameters to be used in optimization
         self.driver.add_parameter('tm.tileCount', low=1, high=1000)
         self.driver.add_parameter('tm.tileEff', low=.7, high=.98)
-        self.driver.add_parameter('tm.tilekWh', low=.0001, high=.01)
+        self.driver.add_parameter('tm.tilePower', low=.0001, high=.01)
 
         self.driver.add_objective('-tm.totalkWh')
         self.driver.add_constraint('tm.triboCapitalCost <= 400000.0')

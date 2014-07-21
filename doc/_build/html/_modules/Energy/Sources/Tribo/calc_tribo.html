@@ -90,6 +90,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../cost.html">Cost Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../cost.html#costmodel-component">CostModel Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
@@ -161,19 +166,28 @@
 
 
 <span class="c">#@jit</span>
-<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">tileCount</span><span class="p">,</span> <span class="n">pedStepsPerTile</span><span class="p">,</span> <span class="n">tileEff</span><span class="p">,</span> <span class="n">tilekWh</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">tileCount</span><span class="p">,</span> <span class="n">pedStepsPerTile</span><span class="p">,</span> <span class="n">tileEff</span><span class="p">,</span> <span class="n">tilePower</span><span class="p">,</span> <span class="n">timePerStep</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Calc_power computes the total number of steps that will occur across all tiles for this given design</span>
 <span class="sd">    configuration. The total number of steps is affected by the number of tiles and the pedestrian model that</span>
 <span class="sd">    simulates both on and off season steps per tile.</span>
 
+<span class="sd">    .. note:: The vendor advertises watts generated per step, not kWh. So we convert to energy by assuming a step \</span>
+<span class="sd">    generates power at the stated power for a fixed period of time, timePerStep</span>
+
 <span class="sd">    :param tileCount: A design variable for how many tiles you would want to purchase</span>
 <span class="sd">    :param pedStepsPerTile: An uncertainty for the number of expected steps per tile over a year</span>
 <span class="sd">    :param tileEff: The amount of actual useful energy based on the claimed</span>
-<span class="sd">    :param tilekWh: The claimed power return when one person steps on a tile</span>
+<span class="sd">    :param tilePower: The claimed power return when one person steps on a tile</span>
+<span class="sd">    :param timePerStep: The duration of power generation for one step</span>
 <span class="sd">    :return: The total energy generated in a year for the input design configuration</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">return</span> <span class="n">tileCount</span> <span class="o">*</span> <span class="n">pedStepsPerTile</span> <span class="o">*</span> <span class="n">tileEff</span> <span class="o">*</span> <span class="n">tilekWh</span>
+
+    <span class="n">minutesPerHour</span> <span class="o">=</span> <span class="mf">60.0</span>
+    <span class="n">secondsPerMinute</span> <span class="o">=</span> <span class="mf">60.0</span>
+    <span class="n">timeFactor</span> <span class="o">=</span> <span class="p">(</span><span class="n">timePerStep</span><span class="o">/</span><span class="p">(</span><span class="n">minutesPerHour</span> <span class="o">*</span> <span class="n">secondsPerMinute</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">tileCount</span> <span class="o">*</span> <span class="n">pedStepsPerTile</span> <span class="o">*</span> <span class="n">tileEff</span> <span class="o">*</span> <span class="n">tilePower</span> <span class="o">*</span> <span class="n">timePerStep</span> <span class="o">*</span> <span class="n">timeFactor</span>
 
 
 <span class="c">#@jit</span></div>
