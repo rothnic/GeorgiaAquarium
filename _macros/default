@@ -1,8 +1,9 @@
 # Auto-generated file - MODIFY AT YOUR OWN RISK
+import os, sys
+sys.path.append(os.path.realpath('__file__'))
 SolarModel = set_as_top(create("openmdao.main.assembly.Assembly"))
 SolarModel.add("sm", create("Energy.Sources.Solar.Solar.SolarModel"))
 SolarModel.replace("driver", create("openmdao.lib.drivers.doedriver.DOEdriver"))
-SolarModel.driver.add_parameter('sm.batteryCost',low=1,high=20);
 SolarModel.driver.add_parameter('sm.circuitLoss',low=.1,high=.4);
 SolarModel.driver.add_parameter('sm.panelEff',low=.8,high=.98);
 SolarModel.driver.add_parameter('sm.panelRating',low=.5,high=.6);
@@ -16,7 +17,6 @@ SolarModel.driver.add_parameter('sm.panelEff',low=.15,high=.45);
 SolarModel.driver.add_parameter('sm.surfaceArea',low=100,high=1000);
 SolarModel.driver.add_parameter('sm.panelRating',low=200,high=350);
 SolarModel.driver.add_parameter('sm.sunRadianceScalar',low=.9,high=1.1);
-SolarModel.driver.add_parameter('sm.batteryCost',low=1,high=1);
 SolarModel.driver.add_parameter('sm.circuitLoss',low=.7,high=.95);
 SolarModel.set(u'driver.case_outputs', ['sm.totalkWh','sm.solarCapitalCost'])
 UncertaintyTester = set_as_top(create("openmdao.main.assembly.Assembly"))
@@ -76,7 +76,6 @@ _ = GeorgiaAquarium.create_passthrough('wm.turbineEff')
 _ = GeorgiaAquarium.create_passthrough('wm.turbineRating')
 _ = GeorgiaAquarium.create_passthrough('wm.windCostPerWatt')
 _ = GeorgiaAquarium.create_passthrough('wm.windSpeedScalar')
-_ = GeorgiaAquarium.create_passthrough('sm.batteryCost')
 _ = GeorgiaAquarium.create_passthrough('sm.panelEff')
 _ = GeorgiaAquarium.create_passthrough('sm.panelRating')
 _ = GeorgiaAquarium.create_passthrough('sm.sunRadianceScalar')
@@ -126,20 +125,6 @@ _ = GeorgiaAquarium.create_passthrough('pm.pedsPerHourOn')
 GeorgiaAquarium.connect("pm.yearlyStepsPerTile","tb.pedStepsPerTile")
 GeorgiaAquarium.add("tma", create("openmdao.main.assembly.Assembly"))
 GeorgiaAquarium.remove("tma")
-GeorgiaAquariumAssembly = set_as_top(create("openmdao.main.assembly.Assembly"))
-GeorgiaAquariumAssembly.add("sma", create("openmdao.main.assembly.Assembly"))
-GeorgiaAquariumAssembly.sma.add("sm", create("Energy.Sources.Solar.Solar.SolarModel"))
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.batteryCost')
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.circuitLoss')
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.panelEff')
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.panelRating')
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.sunRadianceScalar')
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.surfaceArea')
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.solarCapitalCost')
-_ = GeorgiaAquariumAssembly.sma.create_passthrough('sm.totalkWh')
-_ = GeorgiaAquariumAssembly.create_passthrough('sma.batteryCost')
-_ = GeorgiaAquariumAssembly.create_passthrough('sma.circuitLoss')
-_ = GeorgiaAquariumAssembly.create_passthrough('sma.panelEff')
 GeorgiaAquarium.driver.workflow.remove('sm')
 GeorgiaAquarium.driver.workflow.remove('tb')
 GeorgiaAquarium.driver.workflow.remove('wm')
@@ -204,3 +189,6 @@ gao.set(u'driver.pyopt_diff', True)
 CostTester.replace("driver", create("openmdao.lib.drivers.genetic.Genetic"))
 gao.set(u'driver.printvars', ['ga.totalInitialInvestment', 'ga.breakEvenYear', 'ga.totalFlowProtein'])
 gad = set_as_top(create("GeorgiaAquariumOptimizer.GeorgiaAquariumDoe"))
+from GeorgiaAquarium import GeorgiaAquarium
+gad2 = set_as_top(create("GeorgiaAquariumOptimizer.GeorgiaAquariumDoe"))
+del(gad2)

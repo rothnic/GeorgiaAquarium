@@ -10,7 +10,7 @@ class RunAggregator(Component):
 
     # set up inputs
     breakEvenYearSamp = Float(500.0, iotype='in', desc='break even year sample')
-    headOutSamp = Float(500.0, iotype='in', desc='head out sample')
+    proteinHeadSamp = Float(500.0, iotype='in', desc='head out sample')
     originalEnergyCostSamp = Float(500.0, iotype='in', desc='original/baseline energy cost sample')
     totalEnergyCostSamp = Float(500.0, iotype='in', desc='total energy cost sample')
     totalEnergySavedSamp = Float(500.0, iotype='in', desc='total energy saved sample')
@@ -27,7 +27,7 @@ class RunAggregator(Component):
 
     # set up outputs
     breakEvenYearMean = Float(500.0, iotype='out', desc='break even year mean')
-    headOutMean = Float(500.0, iotype='out', desc='head out mean')
+    proteinHeadMean = Float(500.0, iotype='out', desc='head out mean')
     originalEnergyCostMean = Float(500.0, iotype='out', desc='original/baseline energy cost mean')
     totalEnergyCostMean = Float(500.0, iotype='out', desc='total energy cost mean')
     totalEnergySavedMean = Float(500.0, iotype='out', desc='total energy saved mean')

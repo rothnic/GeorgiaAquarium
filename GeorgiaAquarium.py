@@ -58,7 +58,6 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('wm.windCapitalCost')
 
         # Solar Model
-        self.create_passthrough('sm.batteryCost')
         self.create_passthrough('sm.panelEff')
         self.create_passthrough('sm.panelRating')
         self.create_passthrough('sm.sunRadianceScalar')

@@ -63,11 +63,11 @@ class GeorgiaAquariumSampler(Assembly):
         self.connect("um.pedsPerHourOff", "ga.pedsPerHourOff")
         self.connect("um.pedsPerHourOn", "ga.pedsPerHourOn")
         self.connect("ga.breakEvenYear", "ra.breakEvenYearSamp")
-        self.connect("ga.proteinHead", "ra.headOutSamp")
+        self.connect("ga.proteinHead", "ra.proteinHeadSamp")
         self.connect("ga.originalEnergyCost", "ra.originalEnergyCostSamp")
         self.connect("ga.totalEnergyCost", "ra.totalEnergyCostSamp")
         self.connect("ga.totalEnergySaved", "ra.totalEnergySavedSamp")
-        self.connect("ga.totalProteinFlow", "ra.totalProteinFlowSamp")
+        self.connect("ga.totalFlowProtein", "ra.totalFlowProteinSamp")
         self.connect("ga.totalInitialInvestment", "ra.totalInitialInvestmentSamp")
         self.connect("ga.totalPowerConsumed", "ra.totalPowerConsumedSamp")
         self.connect("ga.totalPowerProduced", "ra.totalPowerProducedSamp")
@@ -169,8 +169,6 @@ class GeorgiaAquariumDoe(Assembly):
         self.driver.workflow.add("ga", check=True)
 
         # Add parameters to Optimization Driver
-        #self.driver.add_parameter('ga.doProteinUpgrade', low=0.0, high=1.0)
-        #self.driver.add_parameter('ga.doSandUpgrade', low=0.0, high=1.0)
         self.driver.add_parameter('ga.bladeLength', low=1.0, high=5.0)
         self.driver.add_parameter('ga.proteinRatedSpeed', low=100.0, high=1500.0)
         self.driver.add_parameter('ga.ratedHead', low=20.0, high=40.0)
@@ -193,5 +191,5 @@ class GeorgiaAquariumDoe(Assembly):
 if __name__=="__main__":
     gao = GeorgiaAquariumOptimization()
     gao.execute()
-    gad = GeorgiaAquariumDoe()
-    gad.execute()
+    #gad = GeorgiaAquariumDoe()
+    #gad.execute()
