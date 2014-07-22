@@ -32,6 +32,8 @@ class PedSurrogate:
         representing the pedestrians per hour in the on season, and the pedestrians per hour in the off season. These
         are used to calculate the average steps we could expect on a triboelectric tile in a given year.
 
+        .. Note: Assumes 7 hours per day for off season, and 12 hours per day for on season
+
         :param pedsPerHourOn: Average pedestrians per hour in the on season
         :param pedsPerHourOff: Average pedestrians per hour in the off season
         :return: Number of steps we would expect per triboelectric tile on average for a given year

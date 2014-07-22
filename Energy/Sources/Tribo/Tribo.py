@@ -38,8 +38,8 @@ class TriboModel(Component):
     tilePower = Float(0.000001, iotype='in', desc='wattage produced per step (kWh)')
 
     # set up outputs
-    totalkWh = Float(1.0, iotype='out', desc='yearly power output (kWh)')
-    triboCapitalCost = Float(40000.0, iotype='out', desc='investment cost ($)')
+    totalkWh = Float(4.68, iotype='out', desc='yearly power output (kWh)')
+    triboCapitalCost = Float(27000.0, iotype='out', desc='investment cost ($)')
 
     # set up constants
     # None

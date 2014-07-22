@@ -24,7 +24,7 @@ class PedestrianModel(Component):
     pedsPerHourOff = Float(500.0, iotype='in', desc='panel efficiency')
 
     # set up outputs
-    yearlyStepsPerTile = Float(47180.0, iotype='out', desc='yearly power output')
+    yearlyStepsPerTile = Float(415820.0, iotype='out', desc='yearly power output')
 
     # set up constants
     offDays = 236      #: number of off season days in one year
