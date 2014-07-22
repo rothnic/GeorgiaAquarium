@@ -42,8 +42,7 @@ class TriboModel(Component):
     triboCapitalCost = Float(40000.0, iotype='out', desc='investment cost ($)')
 
     # set up constants
-    # timePerStep and wattsPerStep were used to calculate the expected value
-    timePerStep = 1.0  #: The duration of power generation for one step
+    # None
 
     # primary model method
     def execute(self):
@@ -61,8 +60,7 @@ class TriboModel(Component):
             self.tileCount,
             self.pedStepsPerTile,
             self.tileEff,
-            self.tilePower,
-            self.timePerStep)
+            self.tilePower)
 
         # Calculate cost
         self.triboCapitalCost = calc_cost(
