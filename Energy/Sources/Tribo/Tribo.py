@@ -35,7 +35,7 @@ class TriboModel(Component):
     tileEff = Float(0.9, iotype='in', desc='tribo efficiency (percent)')
     tileUnitCost = Float(800.0, iotype='in', desc='unit cost of a single tile')
     mgtTileUnitCost = Float(3000.0, iotype='in', desc='unit cost of a management tile')
-    tilePower = Float(0.007, iotype='in', desc='wattage produced per step (kWh)')
+    tilePower = Float(0.000001, iotype='in', desc='wattage produced per step (kWh)')
 
     # set up outputs
     totalkWh = Float(1.0, iotype='out', desc='yearly power output (kWh)')

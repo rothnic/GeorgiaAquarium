@@ -31,7 +31,7 @@ class RunAggregator(Component):
     originalEnergyCostMean = Float(500.0, iotype='out', desc='original/baseline energy cost mean')
     totalEnergyCostMean = Float(500.0, iotype='out', desc='total energy cost mean')
     totalEnergySavedMean = Float(500.0, iotype='out', desc='total energy saved mean')
-    totalFlowProteinwMean = Float(500.0, iotype='out', desc='total flow mean')
+    totalFlowProteinMean = Float(500.0, iotype='out', desc='total flow mean')
     totalInitialInvestmentMean = Float(500.0, iotype='out', desc='total initial investment mean')
     totalPowerConsumedMean = Float(500.0, iotype='out', desc='total power consumed mean')
     totalPowerProducedMean = Float(500.0, iotype='out', desc='total power produced mean')

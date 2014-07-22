@@ -20,21 +20,21 @@ class GeorgiaAquariumGlobalOptimization(Assembly):
 
         # Create passthroughs to optimizer
         self.create_passthrough('gas.bladeLength')
-        self.create_passthrough('gas.ratedEff')
+        self.create_passthrough('gas.proteinRatedEff')
         self.create_passthrough('gas.ratedFlow')
-        self.create_passthrough('gas.ratedHead')
-        self.create_passthrough('gas.ratedSpeed')
+        self.create_passthrough('gas.proteinHead')
+        self.create_passthrough('gas.proteinRatedSpeed')
         self.create_passthrough('gas.referenceArea')
         self.create_passthrough('gas.runSpeed')
         self.create_passthrough('gas.surfaceArea')
         self.create_passthrough('gas.tileCount')
         self.create_passthrough('gas.turbineCount')
         self.create_passthrough('gas.breakEvenYearMean')
-        self.create_passthrough('gas.headOutMean')
+        self.create_passthrough('gas.proteinHeadMean')
         self.create_passthrough('gas.originalEnergyCostMean')
         self.create_passthrough('gas.totalEnergyCostMean')
         self.create_passthrough('gas.totalEnergySavedMean')
-        self.create_passthrough('gas.totalFlowMean')
+        self.create_passthrough('gas.totalFlowProteinMean')
         self.create_passthrough('gas.totalInitialInvestmentMean')
         self.create_passthrough('gas.totalPowerConsumedMean')
         self.create_passthrough('gas.totalPowerProducedMean')
@@ -59,7 +59,7 @@ class GeorgiaAquariumSampler(Assembly):
         self.driver.workflow.add("ga", check=True)
         self.driver.workflow.add("ra", check=True)
 
-        # Make connections between internal components
+        # Make internal connections
         self.connect("um.pedsPerHourOff", "ga.pedsPerHourOff")
         self.connect("um.pedsPerHourOn", "ga.pedsPerHourOn")
         self.connect("ga.breakEvenYear", "ra.breakEvenYearSamp")
@@ -88,7 +88,7 @@ class GeorgiaAquariumSampler(Assembly):
 
         # Setup passthroughs for design variables and expected output values
         self.create_passthrough('ga.bladeLength')
-        self.create_passthrough('ga.ratedSpeed')
+        self.create_passthrough('ga.proteinRatedSpeed')
         self.create_passthrough('ga.proteinHead')
         self.create_passthrough('ga.ratedFlow')
         self.create_passthrough('ga.surfaceArea')
@@ -96,13 +96,13 @@ class GeorgiaAquariumSampler(Assembly):
         self.create_passthrough('ga.turbineCount')
         self.create_passthrough('ga.runSpeed')
         self.create_passthrough('ga.referenceArea')
-        self.create_passthrough('ovm.proteinRatedEff')
+        self.create_passthrough('ga.proteinRatedEff')
         self.create_passthrough('ra.breakEvenYearMean')
-        self.create_passthrough('ra.headOutMean')
+        self.create_passthrough('ra.proteinHeadMean')
         self.create_passthrough('ra.originalEnergyCostMean')
         self.create_passthrough('ra.totalEnergyCostMean')
         self.create_passthrough('ra.totalEnergySavedMean')
-        self.create_passthrough('ra.totalFlowMean')
+        self.create_passthrough('ra.totalFlowProteinMean')
         self.create_passthrough('ra.totalInitialInvestmentMean')
         self.create_passthrough('ra.totalPowerConsumedMean')
         self.create_passthrough('ra.totalPowerProducedMean')
@@ -144,11 +144,17 @@ class GeorgiaAquariumOptimization(Assembly):
         self.driver.add_parameter('ga.panelEff', low=.05, high=.25)
         self.driver.add_parameter('ga.panelRating', low=100, high=450)
         self.driver.add_parameter('ga.surfaceArea', low=0.0, high=1000.0)
+
+        # Define Objective
         self.driver.add_objective('-ga.year5Roi')
+
+        # Define Constraints
         self.driver.add_constraint('ga.totalInitialInvestment-400000.0 <= 0.0')
         self.driver.add_constraint('ga.breakEvenYear - 3.0 < 0')
         self.driver.add_constraint('ga.totalFlowProtein-66000 < 0')
         self.driver.add_constraint('ga.totalFlowProtein-60000 > 0')
+
+        # Configure additional logged variables
         self.driver.printvars = ['ga.totalInitialInvestment', 'ga.breakEvenYear', 'ga.totalFlowProtein', 'ga.year5Roi']
 
 class GeorgiaAquariumDoe(Assembly):
