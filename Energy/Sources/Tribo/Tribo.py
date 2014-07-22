@@ -20,10 +20,9 @@ class TriboModel(Component):
     detailed simulation of the pedestrian movement through the aquarium to estimate the number of steps we would see
     on a given tile, then use that information in the calculation of power generation.
 
-    The current assumption for power calculation is that the quoted 7 watts per step is only over a short period of
-    time, like 1 second. You can use this to calculate what that is in kWh. This can be used with the yearly steps
-    per tile to provide some performance output for a design decision on the number of tiles, along with the cost
-    impact of that decision.
+    The current assumption for power calculation is that 1,000,000 steps = 1kWh of power generated. 
+    This can be used with the yearly steps per tile to provide some performance output for a design decision 
+    on the number of tiles, along with the cost impact of that decision.
 
     Relies on input values from the :class:`~Pedestrian.Pedestrian.PedestrianModel` for use in calculating the power
     generation.
@@ -38,8 +37,8 @@ class TriboModel(Component):
     tilePower = Float(0.000001, iotype='in', desc='wattage produced per step (kWh)')
 
     # set up outputs
-    totalkWh = Float(4.68, iotype='out', desc='yearly power output (kWh)')
-    triboCapitalCost = Float(27000.0, iotype='out', desc='investment cost ($)')
+    totalkWh = Float(1.0, iotype='out', desc='yearly power output (kWh)')
+    triboCapitalCost = Float(40000.0, iotype='out', desc='investment cost ($)')
 
     # set up constants
     # None
