@@ -30,6 +30,7 @@ def calc_cost(tileUnitCost, tileCount, mgtTileUnitCost):
     '''
     Calc_cost computes the cost of a triboelectric system based on the PedGen pricing model. There are affects to
     cost based on the number of units you purchase, which affects how many management tiles are needed as well.
+    Each management tile can run up to 50 tiles.
 
     :param tileUnitCost: A cost per regular tile type when purchased in bulk
     :param tileCount: The whole number count of tiles to be installed
