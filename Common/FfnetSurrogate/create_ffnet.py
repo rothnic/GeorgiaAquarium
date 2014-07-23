@@ -5,7 +5,7 @@ from FfnetSurrogate import FfnetSurrogate
 
 def neural_from_csv(trainFile, inputCols, outputCols):
     surr = FfnetSurrogate(trainingFile=trainFile, inputCols=inputCols, outputCols=outputCols)
-    surr.train([len(inputCols), 25, len(outputCols)])
+    surr.train(25)
     surr.test()
     return surr
 
@@ -53,7 +53,7 @@ def create_surrogate():
         'deareationPowerOut'
     ]
 
-    trainFile = 'hydroTraining.csv'
+    trainFile = 'hydroSandTraining.csv'
 
     return neural_from_csv(trainFile, inputCols, outputCols)
 

@@ -132,15 +132,37 @@ class GeorgiaAquariumOptimization(Assembly):
         self.driver.workflow.add("ga", check=True)
 
         # Add parameters to Optimization Driver
+        # OceanVoyager protein skimmers
         self.driver.add_parameter('ga.bladeLength', low=0.0, high=5.0)
-        self.driver.add_parameter('ga.proteinRatedSpeed', low=100.0, high=1500.0)
+        self.driver.add_parameter('ga.proteinRatedSpeed', low=800.0, high=1600.0)
         self.driver.add_parameter('ga.ratedHead', low=20.0, high=40.0)
         self.driver.add_parameter('ga.ratedFlow', low=1300.0, high=2000.0)
+        self.driver.add_parameter('ga.proteinRatedEff', low=0.6, high=0.9)
+        self.driver.add_parameter('ga.runSpeed', low=800.0, high=1600.0)
+        self.driver.add_parameter('ga.lossMultiplier', low=135.0, high=150.0)
+        self.driver.add_parameter('ga.referenceArea', low=0.1, high=0.5)
+
+        # OceanVoyager sand filters
+        self.driver.add_parameter('ga.pumpFlow', low=1300.0, high=1700.0)
+        self.driver.add_parameter('ga.pumpEff', low=.6, high=.9)
+        self.driver.add_parameter('ga.pumpRatedHead', low=40.0, high=80.0)
+        self.driver.add_parameter('ga.pumpRatedRpm', low=1000.0, high=1300.0)
+        self.driver.add_parameter('ga.pumpRunRpm', low=1000.0, high=1300.0)
+        self.driver.add_parameter('ga.flowLossCoef', low=0.1, high=10.0)
+        self.driver.add_parameter('ga.heatExchFlowLossCoef', low=0.1, high=6.0)
+        self.driver.add_parameter('ga.heatExchValveOpen', low=0.1, high=1.0)
+        self.driver.add_parameter('ga.denitFLowLossCoef', low=0.1, high=3.0)
+        self.driver.add_parameter('ga.denitValveOpen', low=0.1, high=1.0)
+        self.driver.add_parameter('ga.ozoneFlowLossCoef', low=0.1, high=6.0)
+        self.driver.add_parameter('ga.ozoneValveOpen', low=0.1, high=1.0)
+        self.driver.add_parameter('ga.deaerationFlowLossCoef', low=0.1, high=2.0)
+
+        # OceanVoyager Lighting
+        self.driver.add_parameter('ga.numBulbs', low=0.0, high=40.0)
+
         self.driver.add_parameter('ga.tileCount', low=0.0, high=100.0)
         self.driver.add_parameter('ga.turbineCount', low=0.0, high=25.0)
-        self.driver.add_parameter('ga.runSpeed', low=800.0, high=1600.0)
-        self.driver.add_parameter('ga.referenceArea', low=.1, high=.5)
-        self.driver.add_parameter('ga.pumpEff', low=.6, high=.9)
+
         self.driver.add_parameter('ga.panelEff', low=.05, high=.25)
         self.driver.add_parameter('ga.panelRating', low=100, high=450)
         self.driver.add_parameter('ga.surfaceArea', low=0.0, high=1000.0)
@@ -151,8 +173,18 @@ class GeorgiaAquariumOptimization(Assembly):
         # Define Constraints
         self.driver.add_constraint('ga.totalInitialInvestment-400000.0 <= 0.0')
         self.driver.add_constraint('ga.breakEvenYear - 3.0 < 0')
-        self.driver.add_constraint('ga.totalFlowProtein-66000 < 0')
-        self.driver.add_constraint('ga.totalFlowProtein-60000 > 0')
+        self.driver.add_constraint('ga.totalFlowProtein - 66000 < 0')
+        self.driver.add_constraint('ga.totalFlowProtein - 60000 > 0')
+        self.driver.add_constraint('ga.proteinPumpPower - 20 < 0')
+        self.driver.add_constraint('ga.proteinPumpPower > 0')
+        self.driver.add_constraint('ga.totalFlowSand - 61000 < 0')
+        self.driver.add_constraint('ga.totalFlowSand -60000 > 0')
+        self.driver.add_constraint('ga.sandFilterFlow - 800 < 0')
+        self.driver.add_constraint('ga.sandFilterFlow > 0')
+        self.driver.add_constraint('ga.denitFlow - 8500 < 0')
+        self.driver.add_constraint('ga.denitFlow - 7000 > 0')
+        self.driver.add_constraint('ga.bypassFlow - 44000 < 0')
+        self.driver.add_constraint('ga.bypassFlow - 42000 > 0')
 
         # Configure additional logged variables
         self.driver.printvars = ['ga.totalInitialInvestment', 'ga.breakEvenYear', 'ga.totalFlowProtein', 'ga.year5Roi']

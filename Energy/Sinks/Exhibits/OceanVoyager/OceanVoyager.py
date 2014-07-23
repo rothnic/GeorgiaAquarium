@@ -19,13 +19,13 @@ import numpy as np
 class OceanVoyagerModel(Component):
     # set up inputs
     # protein skimmer model
-    proteinRatedSpeed = Float(800.0, iotype='in', desc='electric pump speed rating')
-    lossMultiplier = Float(20.0, iotype='in', desc='loss multiplier')
-    proteinRatedEff = Float(0.6, iotype='in', desc='electric pump efficiency')
-    ratedHead = Float(20.0, iotype='in', desc='electric pump rated head')
-    ratedFlow = Float(1300.0, iotype='in', desc='electric pump rated flow')
+    proteinRatedSpeed = Float(1590.0, iotype='in', desc='electric pump speed rating')
+    lossMultiplier = Float(160.0, iotype='in', desc='loss multiplier')
+    proteinRatedEff = Float(0.7, iotype='in', desc='electric pump efficiency')
+    ratedHead = Float(29.0, iotype='in', desc='electric pump rated head')
+    ratedFlow = Float(1668.0, iotype='in', desc='electric pump rated flow')
     referenceArea = Float(0.1, iotype='in', desc='reference area')
-    runSpeed = Float(800.0, iotype='in', desc='electric pump actual run speed')
+    runSpeed = Float(1590.0, iotype='in', desc='electric pump actual run speed')
     pumpModificationUnitCost = Float(3500.0, iotype='in', desc='electric pump modification cost')
     doProteinUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
 
@@ -33,15 +33,15 @@ class OceanVoyagerModel(Component):
     pumpFlow = Float(1669.0, iotype='in', desc='electric pump rated flow')
     pumpRatedHead = Float(76.0, iotype='in', desc='electric pump rated head')
     pumpRatedRpm = Float(1074.0, iotype='in', desc='electric pump speed rating')
-    pumpRunRpm = Float(1000.0, iotype='in', desc='electric pump actual run speed')
+    pumpRunRpm = Float(1116.0, iotype='in', desc='electric pump actual run speed')
     pumpEff = Float(0.79, iotype='in', desc='electric pump efficiency')
     flowLossCoef = Float(3.54, iotype='in', desc='electric pump speed rating')
     heatExchFlowLossCoef = Float(5.06, iotype='in', desc='electric pump speed rating')
     heatExchValveOpen = Float(0.1, iotype='in', desc='loss multiplier')
     denitFLowLossCoef = Float(0.54, iotype='in', desc='electric pump efficiency')
     ozoneFlowLossCoef = Float(0.57, iotype='in', desc='electric pump rated head')
-    ozoneValveOpen = Float(0.1, iotype='in', desc='electric pump rated flow')
-    denitValveOpen = Float(0.1, iotype='in', desc='reference area')
+    ozoneValveOpen = Float(0.36, iotype='in', desc='electric pump rated flow')
+    denitValveOpen = Float(0.7, iotype='in', desc='reference area')
     deaerationFlowLossCoef = Float(0.3, iotype='in', desc='electric pump actual run speed')
     doSandUpgrade = Float(1.0, iotype='in', desc='boolean to do retrofit or not')
 
@@ -52,7 +52,7 @@ class OceanVoyagerModel(Component):
     # potential constraints
     proteinHead = Float(25.0, iotype='out', desc='simulated head')
     totalFlowSand = Float(63000.0, iotype='out', desc='total gallons per minute sand filters')
-    totalFlowProtein = Float(1.0, iotype='out', desc='total gallons per minute protein skimmers')
+    totalFlowProtein = Float(55358.0, iotype='out', desc='total gallons per minute protein skimmers')
     heatExchFlow1 = Float(1000.0, iotype='out', desc='simulated head')
     heatExchFlow2 = Float(1000.0, iotype='out', desc='simulated head')
     denitFlow = Float(8000.0, iotype='out', desc='simulated head')
@@ -60,6 +60,7 @@ class OceanVoyagerModel(Component):
     sandFilterFlow = Float(800.0, iotype='out', desc='flow through one of the sand filters')
 
     # power
+    proteinPumpPower = Float(10.0, iotype='out', desc='power in kW for protein skimmer pump')
     totalPowerSand = Float(1350.0, iotype='out', desc='yearly power used for sand filters')
     totalPowerProtein = Float(1.0, iotype='out', desc='yearly power used for protein skimmers')
     yearlykWhNominal = Float(1.0, iotype='out', desc='yearly power usage for lighting (nominal)')
@@ -170,7 +171,8 @@ class OceanVoyagerModel(Component):
             # Calculate protein performance attributes
             self.totalPowerProtein, \
             self.proteinHead, \
-            self.totalFlowProtein = calc_protein_power(self.protein_surrogate, inputsProtein, self.numProteinPumps)
+            self.totalFlowProtein, \
+            self.proteinPumpPower = calc_protein_power(self.protein_surrogate, inputsProtein, self.numProteinPumps)
 
             # Calculate protein cost
             self.proteinCapitalCost = calc_protein_cost(self.numProteinPumps, self.pumpModificationUnitCost,
@@ -185,6 +187,7 @@ class OceanVoyagerModel(Component):
             self.totalFlowProtein = 63000.0
             self.totalPowerProtein = self.currentProteinPumpKw * 24 * 365
             self.proteinCapitalCost = 0.0
+            self.proteinPumpPower = self.currentProteinPumpKw / self.numProteinPumps
 
         # Calculations for sand filters
         # This calculation is dependent on whether or not we'd like to do an upgrade. The upgrade is essentially the

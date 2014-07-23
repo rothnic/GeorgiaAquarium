@@ -99,15 +99,16 @@ def calc_protein_power(surrogate, inputs, numPumps):
 
     outputs = surrogate.sim(inputs)
 
-    totalPower, headOut, totalFlow = calc_protein_power_fast(outputs, numPumps)
+    totalPower, headOut, totalFlow, proteinPumpPower = calc_protein_power_fast(outputs, numPumps)
 
-    return totalPower, headOut, totalFlow
+    return totalPower, headOut, totalFlow, proteinPumpPower
 
 
-@jit
+#@jit
 def calc_protein_power_fast(outputs, numPumps):
     # total kWh per year
-    totalPower = (outputs[0] * numPumps) * 24 * 365
+    proteinPumpPower = outputs[0]
+    totalPower = (proteinPumpPower * numPumps) * 24 * 365
 
     # head out
     pumpHeadDiff = outputs[5] - outputs[4]
@@ -116,7 +117,7 @@ def calc_protein_power_fast(outputs, numPumps):
 
     # total flow out
     totalFlow = outputs[1]
-    return totalPower, headOut, totalFlow
+    return totalPower, headOut, totalFlow, proteinPumpPower
 
 
 def calc_sand_power(surrogate, inputs, numPumps):
@@ -124,17 +125,17 @@ def calc_sand_power(surrogate, inputs, numPumps):
     outputs = surrogate.sim(inputs)
 
     totalPower = (outputs[1] * numPumps) * 24 * 365
-    sandFlow = outputs[7]
+    sandFlow = -outputs[7]
     heatExchFlow1 = outputs[3]
-    heatExchFlow2 = outputs[4]
-    denitFlow = outputs[14]
-    bypassFlow = outputs[20]
+    heatExchFlow2 = -outputs[4]
+    denitFlow = -outputs[14]
+    bypassFlow = -outputs[20]
     totalFlow = heatExchFlow2 + denitFlow + bypassFlow + sandFlow
 
     return totalPower, sandFlow, heatExchFlow1, heatExchFlow2, denitFlow, bypassFlow, totalFlow
 
 
-@jit
+#@jit
 def calc_protein_cost(numPumpRetrofits, pumpModificationUnitCost, lossMultiplier, currentProteinCircuitLoss,
                       proteinRatedEff, currentProteinRatedEff, proteinRatedSpeed, currentProteinRatedSpeed,
                       ratedFlow, currentProteinRatedFlow, ratedHead, currentProteinRatedHead):
@@ -155,7 +156,7 @@ def calc_protein_cost(numPumpRetrofits, pumpModificationUnitCost, lossMultiplier
         return (numPumpRetrofits * pumpModificationUnitCost) + effCostFactor + headCostFactor + lossCostFactor
 
 
-@jit
+#@jit
 def calc_sand_cost(numPumpRetrofits, pumpModificationUnitCost, pumpRatedRpm, currentSandRatedSpeed,
                     pumpFlow, currentSandRatedFlow, pumpEff, currentSandRatedEff,
                     pumpRatedHead, currentSandRatedHead, flowLossCoef, currentSandCircuitLoss,

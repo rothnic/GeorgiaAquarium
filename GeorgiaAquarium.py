@@ -100,6 +100,7 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('ovm.deaerationFlowLossCoef')
         self.create_passthrough('ovm.doProteinUpgrade')
         self.create_passthrough('ovm.doSandUpgrade')
+        self.create_passthrough('ovm.numBulbs')
 
         # Ocean Voyager Out (possible constraints)
         self.create_passthrough('ovm.proteinHead')
@@ -110,7 +111,13 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('ovm.denitFlow')
         self.create_passthrough('ovm.bypassFlow')
         self.create_passthrough('ovm.sandFilterFlow')
+        self.create_passthrough('ovm.proteinPumpPower')
+        self.create_passthrough('ovm.proteinCapitalCost')
+        self.create_passthrough('ovm.sandCapitalCost')
         self.create_passthrough('ovm.hydraulicCapitalCost')
+        self.create_passthrough('ovm.yearlyHydraulicCapitalCost')
+        self.create_passthrough('ovm.recurringCostsNominal')
+        self.create_passthrough('ovm.recurringCosts')
 
         # Cost Model
         self.create_passthrough('cm.breakEvenYear')
