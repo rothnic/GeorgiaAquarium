@@ -2,6 +2,8 @@ __author__ = 'Nick'
 
 from OceanVoyager import OceanVoyagerModel
 from Common.AttributeTools.io import print_outputs
+from OceanVoyager import OceanVoyagerOptimization, OceanVoyagerDoe
+
 
 def test_ov_openmdao_model():
     # Module test routine, only executes when this python is ran independently
@@ -9,3 +11,12 @@ def test_ov_openmdao_model():
     comp = OceanVoyagerModel()
     comp.execute()
     print_outputs(comp)
+
+
+def test_ov_openmdao_optimization():
+    ovo = OceanVoyagerOptimization()
+    ovo.run()
+
+def test_ov_openmdao_doe():
+    ovd = OceanVoyagerDoe()
+    ovd.run()

@@ -5,7 +5,7 @@ from math import pi
 from numba import jit
 
 
-#@jit
+@jit
 def calc_power(bladeLength, turbineEff, airDensity, turbineCount, circuitLoss, windData):
     '''
     http://en.wikipedia.org/wiki/Density_of_air
@@ -32,7 +32,7 @@ def calc_power(bladeLength, turbineEff, airDensity, turbineCount, circuitLoss, w
     return powerOut
 
 
-#@jit
+@jit
 def calc_power_fast(windData, powerMult, theRange):
     '''
     Computes the total yearly power for the solar panel system. :Note: Uses numba just-in-time compilation to LLVM code
@@ -49,7 +49,7 @@ def calc_power_fast(windData, powerMult, theRange):
     return sum
 
 
-#@jit
+@jit
 def calc_cost(windCostPerWatt, turbineRating, turbineCount):
     '''
     Computes the total initial capital cost for a configuration of the system.

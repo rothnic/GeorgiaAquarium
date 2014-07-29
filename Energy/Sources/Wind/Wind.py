@@ -21,7 +21,7 @@ class WindModel(Component):
     # set up inputs
     turbineCount = Float(3.0, iotype='in', desc='turbine count')
     turbineRating = Float(3000.0, iotype='in', desc='turbine power rating (kW)')
-    turbineEff = Float(0.4, iotype='in', desc='turbine efficiency (percent)')
+    turbineEff = Float(0.25, iotype='in', desc='turbine efficiency (percent)')
     windSpeedScalar = Float(1.0, iotype='in', desc='uncertainty around wind speed (scalar)')
     windCostPerWatt = Float(1.5, iotype='in', desc='wind cost per capacity ($/watt)')
     circuitLoss = Float(0.75, iotype='in', desc='circuit power loss (percent)')

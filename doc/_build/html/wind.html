@@ -173,7 +173,7 @@ which is can be loaded by other OpenMDAO structures for automated execution.</p>
 <h3><em>WindModel Class Input Attributes</em><a class="headerlink" href="#windmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre>    <span class="n">turbineCount</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine count&#39;</span><span class="p">)</span>
     <span class="n">turbineRating</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine power rating (kW)&#39;</span><span class="p">)</span>
-    <span class="n">turbineEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine efficiency (percent)&#39;</span><span class="p">)</span>
+    <span class="n">turbineEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine efficiency (percent)&#39;</span><span class="p">)</span>
     <span class="n">windSpeedScalar</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;uncertainty around wind speed (scalar)&#39;</span><span class="p">)</span>
     <span class="n">windCostPerWatt</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wind cost per capacity ($/watt)&#39;</span><span class="p">)</span>
     <span class="n">circuitLoss</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;circuit power loss (percent)&#39;</span><span class="p">)</span>
@@ -226,79 +226,18 @@ execution is complete, it will read total power and total initial capital cost i
 <h2>WindModel Calculations<a class="headerlink" href="#windmodel-calculations" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="Energy.Sources.Wind.calc_wind.calc_power">
-<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_power</tt><big>(</big><em>bladeLength</em>, <em>turbineEff</em>, <em>airDensity</em>, <em>turbineCount</em>, <em>circuitLoss</em>, <em>windData</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_power" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://en.wikipedia.org/wiki/Density_of_air">http://en.wikipedia.org/wiki/Density_of_air</a>
-<a class="reference external" href="http://www.raeng.org.uk/education/diploma/maths/pdf/exemplars_advanced/23_Wind_Turbine.pdf">http://www.raeng.org.uk/education/diploma/maths/pdf/exemplars_advanced/23_Wind_Turbine.pdf</a>
-power = 1/2 (air density) (wind speed in m/sec)^3 ( pi*(blade length)^2) * C
-C = power efficiency (0.35 to 0.45, theoretical max at 0.59)
-(air density) = (absolute pressure) / (R * T)
-R = 287.058J/(kgK)
-T = absolute temperature</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>bladeLength</strong> &#8211; Length of turbine blades in meters</li>
-<li><strong>turbineEff</strong> &#8211; Rated efficiency of the wind turbine motor</li>
-<li><strong>airDensity</strong> &#8211; Uncertainty around the density of the air</li>
-<li><strong>turbineCount</strong> &#8211; The integer quantity of the number of turbines purchased</li>
-<li><strong>circuitLoss</strong> &#8211; A percentage reduction of the power production that would be usable between 0 and 1</li>
-<li><strong>windData</strong> &#8211; A numpy array of hourly wind speeds for an entire year</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total power generated for an entire year</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_power</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_power" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="Energy.Sources.Wind.calc_wind.calc_power_fast">
-<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_power_fast</tt><big>(</big><em>windData</em>, <em>powerMult</em>, <em>theRange</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_power_fast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_power_fast" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the total yearly power for the solar panel system. :Note: Uses numba just-in-time compilation to LLVM code
-to speed up the array operation 1000 times.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>windData</strong> &#8211; Numpy array of wind on a daily basis</li>
-<li><strong>powerMult</strong> &#8211; Power factor multiplier from <a class="reference internal" href="#Energy.Sources.Wind.calc_wind.calc_power" title="Energy.Sources.Wind.calc_wind.calc_power"><tt class="xref py py-func docutils literal"><span class="pre">calc_power()</span></tt></a></li>
-<li><strong>theRange</strong> &#8211; Size of the array, so we can avoid using Python objects and ensure function compiles to LLVM</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Sum off the power output from each day for one year</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_power_fast</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_power_fast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_power_fast" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="Energy.Sources.Wind.calc_wind.calc_cost">
-<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_cost</tt><big>(</big><em>windCostPerWatt</em>, <em>turbineRating</em>, <em>turbineCount</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_cost" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the total initial capital cost for a configuration of the system.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>windCostPerWatt</strong> &#8211; Cost in relation to the power rating of the wind turbine</li>
-<li><strong>turbineRating</strong> &#8211; The power rating of the chosen wind turbine in watts</li>
-<li><strong>turbineCount</strong> &#8211; The integer quantity of the number of turbines chosen for a design of the system</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Total initial capital cost of the considered configuration in dollars</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_cost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="windmodel-optimization">

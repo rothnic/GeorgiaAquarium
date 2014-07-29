@@ -166,35 +166,31 @@
 
 
 <span class="c">#@jit</span>
-<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">tileCount</span><span class="p">,</span> <span class="n">pedStepsPerTile</span><span class="p">,</span> <span class="n">tileEff</span><span class="p">,</span> <span class="n">tilePower</span><span class="p">,</span> <span class="n">timePerStep</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_power"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_power">[docs]</a><span class="k">def</span> <span class="nf">calc_power</span><span class="p">(</span><span class="n">tileCount</span><span class="p">,</span> <span class="n">pedStepsPerTile</span><span class="p">,</span> <span class="n">tileEff</span><span class="p">,</span> <span class="n">tilePower</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Calc_power computes the total number of steps that will occur across all tiles for this given design</span>
 <span class="sd">    configuration. The total number of steps is affected by the number of tiles and the pedestrian model that</span>
 <span class="sd">    simulates both on and off season steps per tile.</span>
 
-<span class="sd">    .. note:: The vendor advertises watts generated per step, not kWh. So we convert to energy by assuming a step \</span>
-<span class="sd">    generates power at the stated power for a fixed period of time, timePerStep</span>
+<span class="sd">    .. note:: The vendor does not provide specific power generated per step.  </span>
+<span class="sd">    The power generated is assumed to be 1,000,000 steps = 1kWh (1mWh / step) based on a telecon with PaveGen.</span>
+<span class="sd">    </span>
 
 <span class="sd">    :param tileCount: A design variable for how many tiles you would want to purchase</span>
 <span class="sd">    :param pedStepsPerTile: An uncertainty for the number of expected steps per tile over a year</span>
 <span class="sd">    :param tileEff: The amount of actual useful energy based on the claimed</span>
 <span class="sd">    :param tilePower: The claimed power return when one person steps on a tile</span>
-<span class="sd">    :param timePerStep: The duration of power generation for one step</span>
 <span class="sd">    :return: The total energy generated in a year for the input design configuration</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">minutesPerHour</span> <span class="o">=</span> <span class="mf">60.0</span>
-    <span class="n">secondsPerMinute</span> <span class="o">=</span> <span class="mf">60.0</span>
-    <span class="n">timeFactor</span> <span class="o">=</span> <span class="p">(</span><span class="n">timePerStep</span><span class="o">/</span><span class="p">(</span><span class="n">minutesPerHour</span> <span class="o">*</span> <span class="n">secondsPerMinute</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">tileCount</span> <span class="o">*</span> <span class="n">pedStepsPerTile</span> <span class="o">*</span> <span class="n">tileEff</span> <span class="o">*</span> <span class="n">tilePower</span> <span class="o">*</span> <span class="n">timePerStep</span> <span class="o">*</span> <span class="n">timeFactor</span>
-
+    <span class="k">return</span> <span class="n">tileCount</span> <span class="o">*</span> <span class="n">pedStepsPerTile</span> <span class="o">*</span> <span class="n">tileEff</span> <span class="o">*</span> <span class="n">tilePower</span>
 
 <span class="c">#@jit</span></div>
 <div class="viewcode-block" id="calc_cost"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_cost">[docs]</a><span class="k">def</span> <span class="nf">calc_cost</span><span class="p">(</span><span class="n">tileUnitCost</span><span class="p">,</span> <span class="n">tileCount</span><span class="p">,</span> <span class="n">mgtTileUnitCost</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Calc_cost computes the cost of a triboelectric system based on the PedGen pricing model. There are affects to</span>
 <span class="sd">    cost based on the number of units you purchase, which affects how many management tiles are needed as well.</span>
+<span class="sd">    Each management tile can run up to 50 tiles.</span>
 
 <span class="sd">    :param tileUnitCost: A cost per regular tile type when purchased in bulk</span>
 <span class="sd">    :param tileCount: The whole number count of tiles to be installed</span>

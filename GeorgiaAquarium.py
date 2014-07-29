@@ -93,7 +93,7 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('ovm.flowLossCoef')
         self.create_passthrough('ovm.heatExchFlowLossCoef')
         self.create_passthrough('ovm.heatExchValveOpen')
-        self.create_passthrough('ovm.denitFLowLossCoef')
+        self.create_passthrough('ovm.denitFlowLossCoef')
         self.create_passthrough('ovm.ozoneFlowLossCoef')
         self.create_passthrough('ovm.ozoneValveOpen')
         self.create_passthrough('ovm.denitValveOpen')
@@ -118,6 +118,8 @@ class GeorgiaAquarium(Assembly):
         self.create_passthrough('ovm.yearlyHydraulicCapitalCost')
         self.create_passthrough('ovm.recurringCostsNominal')
         self.create_passthrough('ovm.recurringCosts')
+        self.create_passthrough('ovm.totalPowerSand')
+        self.create_passthrough('ovm.totalPowerProtein')
 
         # Cost Model
         self.create_passthrough('cm.breakEvenYear')

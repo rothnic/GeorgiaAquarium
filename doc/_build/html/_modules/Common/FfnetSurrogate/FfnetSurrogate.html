@@ -170,7 +170,7 @@
 
 
 <div class="viewcode-block" id="FfnetSurrogate"><a class="viewcode-back" href="../../../common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate">[docs]</a><span class="k">class</span> <span class="nc">FfnetSurrogate</span><span class="p">:</span>
-<div class="viewcode-block" id="FfnetSurrogate.__init__"><a class="viewcode-back" href="../../../common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainingFile</span><span class="p">,</span> <span class="n">inputCols</span><span class="p">,</span> <span class="n">outputCols</span><span class="p">,</span> <span class="n">netFile</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="FfnetSurrogate.__init__"><a class="viewcode-back" href="../../../common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainingFile</span><span class="p">,</span> <span class="n">inputCols</span><span class="p">,</span> <span class="n">outputCols</span><span class="p">,</span> <span class="n">netFile</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">multi</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Constructor for FfnetSurrogate, which wraps the ffnet :class:`~ffnet.ffnet` class. This class is a</span>
 <span class="sd">        feed-forward neural network library written in Fortran, that is wrapped with a python interface. The way this</span>
@@ -239,6 +239,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputData</span><span class="p">)</span>
 
         <span class="c"># Save the trained network to disk</span>
+
         <span class="n">savenet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">,</span> <span class="s">&#39;ffnetSurrogate.net&#39;</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="FfnetSurrogate.sim"><a class="viewcode-back" href="../../../common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.sim">[docs]</a>    <span class="k">def</span> <span class="nf">sim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inValue</span><span class="p">):</span>

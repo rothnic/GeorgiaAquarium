@@ -41,7 +41,8 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
-    'sphinx_notebook.notebook_sphinxext'
+    'sphinx_notebook.notebook_sphinxext',
+    'sphinx_pyreverse'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

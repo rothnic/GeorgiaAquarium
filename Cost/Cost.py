@@ -28,10 +28,11 @@ class CostModel(Component):
     triboCapitalCost = Float(100000.0, iotype='in', desc='cost of implementing tribo energy')
     elecUtilityRate = Float(0.1, iotype='in', desc='cost of electricity')
     baselineTotalPowerUse = Float(27765028.90, iotype='in', desc='total GA power use')
-    baselineOceanVoyPowerUse = Float(19948604.08, iotype='in', desc='total ocean voyager power use')
+    #baselineOceanVoyPowerUse = Float(19948604.08, iotype='in', desc='total ocean voyager power use (protein+sand)')
+    baselineOceanVoyPowerUse = Float(16522761.0, iotype='in', desc='total ocean voyager power use (protein+sand)')
     hydraulicPowerUse = Float(19648604.08, iotype='in', desc='total ocean voyager power use')
-    yearlyPowerProducedSolar = Float(100.0, iotype='in', desc='solar power produced for given investment')
-    yearlyPowerProducedWind = Float(100.0, iotype='in', desc='wind power produced for given investment')
+    yearlyPowerProducedSolar = Float(20000.0, iotype='in', desc='solar power produced for given investment')
+    yearlyPowerProducedWind = Float(20000.0, iotype='in', desc='wind power produced for given investment')
     yearlyPowerProducedTribo = Float(100.0, iotype='in', desc='tribo power produced for given investment')
 
     # set up outputs

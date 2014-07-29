@@ -124,15 +124,17 @@ def calc_sand_power(surrogate, inputs, numPumps):
 
     outputs = surrogate.sim(inputs)
 
-    totalPower = (outputs[1] * numPumps) * 24 * 365
-    sandFlow = -outputs[7]
+    sandPumpPower = outputs[1]
+    totalPower = (sandPumpPower * numPumps) * 24 * 365
+    sandFlow = -outputs[6]
     heatExchFlow1 = outputs[3]
     heatExchFlow2 = -outputs[4]
-    denitFlow = -outputs[14]
-    bypassFlow = -outputs[20]
+    denitFlow = -outputs[12]
+    bypassFlow = -outputs[18]
+    ozFlow = -outputs[9] * 6
     totalFlow = heatExchFlow2 + denitFlow + bypassFlow + sandFlow
 
-    return totalPower, sandFlow, heatExchFlow1, heatExchFlow2, denitFlow, bypassFlow, totalFlow
+    return totalPower, sandFlow, heatExchFlow1, heatExchFlow2, denitFlow, bypassFlow, totalFlow, sandPumpPower, ozFlow
 
 
 #@jit

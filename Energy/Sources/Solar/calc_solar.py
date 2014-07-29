@@ -9,7 +9,7 @@ from math import floor
 from numba import jit
 
 
-# @jit
+@jit
 def calc_power(panelRating, panelEff, sunRadianceScalar, surfaceArea, circuitLoss, sunData):
     '''
     Calculates the total yearly power for the solar panel system. Utilizes a separate vectorized function for most of
@@ -31,7 +31,7 @@ def calc_power(panelRating, panelEff, sunRadianceScalar, surfaceArea, circuitLos
     return powerOut
 
 
-# @jit
+@jit
 def calc_power_fast(sunData, multValue, theRange):
     '''
     Computes the total yearly power for the solar panel system. Uses numba just-in-time compilation to LLVM code to
@@ -52,7 +52,7 @@ def calc_power_fast(sunData, multValue, theRange):
     return sum
 
 
-#@jit
+@jit
 def calc_cost(panelEff, surfaceArea, panelRating, numPanels):
     '''
     Computes the cost of the solar design based on the solar cost per watt, panel rating in watts, and the number of
@@ -71,7 +71,7 @@ def calc_cost(panelEff, surfaceArea, panelRating, numPanels):
     return solarCostPerWatt * numPanels * panelRating
 
 
-#@jit
+@jit
 def calc_num_panels(surfaceArea, panelSize):
     '''
     Finds the number of panels that will fit in the desired area.

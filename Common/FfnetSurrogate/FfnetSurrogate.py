@@ -10,7 +10,7 @@ from ffnet import ffnet, mlgraph, imlgraph, savenet, loadnet
 
 
 class FfnetSurrogate:
-    def __init__(self, trainingFile, inputCols, outputCols, netFile=None):
+    def __init__(self, trainingFile, inputCols, outputCols, netFile=None, multi=False):
         '''
         Constructor for FfnetSurrogate, which wraps the ffnet :class:`~ffnet.ffnet` class. This class is a
         feed-forward neural network library written in Fortran, that is wrapped with a python interface. The way this
@@ -79,6 +79,7 @@ class FfnetSurrogate:
         self.net.test(self.inputData, self.outputData)
 
         # Save the trained network to disk
+
         savenet(self.net, 'ffnetSurrogate.net')
 
     def sim(self, inValue):

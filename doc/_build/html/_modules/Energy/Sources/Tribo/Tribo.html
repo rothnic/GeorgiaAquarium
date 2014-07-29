@@ -195,15 +195,14 @@
     <span class="n">tileEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;tribo efficiency (percent)&#39;</span><span class="p">)</span>
     <span class="n">tileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;unit cost of a single tile&#39;</span><span class="p">)</span>
     <span class="n">mgtTileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;unit cost of a management tile&#39;</span><span class="p">)</span>
-    <span class="n">tilePower</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.007</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wattage produced per step (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">tilePower</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.000001</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wattage produced per step (kWh)&#39;</span><span class="p">)</span>
 
     <span class="c"># set up outputs</span>
-    <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
-    <span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">40000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost ($)&#39;</span><span class="p">)</span>
+    <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">4.68</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">27000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost ($)&#39;</span><span class="p">)</span>
 
     <span class="c"># set up constants</span>
-    <span class="c"># timePerStep and wattsPerStep were used to calculate the expected value</span>
-    <span class="n">timePerStep</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c">#: The duration of power generation for one step</span>
+    <span class="c"># None</span>
 
     <span class="c"># primary model method</span>
 <div class="viewcode-block" id="TriboModel.execute"><a class="viewcode-back" href="../../../../triboelectric.html#Energy.Sources.Tribo.Tribo.TriboModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -221,8 +220,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">tileCount</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pedStepsPerTile</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tileEff</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tilePower</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">timePerStep</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tilePower</span><span class="p">)</span>
 
         <span class="c"># Calculate cost</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">calc_cost</span><span class="p">(</span>
