@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pedestrian Model &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Lighting Model" href="lighting.html"/>
+        <link rel="prev" title="Triboelectric Model" href="triboelectric.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Pedestrian Model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/pedestrian.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="pedestrian-model">
+<h1>Pedestrian Model<a class="headerlink" href="#pedestrian-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pedestrianmodel-component">
+<h2>PedestrianModel Component<a class="headerlink" href="#pedestrianmodel-component" title="Permalink to this headline">¶</a></h2>
+<p>The pedestrian model component is developed in OpenMDAO, but the calculation functions have been developed as
+stand-alone units. In this case much of the actual model exists in an agent-based simulation developed within
+AnyLogic, but limitations in capability and time exist for integrating that model directly into the system of
+systems model. The primary OpenMDAO element that would be executed is the
+<a class="reference internal" href="#Pedestrian.Pedestrian.PedestrianModel" title="Pedestrian.Pedestrian.PedestrianModel"><tt class="xref py py-class docutils literal"><span class="pre">PedestrianModel</span></tt></a> Component, which can be loaded by other OpenMDAO structures for
+automated execution.</p>
+<div class="section" id="pedestrianmodel-class-input-attributes">
+<h3><em>PedestrianModel Class Input Attributes</em><a class="headerlink" href="#pedestrianmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">pedsPerHourOn</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">600.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel rating&#39;</span><span class="p">)</span>
+    <span class="n">pedsPerHourOff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;panel efficiency&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pedestrianmodel-class-output-attributes">
+<h3><em>PedestrianModel Class Output Attributes</em><a class="headerlink" href="#pedestrianmodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">yearlyStepsPerTile</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">415820.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pedestrianmodel-class-constants">
+<h3><em>PedestrianModel Class Constants</em><a class="headerlink" href="#pedestrianmodel-class-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">offDays</span> <span class="o">=</span> <span class="mi">236</span>      <span class="c">#: number of off season days in one year</span>
+    <span class="n">onDays</span> <span class="o">=</span> <span class="mi">139</span>       <span class="c">#: number of on season days in one year</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pedestrianmodel-class-definition">
+<h3><em>PedestrianModel Class Definition</em><a class="headerlink" href="#pedestrianmodel-class-definition" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Pedestrian.Pedestrian.PedestrianModel">
+<em class="property">class </em><tt class="descclassname">Pedestrian.Pedestrian.</tt><tt class="descname">PedestrianModel</tt><a class="reference internal" href="_modules/Pedestrian/Pedestrian.html#PedestrianModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Pedestrian.Pedestrian.PedestrianModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<p>The PedestrianModel class represents the Pedestrian flow through the Georgia Aquarium. The model was originally
+developed using AnyLogic, which includes powerfully pedestrian simulation capabilities. This OpenMDAO component
+implements a surrogate of the original Anylogic model. It extends the OpenMDAO Component.</p>
+<dl class="method">
+<dt id="Pedestrian.Pedestrian.PedestrianModel.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Pedestrian/Pedestrian.html#PedestrianModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Pedestrian.Pedestrian.PedestrianModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extend the OpenMDAO component init method only so that we don&#8217;t have to reload the model file each time it is
+executed. This might be considered bad practice, but is necessary to reduce run time. There could be a better
+way to avoid this problem.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Initialized OpenMDAO SurrogateModel component object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Pedestrian.Pedestrian.PedestrianModel.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Pedestrian/Pedestrian.html#PedestrianModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Pedestrian.Pedestrian.PedestrianModel.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute is the primary method that every openMDAO component must implement. Each time the model is ran by
+openMDAO, the execute method is called. In this case, the Pedestrian model reads the openMDAO input
+attributes, then executes the surrogate model with these values. The surrogate model is trained within the
+__init__ method, so the trained model is executed quickly. The inputs are both the on season and off season
+values for how many expected visitors are expected on average in an hour. These values were derived from data
+provided by Georgia Aquarium. These values are used to come up with an aggregate number of steps per tile
+we&#8217;d expected over a years time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">yearly steps per single triboelectric tile</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="pedsurrogate-class">
+<h2>PedSurrogate Class<a class="headerlink" href="#pedsurrogate-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Pedestrian.calc_ped.PedSurrogate">
+<em class="property">class </em><tt class="descclassname">Pedestrian.calc_ped.</tt><tt class="descname">PedSurrogate</tt><big>(</big><em>offDays</em>, <em>onDays</em>, <em>trainingFile</em>, <em>inputCols</em>, <em>outputCols</em>, <em>regressorFile</em><big>)</big><a class="reference internal" href="_modules/Pedestrian/calc_ped.html#PedSurrogate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Pedestrian.calc_ped.PedSurrogate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Pedestrian.calc_ped.PedSurrogate.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>offDays</em>, <em>onDays</em>, <em>trainingFile</em>, <em>inputCols</em>, <em>outputCols</em>, <em>regressorFile</em><big>)</big><a class="reference internal" href="_modules/Pedestrian/calc_ped.html#PedSurrogate.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Pedestrian.calc_ped.PedSurrogate.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializer for the Pedestrian surrogate model. This model reads in data from an agent-based pedestrian model
+for the Georgia Aquarium built in AnyLogic. The AnyLogic model is limited from integrating with this one due
+to university version restrictions, and takes much too long to run. It is beneficial to run the AnyLogic
+model over the design space ahead of time, then generate a surrogate model from the parametric output data.
+The surrogate model currently uses a random forest tree surrogate that has been pre-trained on the parametric
+data. When the PedSurrogate class is provided the netFile, which is a trained model saved to disk,
+it initializes the surrogate and it is then ready for execution. This particular surrogate model wraps the
+decision tree surrogate because we need two samples from it for every execution. One sample is for the on
+season pedestrian rates, and one is for the off season pedestrian rates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>trainingFile</strong> &#8211; The original input data. This is used even in post training for initializing the surrogate</li>
+<li><strong>inputCols</strong> &#8211; A list of string values representing the input columns in the trainingFile</li>
+<li><strong>outputCols</strong> &#8211; A list of string values representing the output columns in the trainingFile</li>
+<li><strong>netFile</strong> &#8211; A trained model that has been saved to disk via pickling</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The initialized PedSurrogate object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Pedestrian.calc_ped.PedSurrogate.sim">
+<tt class="descname">sim</tt><big>(</big><em>pedsPerHourOn</em>, <em>pedsPerHourOff</em><big>)</big><a class="reference internal" href="_modules/Pedestrian/calc_ped.html#PedSurrogate.sim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Pedestrian.calc_ped.PedSurrogate.sim" title="Permalink to this definition">¶</a></dt>
+<dd><p>The only method of the PedSurrogate class. It has two parameters it takes, which are the uncertainty values
+representing the pedestrians per hour in the on season, and the pedestrians per hour in the off season. These
+are used to calculate the average steps we could expect on a triboelectric tile in a given year.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pedsPerHourOn</strong> &#8211; Average pedestrians per hour in the on season</li>
+<li><strong>pedsPerHourOff</strong> &#8211; Average pedestrians per hour in the off season</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Number of steps we would expect per triboelectric tile on average for a given year</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pedestrianmodel-tests">
+<h2>PedestrianModel Tests<a class="headerlink" href="#pedestrianmodel-tests" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Pedestrian.test_pedestrian.test_samples">
+<tt class="descclassname">Pedestrian.test_pedestrian.</tt><tt class="descname">test_samples</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Pedestrian/test_pedestrian.html#test_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Pedestrian.test_pedestrian.test_samples" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Pedestrian.test_pedestrian.run_tests_with_print">
+<tt class="descclassname">Pedestrian.test_pedestrian.</tt><tt class="descname">run_tests_with_print</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Pedestrian/test_pedestrian.html#run_tests_with_print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Pedestrian.test_pedestrian.run_tests_with_print" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lighting.html" class="btn btn-neutral float-right" title="Lighting Model"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="triboelectric.html" class="btn btn-neutral" title="Triboelectric Model"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

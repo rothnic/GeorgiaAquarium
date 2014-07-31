@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Common.RunAggregator.RunAggregator &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>Common.RunAggregator.RunAggregator</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for Common.RunAggregator.RunAggregator</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
+
+<span class="kn">from</span> <span class="nn">openmdao.main.api</span> <span class="kn">import</span> <span class="n">Assembly</span><span class="p">,</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.drivers</span> <span class="kn">import</span> <span class="n">doedriver</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.datatypes.api</span> <span class="kn">import</span> <span class="n">Float</span>
+<span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">get_output_values</span><span class="p">,</span> <span class="n">get_inputs</span><span class="p">,</span> <span class="n">get_outputs</span><span class="p">,</span> <span class="n">get_input_values</span><span class="p">,</span> <span class="n">print_outputs</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="RunAggregator"><a class="viewcode-back" href="../../../uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator">[docs]</a><span class="k">class</span> <span class="nc">RunAggregator</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+
+    <span class="c"># set up inputs</span>
+    <span class="n">breakEvenYearSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;break even year sample&#39;</span><span class="p">)</span>
+    <span class="n">proteinHeadSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;head out sample&#39;</span><span class="p">)</span>
+    <span class="n">originalEnergyCostSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;original/baseline energy cost sample&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergyCostSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total energy cost sample&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergySavedSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total energy saved sample&#39;</span><span class="p">)</span>
+    <span class="n">totalFlowProteinSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total flow sample&#39;</span><span class="p">)</span>
+    <span class="n">totalInitialInvestmentSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total initial investment sample&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerConsumedSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total power consumed sample&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerProducedSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total power produced sample&#39;</span><span class="p">)</span>
+    <span class="n">totalUtilitySamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total utility sample&#39;</span><span class="p">)</span>
+    <span class="n">year1RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 1 ROI sample&#39;</span><span class="p">)</span>
+    <span class="n">year5RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 5 ROI sample&#39;</span><span class="p">)</span>
+    <span class="n">year10RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 10 ROI sample&#39;</span><span class="p">)</span>
+    <span class="n">year20RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 20 ROI sample&#39;</span><span class="p">)</span>
+    <span class="n">year30RoiSamp</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 30 ROI sample&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up outputs</span>
+    <span class="n">breakEvenYearMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;break even year mean&#39;</span><span class="p">)</span>
+    <span class="n">proteinHeadMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;head out mean&#39;</span><span class="p">)</span>
+    <span class="n">originalEnergyCostMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;original/baseline energy cost mean&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergyCostMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total energy cost mean&#39;</span><span class="p">)</span>
+    <span class="n">totalEnergySavedMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total energy saved mean&#39;</span><span class="p">)</span>
+    <span class="n">totalFlowProteinMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total flow mean&#39;</span><span class="p">)</span>
+    <span class="n">totalInitialInvestmentMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total initial investment mean&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerConsumedMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total power consumed mean&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerProducedMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total power produced mean&#39;</span><span class="p">)</span>
+    <span class="n">totalUtilityMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total utility mean&#39;</span><span class="p">)</span>
+    <span class="n">year1RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 1 ROI mean&#39;</span><span class="p">)</span>
+    <span class="n">year5RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 5 ROI mean&#39;</span><span class="p">)</span>
+    <span class="n">year10RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 10 ROI mean&#39;</span><span class="p">)</span>
+    <span class="n">year20RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 20 ROI mean&#39;</span><span class="p">)</span>
+    <span class="n">year30RoiMean</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;year 30 ROI mean&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up constants</span>
+    <span class="c"># None defined</span>
+
+    <span class="c"># initialization</span>
+    <span class="c">#Todo improve the speed by not using python dicts</span>
+<div class="viewcode-block" id="RunAggregator.__init__"><a class="viewcode-back" href="../../../uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Extend the OpenMDAO component init method only so that we can keep track of the execution state, collect the</span>
+<span class="sd">        names of our configured outputs, and initialize the dict to store the samples over time.</span>
+
+<span class="sd">        :return: Initialized OpenMDAO component object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># ToDo: See if there is a way to turn this into a reusable component</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RunAggregator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exec_num</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_names</span> <span class="o">=</span> <span class="n">get_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">output_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">output_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+    <span class="c"># primary method</span></div>
+<div class="viewcode-block" id="RunAggregator.execute"><a class="viewcode-back" href="../../../uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,</span>
+<span class="sd">        OpenMDAO will write new values into the components inputs, then will call this execute method. This component</span>
+<span class="sd">        is different from the other model components because it exists simply to work with the Uncertainties model.</span>
+<span class="sd">        The RunAggregator sit at a higher level than the GeorgiaAquarium assembly so that for each set of design</span>
+<span class="sd">        variables, we can execute the GeorgiaAquarium model many times. During this time, the design variables do not</span>
+<span class="sd">        change, but the uncertainties do change due to the sampling of them with a Latin Hypercube driver. We can</span>
+<span class="sd">        execute the model like with without the RunAggregator, but the higher-level optimization component would only</span>
+<span class="sd">        observe the last value.</span>
+
+<span class="sd">        The RunAggregator observes all outputs from the samples associated with a single configuration of design</span>
+<span class="sd">        variables and many samples across the uncertainties. For each output of the GeorgiaAquarium model,</span>
+<span class="sd">        the RunAggregator stores the values in a python :class:`dict`, with a key equal to the name of the variable</span>
+<span class="sd">        appended with &quot;Mean&quot;, with a value of a :class:`~numpy.array` of length equal to the number of configured</span>
+<span class="sd">        latin hypercube samples. Each time the RunAggregator is executed, the mean of the array is stored into the</span>
+<span class="sd">        RunAggregator&#39;s output attributes.</span>
+
+<span class="sd">        This component combined with the Uncertainties model replaces the functionality implemented in the Phoenix</span>
+<span class="sd">        Integration ModelCenter Latin Hypercube driver combined with the cumulative distribution function excel</span>
+<span class="sd">        spreadsheet, that has been used with it by Georgia Tech&#39;s PMASE program. Both of the components try to</span>
+<span class="sd">        incorporate uncertainties into the model execution as a separate concept to design variables, allowing the</span>
+<span class="sd">        model to converge to an expected value with enough runs.</span>
+
+<span class="sd">        :returns: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c"># Get the values from last run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">get_input_values</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Calculate the mean value of all input values so far</span>
+        <span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="nb">input</span><span class="p">])</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exec_num</span> <span class="o">&gt;=</span> <span class="mf">1.0</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">exec_num</span> <span class="o">+=</span> <span class="mf">1.0</span>
+
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    A module testing routine, executes when this python file is ran independently. For example, using Pycharm,</span>
+<span class="sd">    right click while editing and select Run. The tests called below are alternatively ran automatically by pytest</span>
+<span class="sd">    from test_aggregator if configured to do so within Pycharm.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">from</span> <span class="nn">test_aggregator</span> <span class="kn">import</span> <span class="n">test_meaning</span>
+    <span class="n">test_meaning</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

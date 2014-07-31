@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Triboelectric Model &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Pedestrian Model" href="pedestrian.html"/>
+        <link rel="prev" title="Wind Model" href="wind.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Triboelectric Model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/triboelectric.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="triboelectric-model">
+<h1>Triboelectric Model<a class="headerlink" href="#triboelectric-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="triboelectric-component">
+<h2>Triboelectric Component<a class="headerlink" href="#triboelectric-component" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tribomodel-class-input-attributes">
+<h3><em>TriboModel Class Input Attributes</em><a class="headerlink" href="#tribomodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">tileCount</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;number of tiles&#39;</span><span class="p">)</span>
+    <span class="n">pedStepsPerTile</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">260000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;expected steps per tile&#39;</span><span class="p">)</span>
+    <span class="n">tileEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;tribo efficiency (percent)&#39;</span><span class="p">)</span>
+    <span class="n">tileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;unit cost of a single tile&#39;</span><span class="p">)</span>
+    <span class="n">mgtTileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;unit cost of a management tile&#39;</span><span class="p">)</span>
+    <span class="n">tilePower</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.000001</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wattage produced per step (kWh)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tribomodel-class-output-attributes">
+<h3><em>TriboModel Class Output Attributes</em><a class="headerlink" href="#tribomodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">triboCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">40000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tribomodel-class-constants">
+<h3><em>TriboModel Class Constants</em><a class="headerlink" href="#tribomodel-class-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="c"># None</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tribomodel-class-definition">
+<h3><em>TriboModel Class Definition</em><a class="headerlink" href="#tribomodel-class-definition" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Energy.Sources.Tribo.Tribo.TriboModel">
+<em class="property">class </em><tt class="descclassname">Energy.Sources.Tribo.Tribo.</tt><tt class="descname">TriboModel</tt><a class="reference internal" href="_modules/Energy/Sources/Tribo/Tribo.html#TriboModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.Tribo.TriboModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<p>The TriboModel is a wrapper for a power and cost calculation in regard to implementing a tile-based triboelectric
+system. The PaveGen solution was the primary intended use, although there is very little available information
+for it. There are some articles, such as _this: <a class="reference external" href="http://www.theguardian.com/sustainable-business/power-generating-tiles-renewable-energy">http://www.theguardian.com/sustainable-business/power-generating-tiles-renewable-energy</a>
+one that seems to cause confusion on how to calculate the power generation. The approach taken is to create a
+detailed simulation of the pedestrian movement through the aquarium to estimate the number of steps we would see
+on a given tile, then use that information in the calculation of power generation.</p>
+<p>The current assumption for power calculation is that 1,000,000 steps = 1kWh of power generated. 
+This can be used with the yearly steps per tile to provide some performance output for a design decision 
+on the number of tiles, along with the cost impact of that decision.</p>
+<p>Relies on input values from the <a class="reference internal" href="pedestrian.html#Pedestrian.Pedestrian.PedestrianModel" title="Pedestrian.Pedestrian.PedestrianModel"><tt class="xref py py-class docutils literal"><span class="pre">PedestrianModel</span></tt></a> for use in calculating the power
+generation.</p>
+<dl class="method">
+<dt id="Energy.Sources.Tribo.Tribo.TriboModel.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Tribo/Tribo.html#TriboModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.Tribo.TriboModel.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method for an OpenMDAO component that is required to be filled out with the internal behavior,
+and is called each time OpenMDAO has changed the input values. After execution, the new output values are
+then read from the component. This component executes to functions; one to calculate power, and one to
+calculate the initial capital cost associated with the configuration of the input values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="tribomodel-calculations">
+<h2>TriboModel Calculations<a class="headerlink" href="#tribomodel-calculations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Energy.Sources.Tribo.calc_tribo.calc_power">
+<tt class="descclassname">Energy.Sources.Tribo.calc_tribo.</tt><tt class="descname">calc_power</tt><big>(</big><em>tileCount</em>, <em>pedStepsPerTile</em>, <em>tileEff</em>, <em>tilePower</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Tribo/calc_tribo.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.calc_tribo.calc_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calc_power computes the total number of steps that will occur across all tiles for this given design
+configuration. The total number of steps is affected by the number of tiles and the pedestrian model that
+simulates both on and off season steps per tile.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The vendor does not provide specific power generated per step.</p>
+</div>
+<p>The power generated is assumed to be 1,000,000 steps = 1kWh (1mWh / step) based on a telecon with PaveGen.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tileCount</strong> &#8211; A design variable for how many tiles you would want to purchase</li>
+<li><strong>pedStepsPerTile</strong> &#8211; An uncertainty for the number of expected steps per tile over a year</li>
+<li><strong>tileEff</strong> &#8211; The amount of actual useful energy based on the claimed</li>
+<li><strong>tilePower</strong> &#8211; The claimed power return when one person steps on a tile</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The total energy generated in a year for the input design configuration</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Tribo.calc_tribo.calc_cost">
+<tt class="descclassname">Energy.Sources.Tribo.calc_tribo.</tt><tt class="descname">calc_cost</tt><big>(</big><em>tileUnitCost</em>, <em>tileCount</em>, <em>mgtTileUnitCost</em><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Tribo/calc_tribo.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.calc_tribo.calc_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calc_cost computes the cost of a triboelectric system based on the PedGen pricing model. There are affects to
+cost based on the number of units you purchase, which affects how many management tiles are needed as well.
+Each management tile can run up to 50 tiles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tileUnitCost</strong> &#8211; A cost per regular tile type when purchased in bulk</li>
+<li><strong>tileCount</strong> &#8211; The whole number count of tiles to be installed</li>
+<li><strong>mgtTileUnitCost</strong> &#8211; The cost per management tile</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The cost of purchasing and installation of the tribo system</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="tribomodel-optimization">
+<h2>TriboModel Optimization<a class="headerlink" href="#tribomodel-optimization" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Energy.Sources.Tribo.Tribo.TriboOptimization">
+<em class="property">class </em><tt class="descclassname">Energy.Sources.Tribo.Tribo.</tt><tt class="descname">TriboOptimization</tt><a class="reference internal" href="_modules/Energy/Sources/Tribo/Tribo.html#TriboOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.Tribo.TriboOptimization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.assembly.Assembly</span></tt></p>
+<p>Implements an assembly to contain the TriboModel component, and run optimizations on it stand-alone with the
+pyOpt plugin of optimization drivers. Implements a caserecorder so that you can investigate the results
+afterwards. This assembly will show up automatically when using openmdao gui, or can be used directly in another
+python script as you would use a regular python class.</p>
+<dl class="method">
+<dt id="Energy.Sources.Tribo.Tribo.TriboOptimization.configure">
+<tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Tribo/Tribo.html#TriboOptimization.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.Tribo.TriboOptimization.configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be filled in with the desired configuration for any custom OpenMDAO Assembly. This Assembly
+is used to load the <a class="reference internal" href="#Energy.Sources.Tribo.Tribo.TriboModel" title="Energy.Sources.Tribo.Tribo.TriboModel"><tt class="xref py py-class docutils literal"><span class="pre">TriboModel</span></tt></a> for execution, sets up a <tt class="xref py py-mod docutils literal"><span class="pre">pyOpt</span></tt>
+optimizer, configures a CSV recorder to record inputs and outputs to tribo_optimization.csv, then configures
+parameters, an objective, and a constraint. This isolated optimization can be used to ensure the model is
+working correctly before integrating it into a larger model.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tribomodel-tests">
+<h2>TriboModel Tests<a class="headerlink" href="#tribomodel-tests" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Energy.Sources.Tribo.test_tribo.test_tribo_openmdao_model">
+<tt class="descclassname">Energy.Sources.Tribo.test_tribo.</tt><tt class="descname">test_tribo_openmdao_model</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Tribo/test_tribo.html#test_tribo_openmdao_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.test_tribo.test_tribo_openmdao_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Tribo.test_tribo.test_tribo_optimization">
+<tt class="descclassname">Energy.Sources.Tribo.test_tribo.</tt><tt class="descname">test_tribo_optimization</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Tribo/test_tribo.html#test_tribo_optimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Tribo.test_tribo.test_tribo_optimization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pedestrian.html" class="btn btn-neutral float-right" title="Pedestrian Model"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wind.html" class="btn btn-neutral" title="Wind Model"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

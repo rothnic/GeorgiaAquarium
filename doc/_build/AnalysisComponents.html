@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Analysis Components &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Common Utilities" href="common.html"/>
+        <link rel="prev" title="Uncertainties Driver" href="uncertainties.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Analysis Components</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/AnalysisComponents.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="analysis-components">
+<h1>Analysis Components<a class="headerlink" href="#analysis-components" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-GeorgiaAquarium">
+<span id="georgia-aquarium-model"></span><h2>Georgia Aquarium Model<a class="headerlink" href="#module-GeorgiaAquarium" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="GeorgiaAquarium.GeorgiaAquarium">
+<em class="property">class </em><tt class="descclassname">GeorgiaAquarium.</tt><tt class="descname">GeorgiaAquarium</tt><a class="reference internal" href="_modules/GeorgiaAquarium.html#GeorgiaAquarium"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquarium.GeorgiaAquarium" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="GeorgiaAquarium.GeorgiaAquarium.configure">
+<tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/GeorgiaAquarium.html#GeorgiaAquarium.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquarium.GeorgiaAquarium.configure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="GeorgiaAquarium.run_tests">
+<tt class="descclassname">GeorgiaAquarium.</tt><tt class="descname">run_tests</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/GeorgiaAquarium.html#run_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquarium.run_tests" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="georgia-aquarium-global-optimization">
+<h2>Georgia Aquarium Global Optimization<a class="headerlink" href="#georgia-aquarium-global-optimization" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization">
+<em class="property">class </em><tt class="descclassname">GeorgiaAquariumOptimizer.</tt><tt class="descname">GeorgiaAquariumGlobalOptimization</tt><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumGlobalOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h2>Georgia Aquarium Global Optimization<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization">
+<em class="property">class </em><tt class="descclassname">GeorgiaAquariumOptimizer.</tt><tt class="descname">GeorgiaAquariumOptimization</tt><big>(</big><em>breakEven=3.0</em>, <em>initialInvestment=400000.0</em>, <em>filename=None</em><big>)</big><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization" title="Permalink to this definition">¶</a></dt>
+<dd><p>An assembly to connect the optimizer directly to the Georgia Aquarium model. This can be used to avoid issues
+with the uncertainty distributions. After it is found that this assembly is working correctly, the next step
+would be to</p>
+</dd></dl>
+
+</div>
+<div class="section" id="georgia-aquarium-sampler">
+<h2>Georgia Aquarium Sampler<a class="headerlink" href="#georgia-aquarium-sampler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumSampler">
+<em class="property">class </em><tt class="descclassname">GeorgiaAquariumOptimizer.</tt><tt class="descname">GeorgiaAquariumSampler</tt><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumSampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="georgia-aquarium-doe">
+<h2>Georgia Aquarium DOE<a class="headerlink" href="#georgia-aquarium-doe" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="GeorgiaAquariumOptimizer.GeorgiaAquariumDoe">
+<em class="property">class </em><tt class="descclassname">GeorgiaAquariumOptimizer.</tt><tt class="descname">GeorgiaAquariumDoe</tt><a class="reference internal" href="_modules/GeorgiaAquariumOptimizer.html#GeorgiaAquariumDoe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GeorgiaAquariumOptimizer.GeorgiaAquariumDoe" title="Permalink to this definition">¶</a></dt>
+<dd><p>An assembly to connect the optimizer directly to the Georgia Aquarium model. This can be used to avoid issues
+with the uncertainty distributions. After it is found that this assembly is working correctly, the next step
+would be to</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="common.html" class="btn btn-neutral float-right" title="Common Utilities"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="uncertainties.html" class="btn btn-neutral" title="Uncertainties Driver"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

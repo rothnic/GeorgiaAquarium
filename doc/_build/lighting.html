@@ -1,0 +1,470 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Lighting Model &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Cost Model" href="cost.html"/>
+        <link rel="prev" title="Pedestrian Model" href="pedestrian.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Lighting Model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/lighting.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="lighting-model">
+<h1>Lighting Model<a class="headerlink" href="#lighting-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="reusable-lightingmodel-component">
+<h2>Reusable LightingModel Component<a class="headerlink" href="#reusable-lightingmodel-component" title="Permalink to this headline">¶</a></h2>
+<p>The LightingModel component is an OpenMDAO component, which could be used by multiple exhibits to help determine
+their individual lighting configuration. The LightingModel uses a <a class="reference internal" href="#Common.Lighting.calc_lighting.Lights" title="Common.Lighting.calc_lighting.Lights"><tt class="xref py py-class docutils literal"><span class="pre">Lights</span></tt></a> class
+to configure both a nominal and new design lighting configuration, then perform calculations based on the
+configurations.</p>
+<div class="section" id="lightingmodel-class-input-attributes">
+<h3><em>LightingModel Class Input Attributes</em><a class="headerlink" href="#lightingmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">numBulbs</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;number of bulbs to replace&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lightingmodel-class-output-attributes">
+<h3><em>LightingModel Class Output Attributes</em><a class="headerlink" href="#lightingmodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">yearlykWhNominal</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">recurringCostsNominal</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">6000</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">6000</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">6000</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy_float</span><span class="p">,</span>
+                                  <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">)</span>
+
+    <span class="n">yearlykWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">recurringCosts</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">6000</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">6000</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mi">6000</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy_float</span><span class="p">,</span>
+                           <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lightingmodel-class-constants">
+<h3><em>LightingModel Class Constants</em><a class="headerlink" href="#lightingmodel-class-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">years</span> <span class="o">=</span> <span class="mi">10</span>   <span class="c">#: Years to project out recurring costs</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lightingmodel-class-definition">
+<h3><em>LightingModel Class Definition</em><a class="headerlink" href="#lightingmodel-class-definition" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Common.Lighting.Lighting.LightingModel">
+<em class="property">class </em><tt class="descclassname">Common.Lighting.Lighting.</tt><tt class="descname">LightingModel</tt><big>(</big><em>lightObjNew</em>, <em>lightObjOld</em><big>)</big><a class="reference internal" href="_modules/Common/Lighting/Lighting.html#LightingModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.Lighting.LightingModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The LightingModel is a wrapper for a power and cost calculation in regard to replacing current lighting fixtures
+with more energy</p>
+<dl class="method">
+<dt id="Common.Lighting.Lighting.LightingModel.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>lightObjNew</em>, <em>lightObjOld</em><big>)</big><a class="reference internal" href="_modules/Common/Lighting/Lighting.html#LightingModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.Lighting.LightingModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the initialization of the OpenMDAO Component class. The purpose is to provide a way to customize
+and reuse this class for many different exhibits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lightObjNew</strong> &#8211; Configured <a class="reference internal" href="#Common.Lighting.calc_lighting.Lights" title="Common.Lighting.calc_lighting.Lights"><tt class="xref py py-class docutils literal"><span class="pre">Lights</span></tt></a> class for new bulbs</li>
+<li><strong>lightObjOld</strong> &#8211; Configured <a class="reference internal" href="#Common.Lighting.calc_lighting.Lights" title="Common.Lighting.calc_lighting.Lights"><tt class="xref py py-class docutils literal"><span class="pre">Lights</span></tt></a> class for old bulbs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Initialized <a class="reference internal" href="#Common.Lighting.Lighting.LightingModel" title="Common.Lighting.Lighting.LightingModel"><tt class="xref py py-class docutils literal"><span class="pre">LightingModel</span></tt></a> object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.Lighting.Lighting.LightingModel.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/Lighting.html#LightingModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.Lighting.LightingModel.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method for an OpenMDAO component that is required to be filled out with the internal behavior,
+and is called each time OpenMDAO has changed the input values. After execution, the new output values are
+then read from the component. This component executes to functions; one to calculate power, and one to
+calculate the initial capital cost associated with the configuration of the input values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lights-class">
+<h3><em>Lights Class</em><a class="headerlink" href="#lights-class" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Common.Lighting.calc_lighting.Lights">
+<em class="property">class </em><tt class="descclassname">Common.Lighting.calc_lighting.</tt><tt class="descname">Lights</tt><big>(</big><em>numBulbs</em>, <em>scaleRatio</em>, <em>bulbWatts</em>, <em>bulbCost</em>, <em>bulbLife</em>, <em>hoursOnPerDay</em>, <em>current</em><big>)</big><a class="reference internal" href="_modules/Common/Lighting/calc_lighting.html#Lights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.calc_lighting.Lights" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Common.Lighting.calc_lighting.Lights.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>numBulbs</em>, <em>scaleRatio</em>, <em>bulbWatts</em>, <em>bulbCost</em>, <em>bulbLife</em>, <em>hoursOnPerDay</em>, <em>current</em><big>)</big><a class="reference internal" href="_modules/Common/Lighting/calc_lighting.html#Lights.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.calc_lighting.Lights.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lights is a reuseable and general class for describing the lights configuration for any Georgia Aquarium
+exhibit. The class can be used as part of the higher level exhibit class to come up with a total power use
+and total investment and recurring costs for the exhibit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>numBulbs</strong> &#8211; Number of light bulbs/fixtures for this configuration</li>
+<li><strong>scaleRatio</strong> &#8211; The number of new bulbs needed to replace one old one</li>
+<li><strong>bulbWatts</strong> &#8211; The rating of the bulbs for this configuration</li>
+<li><strong>bulbCost</strong> &#8211; The cost in dollars of a single bulb</li>
+<li><strong>bulbLife</strong> &#8211; The lifespan in hours for the configured bulb</li>
+<li><strong>hoursOnPerDay</strong> &#8211; </li>
+<li><strong>current</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Common.Lighting.calc_lighting.Lights.initial_cost">
+<tt class="descname">initial_cost</tt><a class="reference internal" href="_modules/Common/Lighting/calc_lighting.html#Lights.initial_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.calc_lighting.Lights.initial_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the first year cost of the lighting configuration. This takes into account if the lighting
+configuration is the nominal one, and returns a cost of zero, making the assumption that we already have
+lights at the current moment in time and do not need to immediately replace them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The cost for the current configuration for the initial year of analysis.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Common.Lighting.calc_lighting.Lights.power_per_year">
+<tt class="descname">power_per_year</tt><a class="reference internal" href="_modules/Common/Lighting/calc_lighting.html#Lights.power_per_year"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.calc_lighting.Lights.power_per_year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the total amount of power in kWh for the current lighting configuration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Total amount of power in kWh used by the lights</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.Lighting.calc_lighting.Lights.print_config">
+<tt class="descname">print_config</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/calc_lighting.html#Lights.print_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.calc_lighting.Lights.print_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the configuration to console.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Common.Lighting.calc_lighting.Lights.recurrance_period">
+<tt class="descname">recurrance_period</tt><a class="reference internal" href="_modules/Common/Lighting/calc_lighting.html#Lights.recurrance_period"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.calc_lighting.Lights.recurrance_period" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the number of years required before replacing a bulb</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.14.1)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></a> of length equal to the number of configurations defined, where each value         represents the length in years until the associated lights will need to be replaced</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Common.Lighting.calc_lighting.Lights.recurring_cost">
+<tt class="descname">recurring_cost</tt><a class="reference internal" href="_modules/Common/Lighting/calc_lighting.html#Lights.recurring_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.calc_lighting.Lights.recurring_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the cost required at the recurrance_period.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Assumes all lights go out at once.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.14.1)"><tt class="xref py py-class docutils literal"><span class="pre">pandas.Series</span></tt></a> of length equal to the number of configurations defined, where each value         is the cost in dollars each time you have to replace the lights.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.Lighting.calc_lighting.Lights.yearly_cost">
+<tt class="descname">yearly_cost</tt><big>(</big><em>maxYears</em><big>)</big><a class="reference internal" href="_modules/Common/Lighting/calc_lighting.html#Lights.yearly_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.calc_lighting.Lights.yearly_cost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yearly cost of the lighting configuration over the length of maxYears.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>maxYears</strong> &#8211; The number of years out to calculate the recurring cost</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a> with length of maxYears</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="lighting-tests">
+<h2>Lighting Tests<a class="headerlink" href="#lighting-tests" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Common.Lighting.test_lighting.setup_tests">
+<tt class="descclassname">Common.Lighting.test_lighting.</tt><tt class="descname">setup_tests</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/test_lighting.html#setup_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.test_lighting.setup_tests" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Common.Lighting.test_lighting.test_lights_initial">
+<tt class="descclassname">Common.Lighting.test_lighting.</tt><tt class="descname">test_lights_initial</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/test_lighting.html#test_lights_initial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.test_lighting.test_lights_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Common.Lighting.test_lighting.test_lights_power_year">
+<tt class="descclassname">Common.Lighting.test_lighting.</tt><tt class="descname">test_lights_power_year</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/test_lighting.html#test_lights_power_year"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.test_lighting.test_lights_power_year" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Common.Lighting.test_lighting.test_lights_recurrance">
+<tt class="descclassname">Common.Lighting.test_lighting.</tt><tt class="descname">test_lights_recurrance</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/test_lighting.html#test_lights_recurrance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.test_lighting.test_lights_recurrance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Common.Lighting.test_lighting.test_lights_cost">
+<tt class="descclassname">Common.Lighting.test_lighting.</tt><tt class="descname">test_lights_cost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/test_lighting.html#test_lights_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.test_lighting.test_lights_cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Common.Lighting.test_lighting.test_lighting_model">
+<tt class="descclassname">Common.Lighting.test_lighting.</tt><tt class="descname">test_lighting_model</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/test_lighting.html#test_lighting_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.test_lighting.test_lighting_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Common.Lighting.test_lighting.test_lights_yearly_cost">
+<tt class="descclassname">Common.Lighting.test_lighting.</tt><tt class="descname">test_lights_yearly_cost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/Lighting/test_lighting.html#test_lights_yearly_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.Lighting.test_lighting.test_lights_yearly_cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cost.html" class="btn btn-neutral float-right" title="Cost Model"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pedestrian.html" class="btn btn-neutral" title="Pedestrian Model"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,881 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Index &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li></li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.__init__">__init__() (Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.__init__">(Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="lighting.html#Common.Lighting.Lighting.LightingModel.__init__">(Common.Lighting.Lighting.LightingModel method)</a>
+  </dt>
+
+        
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.__init__">(Common.Lighting.calc_lighting.Lights method)</a>
+  </dt>
+
+        
+  <dt><a href="common.html#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.__init__">(Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.__init__">(Common.RunAggregator.RunAggregator.RunAggregator method)</a>
+  </dt>
+
+        
+  <dt><a href="oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.__init__">(Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel method)</a>
+  </dt>
+
+        
+  <dt><a href="pedestrian.html#Pedestrian.Pedestrian.PedestrianModel.__init__">(Pedestrian.Pedestrian.PedestrianModel method)</a>
+  </dt>
+
+        
+  <dt><a href="pedestrian.html#Pedestrian.calc_ped.PedSurrogate.__init__">(Pedestrian.calc_ped.PedSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.__init__">(Uncertainties.Uncertainties.UncertaintiesModel method)</a>
+  </dt>
+
+        
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.__init__">(Uncertainties.calc_uncertainties.Distribution method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.calc_solar.calc_cost">calc_cost() (in module Energy.Sources.Solar.calc_solar)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_cost">(in module Energy.Sources.Tribo.calc_tribo)</a>
+  </dt>
+
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.calc_wind.calc_cost">(in module Energy.Sources.Wind.calc_wind)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.calc_solar.calc_num_panels">calc_num_panels() (in module Energy.Sources.Solar.calc_solar)</a>
+  </dt>
+
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.calc_solar.calc_power">calc_power() (in module Energy.Sources.Solar.calc_solar)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.calc_tribo.calc_power">(in module Energy.Sources.Tribo.calc_tribo)</a>
+  </dt>
+
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.calc_wind.calc_power">(in module Energy.Sources.Wind.calc_wind)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.calc_solar.calc_power_fast">calc_power_fast() (in module Energy.Sources.Solar.calc_solar)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.calc_wind.calc_power_fast">(in module Energy.Sources.Wind.calc_wind)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="cost.html#Cost.calc_cost.calc_roi">calc_roi() (in module Cost.calc_cost)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="common.html#module-Common.AttributeTools.io">Common.AttributeTools.io (module)</a>
+  </dt>
+
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.Solar.SolarOptimization.configure">configure() (Energy.Sources.Solar.Solar.SolarOptimization method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.Tribo.TriboOptimization.configure">(Energy.Sources.Tribo.Tribo.TriboOptimization method)</a>
+  </dt>
+
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.Wind.WindOptimization.configure">(Energy.Sources.Wind.Wind.WindOptimization method)</a>
+  </dt>
+
+        
+  <dt><a href="AnalysisComponents.html#GeorgiaAquarium.GeorgiaAquarium.configure">(GeorgiaAquarium.GeorgiaAquarium method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="cost.html#Cost.Cost.CostModel">CostModel (class in Cost.Cost)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.create_norm_func">create_norm_func() (Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate">DecisionTreeSurrogate (class in Common.DecisionTreeSurrogate.DecisionTreeSurrogate)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution">Distribution (class in Uncertainties.calc_uncertainties)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.Lighting.LightingModel.execute">execute() (Common.Lighting.Lighting.LightingModel method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator.execute">(Common.RunAggregator.RunAggregator.RunAggregator method)</a>
+  </dt>
+
+        
+  <dt><a href="cost.html#Cost.Cost.CostModel.execute">(Cost.Cost.CostModel method)</a>
+  </dt>
+
+        
+  <dt><a href="oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.execute">(Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel method)</a>
+  </dt>
+
+        
+  <dt><a href="Solar.html#Energy.Sources.Solar.Solar.SolarModel.execute">(Energy.Sources.Solar.Solar.SolarModel method)</a>
+  </dt>
+
+        
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.Tribo.TriboModel.execute">(Energy.Sources.Tribo.Tribo.TriboModel method)</a>
+  </dt>
+
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.Wind.WindModel.execute">(Energy.Sources.Wind.Wind.WindModel method)</a>
+  </dt>
+
+        
+  <dt><a href="pedestrian.html#Pedestrian.Pedestrian.PedestrianModel.execute">(Pedestrian.Pedestrian.PedestrianModel method)</a>
+  </dt>
+
+        
+  <dt><a href="uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.execute">(Uncertainties.Uncertainties.UncertaintiesModel method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate">FfnetSurrogate (class in Common.FfnetSurrogate.FfnetSurrogate)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="AnalysisComponents.html#GeorgiaAquarium.GeorgiaAquarium">GeorgiaAquarium (class in GeorgiaAquarium)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="AnalysisComponents.html#module-GeorgiaAquarium">(module)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumDoe">GeorgiaAquariumDoe (class in GeorgiaAquariumOptimizer)</a>
+  </dt>
+
+      
+  <dt><a href="AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumGlobalOptimization">GeorgiaAquariumGlobalOptimization (class in GeorgiaAquariumOptimizer)</a>
+  </dt>
+
+      
+  <dt><a href="AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumOptimization">GeorgiaAquariumOptimization (class in GeorgiaAquariumOptimizer)</a>
+  </dt>
+
+      
+  <dt><a href="AnalysisComponents.html#GeorgiaAquariumOptimizer.GeorgiaAquariumSampler">GeorgiaAquariumSampler (class in GeorgiaAquariumOptimizer)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="cost.html#Cost.calc_cost.get_break_even">get_break_even() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.AttributeTools.io.get_input_values">get_input_values() (in module Common.AttributeTools.io)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.AttributeTools.io.get_inputs">get_inputs() (in module Common.AttributeTools.io)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.AttributeTools.io.get_output_values">get_output_values() (in module Common.AttributeTools.io)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.AttributeTools.io.get_outputs">get_outputs() (in module Common.AttributeTools.io)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.init_distributions">init_distributions() (Uncertainties.Uncertainties.UncertaintiesModel method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.initial_cost">initial_cost (Common.Lighting.calc_lighting.Lights attribute)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.Lighting.LightingModel">LightingModel (class in Common.Lighting.Lighting)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights">Lights (class in Common.Lighting.calc_lighting)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.make_cdf">make_cdf() (Uncertainties.calc_uncertainties.Distribution method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.make_pdf">make_pdf() (Uncertainties.calc_uncertainties.Distribution method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="common.html#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate">NeurolabSurrogate (class in Common.NeurolabSurrogate.NeurolabSurrogate)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel">OceanVoyagerModel (class in Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="cost.html#Cost.calc_cost.original_energy_cost">original_energy_cost() (in module Cost.calc_cost)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="pedestrian.html#Pedestrian.Pedestrian.PedestrianModel">PedestrianModel (class in Pedestrian.Pedestrian)</a>
+  </dt>
+
+      
+  <dt><a href="pedestrian.html#Pedestrian.calc_ped.PedSurrogate">PedSurrogate (class in Pedestrian.calc_ped)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.power_per_year">power_per_year (Common.Lighting.calc_lighting.Lights attribute)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.print_config">print_config() (Common.Lighting.calc_lighting.Lights method)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.AttributeTools.io.print_outputs">print_outputs() (in module Common.AttributeTools.io)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.print_sim">print_sim() (Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.print_sim">(Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="common.html#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.print_sim">(Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.recurrance_period">recurrance_period (Common.Lighting.calc_lighting.Lights attribute)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.recurring_cost">recurring_cost (Common.Lighting.calc_lighting.Lights attribute)</a>
+  </dt>
+
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.test_solar.run_print_test">run_print_test() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="wind.html#Energy.Sources.Wind.test_wind.run_print_test">(in module Energy.Sources.Wind.test_wind)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="AnalysisComponents.html#GeorgiaAquarium.run_tests">run_tests() (in module GeorgiaAquarium)</a>
+  </dt>
+
+      
+  <dt><a href="pedestrian.html#Pedestrian.test_pedestrian.run_tests_with_print">run_tests_with_print() (in module Pedestrian.test_pedestrian)</a>
+  </dt>
+
+      
+  <dt><a href="uncertainties.html#Common.RunAggregator.RunAggregator.RunAggregator">RunAggregator (class in Common.RunAggregator.RunAggregator)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="uncertainties.html#Uncertainties.calc_uncertainties.Distribution.sample">sample() (Uncertainties.calc_uncertainties.Distribution method)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.setup_tests">setup_tests() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.sim">sim() (Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.sim">(Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="common.html#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.sim">(Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="pedestrian.html#Pedestrian.calc_ped.PedSurrogate.sim">(Pedestrian.calc_ped.PedSurrogate method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.Solar.SolarModel">SolarModel (class in Energy.Sources.Solar.Solar)</a>
+  </dt>
+
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.Solar.SolarOptimization">SolarOptimization (class in Energy.Sources.Solar.Solar)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.test">test() (Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.test">(Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="common.html#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.test">(Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="cost.html#Cost.test_cost.test_break_even">test_break_even() (in module Cost.test_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.test_cost.test_cost_component">test_cost_component() (in module Cost.test_cost)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lighting_model">test_lighting_model() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_cost">test_lights_cost() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_initial">test_lights_initial() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_power_year">test_lights_power_year() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_recurrance">test_lights_recurrance() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="lighting.html#Common.Lighting.test_lighting.test_lights_yearly_cost">test_lights_yearly_cost() (in module Common.Lighting.test_lighting)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.test_cost.test_model_with_print">test_model_with_print() (in module Cost.test_cost)</a>
+  </dt>
+
+      
+  <dt><a href="oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.test_ocean_voyager.test_ov_openmdao_model">test_ov_openmdao_model() (in module Energy.Sinks.Exhibits.OceanVoyager.test_ocean_voyager)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.test_cost.test_roi">test_roi() (in module Cost.test_cost)</a>
+  </dt>
+
+      
+  <dt><a href="pedestrian.html#Pedestrian.test_pedestrian.test_samples">test_samples() (in module Pedestrian.test_pedestrian)</a>
+  </dt>
+
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.test_solar.test_solar_non_neg">test_solar_non_neg() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.test_solar.test_solar_optimization">test_solar_optimization() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.test_tribo.test_tribo_openmdao_model">test_tribo_openmdao_model() (in module Energy.Sources.Tribo.test_tribo)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.test_tribo.test_tribo_optimization">test_tribo_optimization() (in module Energy.Sources.Tribo.test_tribo)</a>
+  </dt>
+
+      
+  <dt><a href="uncertainties.html#Uncertainties.test_uncertainties.test_uncertainties_component">test_uncertainties_component() (in module Uncertainties.test_uncertainties)</a>
+  </dt>
+
+      
+  <dt><a href="wind.html#Energy.Sources.Wind.test_wind.test_wind_component">test_wind_component() (in module Energy.Sources.Wind.test_wind)</a>
+  </dt>
+
+      
+  <dt><a href="wind.html#Energy.Sources.Wind.test_wind.test_wind_optimization">test_wind_optimization() (in module Energy.Sources.Wind.test_wind)</a>
+  </dt>
+
+      
+  <dt><a href="wind.html#Energy.Sources.Wind.test_wind.test_wind_power_calc">test_wind_power_calc() (in module Energy.Sources.Wind.test_wind)</a>
+  </dt>
+
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.test_solar.testSolarClean">testSolarClean() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      
+  <dt><a href="Solar.html#Energy.Sources.Solar.test_solar.testSolarComp">testSolarComp() (in module Energy.Sources.Solar.test_solar)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_capital_cost">total_capital_cost() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_energy_consumed">total_energy_consumed() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_energy_cost">total_energy_cost() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_energy_produced">total_energy_produced() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_energy_saved">total_energy_saved() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="cost.html#Cost.calc_cost.total_utility">total_utility() (in module Cost.calc_cost)</a>
+  </dt>
+
+      
+  <dt><a href="common.html#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.train">train() (Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="common.html#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.train">(Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate method)</a>
+  </dt>
+
+        
+  <dt><a href="common.html#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.train">(Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.Tribo.TriboModel">TriboModel (class in Energy.Sources.Tribo.Tribo)</a>
+  </dt>
+
+      
+  <dt><a href="triboelectric.html#Energy.Sources.Tribo.Tribo.TriboOptimization">TriboOptimization (class in Energy.Sources.Tribo.Tribo)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel">UncertaintiesModel (class in Uncertainties.Uncertainties)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="wind.html#Energy.Sources.Wind.Wind.WindModel">WindModel (class in Energy.Sources.Wind.Wind)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="wind.html#Energy.Sources.Wind.Wind.WindOptimization">WindOptimization (class in Energy.Sources.Wind.Wind)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="lighting.html#Common.Lighting.calc_lighting.Lights.yearly_cost">yearly_cost() (Common.Lighting.calc_lighting.Lights method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

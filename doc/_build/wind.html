@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Wind Model &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Triboelectric Model" href="triboelectric.html"/>
+        <link rel="prev" title="Ocean Voyager Model" href="oceanvoyager.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Wind Model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/wind.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="wind-model">
+<h1>Wind Model<a class="headerlink" href="#wind-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="windmodel-component">
+<h2>WindModel Component<a class="headerlink" href="#windmodel-component" title="Permalink to this headline">¶</a></h2>
+<p>The solar model component is developed in OpenMDAO, but the calculation functions have been developed as stand-alone
+units. The primary OpenMDAO element that would be executed is the Solar Model Component,
+which is can be loaded by other OpenMDAO structures for automated execution.</p>
+<p>Attributes of the component are where the explicit inputs and outputs are defined, and come in the following format:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">attribute_name</span> <span class="o">=</span> <span class="n">attribute_type</span><span class="p">(</span><span class="n">default_value</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in/out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;description of the attribute&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="windmodel-class-input-attributes">
+<h3><em>WindModel Class Input Attributes</em><a class="headerlink" href="#windmodel-class-input-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">turbineCount</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine count&#39;</span><span class="p">)</span>
+    <span class="n">turbineRating</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine power rating (kW)&#39;</span><span class="p">)</span>
+    <span class="n">turbineEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine efficiency (percent)&#39;</span><span class="p">)</span>
+    <span class="n">windSpeedScalar</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;uncertainty around wind speed (scalar)&#39;</span><span class="p">)</span>
+    <span class="n">windCostPerWatt</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;wind cost per capacity ($/watt)&#39;</span><span class="p">)</span>
+    <span class="n">circuitLoss</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;circuit power loss (percent)&#39;</span><span class="p">)</span>
+    <span class="n">airDensity</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.23</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;air density (kg/m^3)&#39;</span><span class="p">)</span>
+    <span class="n">bladeLength</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.524</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;turbine blade length (m)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="windmodel-class-output-attributes">
+<h3><em>WindModel Class Output Attributes</em><a class="headerlink" href="#windmodel-class-output-attributes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">totalkWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output (kWh)&#39;</span><span class="p">)</span>
+    <span class="n">windCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;investment cost ($)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="windmodel-class-constants">
+<h3><em>WindModel Class Constants</em><a class="headerlink" href="#windmodel-class-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>    <span class="n">windDataTable</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">windAtl.csv&#39;</span><span class="p">)</span> <span class="c">#: Pandas table read from a csv file, windAtl.csv</span>
+    <span class="n">windData</span> <span class="o">=</span> <span class="n">windDataTable</span><span class="p">[</span><span class="s">&quot;windSpeed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>        <span class="c">#: Only the wind speed column from the windDataTable</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="windmodel-class-definition">
+<h3><em>WindModel Class Definition</em><a class="headerlink" href="#windmodel-class-definition" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Energy.Sources.Wind.Wind.WindModel">
+<em class="property">class </em><tt class="descclassname">Energy.Sources.Wind.Wind.</tt><tt class="descname">WindModel</tt><a class="reference internal" href="_modules/Energy/Sources/Wind/Wind.html#WindModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.component.Component</span></tt></p>
+<dl class="method">
+<dt id="Energy.Sources.Wind.Wind.WindModel.execute">
+<tt class="descname">execute</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/Wind.html#WindModel.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindModel.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,
+OpenMDAO will write new values into the model&#8217;s inputs, then will call this execute method. After the
+execution is complete, it will read total power and total initial capital cost information from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="windmodel-calculations">
+<h2>WindModel Calculations<a class="headerlink" href="#windmodel-calculations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Energy.Sources.Wind.calc_wind.calc_power">
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_power</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_power" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.calc_wind.calc_power_fast">
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_power_fast</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_power_fast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_power_fast" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.calc_wind.calc_cost">
+<tt class="descclassname">Energy.Sources.Wind.calc_wind.</tt><tt class="descname">calc_cost</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/calc_wind.html#calc_cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.calc_wind.calc_cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="windmodel-optimization">
+<h2>WindModel Optimization<a class="headerlink" href="#windmodel-optimization" title="Permalink to this headline">¶</a></h2>
+<p>An OpenMDAO assembly, configured to use a pyOpt optimization driver, and configured with parameters corresponding to
+the <a class="reference internal" href="#Energy.Sources.Wind.Wind.WindModel" title="Energy.Sources.Wind.Wind.WindModel"><tt class="xref py py-class docutils literal"><span class="pre">WindModel</span></tt></a> inputs. This can be used for testing the model before integration
+with other models.</p>
+<dl class="class">
+<dt id="Energy.Sources.Wind.Wind.WindOptimization">
+<em class="property">class </em><tt class="descclassname">Energy.Sources.Wind.Wind.</tt><tt class="descname">WindOptimization</tt><a class="reference internal" href="_modules/Energy/Sources/Wind/Wind.html#WindOptimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindOptimization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">openmdao.main.assembly.Assembly</span></tt></p>
+<p>Implements an assembly to contain the WindModel component, and run optimizations on it stand-alone with the
+pyOpt plugin of optimization drivers. Implements a caserecorder so that you can investigate the results
+afterwards. This assembly will show up automatically when using openmdao gui, or can be used directly in another
+python script as you would use a regular python class.</p>
+<dl class="method">
+<dt id="Energy.Sources.Wind.Wind.WindOptimization.configure">
+<tt class="descname">configure</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/Wind.html#WindOptimization.configure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.Wind.WindOptimization.configure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="windmodel-tests">
+<h2>WindModel Tests<a class="headerlink" href="#windmodel-tests" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Energy.Sources.Wind.test_wind.test_wind_power_calc">
+<tt class="descclassname">Energy.Sources.Wind.test_wind.</tt><tt class="descname">test_wind_power_calc</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/test_wind.html#test_wind_power_calc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.test_wind.test_wind_power_calc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.test_wind.test_wind_component">
+<tt class="descclassname">Energy.Sources.Wind.test_wind.</tt><tt class="descname">test_wind_component</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/test_wind.html#test_wind_component"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.test_wind.test_wind_component" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.test_wind.run_print_test">
+<tt class="descclassname">Energy.Sources.Wind.test_wind.</tt><tt class="descname">run_print_test</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/test_wind.html#run_print_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.test_wind.run_print_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Energy.Sources.Wind.test_wind.test_wind_optimization">
+<tt class="descclassname">Energy.Sources.Wind.test_wind.</tt><tt class="descname">test_wind_optimization</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Energy/Sources/Wind/test_wind.html#test_wind_optimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Energy.Sources.Wind.test_wind.test_wind_optimization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="triboelectric.html" class="btn btn-neutral float-right" title="Triboelectric Model"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="oceanvoyager.html" class="btn btn-neutral" title="Ocean Voyager Model"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

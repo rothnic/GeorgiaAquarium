@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="../../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../../../index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../../index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   /Energy/Sinks/Exhibits/OceanVoyager/OceanVoyager.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">openmdao.main.api</span> <span class="kn">import</span> <span class="n">Component</span><span class="p">,</span> <span class="n">Assembly</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.datatypes.api</span> <span class="kn">import</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Array</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.doegenerators.optlh</span> <span class="kn">import</span> <span class="n">LatinHypercube</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.drivers.doedriver</span> <span class="kn">import</span> <span class="n">DOEdriver</span>
+
+<span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">print_outputs</span>
+<span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic</span> <span class="kn">import</span> <span class="n">init_protein_skimmer_surrogate</span>
+<span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic</span> <span class="kn">import</span> <span class="n">init_sand_filter_surrogate</span>
+<span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic</span> <span class="kn">import</span> <span class="n">calc_protein_power</span><span class="p">,</span> <span class="n">calc_sand_power</span>
+<span class="kn">from</span> <span class="nn">Energy.Sinks.Exhibits.OceanVoyager.calc_hydraulic</span> <span class="kn">import</span> <span class="n">calc_protein_cost</span><span class="p">,</span> <span class="n">calc_sand_cost</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.casehandlers.api</span> <span class="kn">import</span> <span class="n">CSVCaseRecorder</span>
+<span class="kn">from</span> <span class="nn">Common.Lighting.Lighting</span> <span class="kn">import</span> <span class="n">LightingModel</span>
+<span class="kn">from</span> <span class="nn">Common.Lighting.calc_lighting</span> <span class="kn">import</span> <span class="n">Lights</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="nb">float</span> <span class="k">as</span> <span class="n">numpy_float</span>
+<span class="kn">from</span> <span class="nn">pyopt_driver.pyopt_driver</span> <span class="kn">import</span> <span class="n">pyOptDriver</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="OceanVoyagerModel"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel">[docs]</a><span class="k">class</span> <span class="nc">OceanVoyagerModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="c"># set up inputs</span>
+    <span class="c"># protein skimmer model</span>
+    <span class="n">proteinRatedSpeed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1590.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
+    <span class="n">lossMultiplier</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">132.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;loss multiplier&#39;</span><span class="p">)</span>
+    <span class="n">proteinRatedEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.696</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump efficiency&#39;</span><span class="p">)</span>
+    <span class="n">ratedHead</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">29.2</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated head&#39;</span><span class="p">)</span>
+    <span class="n">ratedFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1668.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated flow&#39;</span><span class="p">)</span>
+    <span class="n">referenceArea</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;reference area&#39;</span><span class="p">)</span>
+    <span class="n">runSpeed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1590.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump actual run speed&#39;</span><span class="p">)</span>
+    <span class="n">pumpModificationUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump modification cost&#39;</span><span class="p">)</span>
+    <span class="n">doProteinUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
+
+    <span class="c"># sand filter model</span>
+    <span class="n">pumpFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1315.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated flow&#39;</span><span class="p">)</span>
+    <span class="n">pumpRatedHead</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">53.00</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated head&#39;</span><span class="p">)</span>
+    <span class="n">pumpRatedRpm</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1006.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
+    <span class="n">pumpRunRpm</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1288.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump actual run speed&#39;</span><span class="p">)</span>
+    <span class="n">pumpEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.73</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump efficiency&#39;</span><span class="p">)</span>
+    <span class="n">flowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">3.54</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
+    <span class="n">heatExchFlowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">5.06</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump speed rating&#39;</span><span class="p">)</span>
+    <span class="n">heatExchValveOpen</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;loss multiplier&#39;</span><span class="p">)</span>
+    <span class="n">denitFlowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.54</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump efficiency&#39;</span><span class="p">)</span>
+    <span class="n">ozoneFlowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.56</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated head&#39;</span><span class="p">)</span>
+    <span class="n">ozoneValveOpen</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.34</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump rated flow&#39;</span><span class="p">)</span>
+    <span class="n">denitValveOpen</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.58</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;reference area&#39;</span><span class="p">)</span>
+    <span class="n">deaerationFlowLossCoef</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;electric pump actual run speed&#39;</span><span class="p">)</span>
+    <span class="n">doSandUpgrade</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;boolean to do retrofit or not&#39;</span><span class="p">)</span>
+
+    <span class="c"># lighting model</span>
+    <span class="n">numBulbs</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;number of bulbs to replace&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up outputs</span>
+    <span class="c"># potential constraints</span>
+    <span class="n">proteinHead</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">25.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">totalFlowSand</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">63000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total gallons per minute sand filters&#39;</span><span class="p">)</span>
+    <span class="n">totalFlowProtein</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">55358.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;total gallons per minute protein skimmers&#39;</span><span class="p">)</span>
+    <span class="n">heatExchFlow1</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">heatExchFlow2</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">denitFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">8000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">bypassFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">45500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;simulated head&#39;</span><span class="p">)</span>
+    <span class="n">ozFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">600.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;ozone path towers 1-6 flow&#39;</span><span class="p">)</span>
+    <span class="n">sandFilterFlow</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;flow through one of the sand filters&#39;</span><span class="p">)</span>
+
+    <span class="c"># power</span>
+    <span class="n">proteinPumpPower</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;power in kW for protein skimmer pump&#39;</span><span class="p">)</span>
+    <span class="n">sandPumpPower</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;power in kW for sand filter pump&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerSand</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1350.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power used for sand filters&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerProtein</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power used for protein skimmers&#39;</span><span class="p">)</span>
+    <span class="n">yearlykWhNominal</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power usage for lighting (nominal)&#39;</span><span class="p">)</span>
+    <span class="n">yearlykWh</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power usage for lighting (new configuration)&#39;</span><span class="p">)</span>
+    <span class="n">totalPowerUsed</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;yearly power output&#39;</span><span class="p">)</span>
+
+    <span class="c"># cost</span>
+    <span class="n">proteinCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">153000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
+    <span class="n">sandCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">162000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
+    <span class="n">yearlyHydraulicCapitalCost</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">360000.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]),</span>
+                                 <span class="n">dtype</span><span class="o">=</span><span class="n">numpy_float</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span>
+                                 <span class="n">desc</span><span class="o">=</span><span class="s">&#39;hydraulic costs for 10 years&#39;</span><span class="p">)</span>
+    <span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">315000.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of modification&#39;</span><span class="p">)</span>
+
+    <span class="c"># lighting nominal</span>
+    <span class="n">recurringCostsNominal</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy_float</span><span class="p">,</span>
+                                  <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;lighting recurring costs for 10 years&#39;</span><span class="p">)</span>
+    <span class="c"># lighting new costs</span>
+    <span class="n">recurringCosts</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy_float</span><span class="p">,</span>
+                           <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;lighting recurring costs for 10 years, new config&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up constants</span>
+    <span class="c"># protein skimmer</span>
+    <span class="n">numProteinPumps</span> <span class="o">=</span> <span class="mi">34</span>
+    <span class="n">currentProteinPumpKw</span> <span class="o">=</span> <span class="mf">580.95</span>
+    <span class="n">currentProteinRatedSpeed</span> <span class="o">=</span> <span class="mi">1180</span>
+    <span class="n">currentProteinRatedFlow</span> <span class="o">=</span> <span class="mi">1960</span>
+    <span class="n">currentProteinRatedEff</span> <span class="o">=</span> <span class="mi">69</span>
+    <span class="n">currentProteinRatedHead</span> <span class="o">=</span> <span class="mi">31</span>
+    <span class="n">currentProteinCircuitLoss</span> <span class="o">=</span> <span class="mi">150</span>
+
+    <span class="c"># sand filter</span>
+    <span class="n">numSandPumps</span> <span class="o">=</span> <span class="mi">36</span>
+    <span class="n">currentSandPumpKw</span> <span class="o">=</span> <span class="mf">1230.24</span>
+    <span class="n">currentSandRatedSpeed</span> <span class="o">=</span> <span class="mi">1006</span>
+    <span class="n">currentSandRatedFlow</span> <span class="o">=</span> <span class="mi">1316</span>
+    <span class="n">currentSandRatedEff</span> <span class="o">=</span> <span class="mi">73</span>
+    <span class="n">currentSandRatedHead</span> <span class="o">=</span> <span class="mi">53</span>
+    <span class="n">currentSandCircuitLoss</span> <span class="o">=</span> <span class="mf">3.54</span>
+    <span class="n">currentSandHxCircuitLoss</span> <span class="o">=</span> <span class="mf">5.06</span>
+    <span class="n">currentSandOzCircuitLoss</span> <span class="o">=</span> <span class="mf">0.57</span>
+    <span class="n">currentSandDnCircuitLoss</span> <span class="o">=</span> <span class="mf">0.54</span>
+    <span class="n">currentSandDatCircuitLoss</span> <span class="o">=</span> <span class="mf">0.33</span>
+
+    <span class="c"># lighting</span>
+    <span class="n">currentNumLights</span> <span class="o">=</span> <span class="mf">40.0</span>
+    <span class="n">currentBulbWatts</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c"># watts</span>
+    <span class="n">currentBulbCost</span> <span class="o">=</span> <span class="mf">180.0</span>    <span class="c"># dollars</span>
+    <span class="n">currentBulbLife</span> <span class="o">=</span> <span class="mi">10000</span>    <span class="c"># hours</span>
+    <span class="n">hoursPerDay</span> <span class="o">=</span> <span class="mi">12</span>           <span class="c"># hours lights are on each day</span>
+    <span class="n">scaleRatio</span> <span class="o">=</span> <span class="mf">1.5</span>           <span class="c"># number of new lights required per old</span>
+    <span class="n">newLightWatts</span> <span class="o">=</span> <span class="mi">120</span>
+    <span class="n">newLightCost</span> <span class="o">=</span> <span class="mi">712</span>
+    <span class="n">newLightLife</span> <span class="o">=</span> <span class="mi">50000</span>
+
+
+    <span class="c"># primary model init</span>
+<div class="viewcode-block" id="OceanVoyagerModel.__init__"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Extend the OpenMDAO component init method only so that we don&#39;t have to reload the surrogate model files each</span>
+<span class="sd">        time it is executed. This might be considered bad practice, but is necessary to reduce run time. There could</span>
+<span class="sd">        be a better way to avoid this problem.</span>
+
+<span class="sd">        :return: Initialized OpenMDAO component object with protein and sand surrogate models loaded</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># ToDo: See if there is a better way to initialize the surrogate without having to extend the constructor</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">OceanVoyagerModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+        <span class="c"># Protein Skimmers Surrogate Model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protein_surrogate</span> <span class="o">=</span> <span class="n">init_protein_skimmer_surrogate</span><span class="p">()</span>
+
+        <span class="c"># Sand Filters Surrogate Model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sand_surrogate</span> <span class="o">=</span> <span class="n">init_sand_filter_surrogate</span><span class="p">()</span>
+
+        <span class="c"># Init light models</span>
+        <span class="n">lsOld</span> <span class="o">=</span> <span class="n">Lights</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">currentNumLights</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currentBulbLife</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currentBulbCost</span><span class="p">],</span>
+                       <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currentBulbLife</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hoursPerDay</span><span class="p">],</span> <span class="p">[</span><span class="bp">True</span><span class="p">])</span> <span class="c"># Old Lights config</span>
+        <span class="n">lsNew</span> <span class="o">=</span> <span class="n">Lights</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">currentNumLights</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scaleRatio</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">newLightWatts</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">newLightCost</span><span class="p">],</span>
+                       <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">newLightLife</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hoursPerDay</span><span class="p">],</span> <span class="p">[</span><span class="bp">False</span><span class="p">])</span> <span class="c"># New Lights config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span> <span class="o">=</span> <span class="n">LightingModel</span><span class="p">(</span><span class="n">lsNew</span><span class="p">,</span> <span class="n">lsOld</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+
+    <span class="c"># primary model method</span></div>
+<div class="viewcode-block" id="OceanVoyagerModel.execute"><a class="viewcode-back" href="../../../../../oceanvoyager.html#Energy.Sinks.Exhibits.OceanVoyager.OceanVoyager.OceanVoyagerModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The method that OpenMDAO requires that the behavior of the model be developed in. At each model execution,</span>
+<span class="sd">        OpenMDAO will write new values into the model&#39;s inputs, then will call this execute method. After the</span>
+<span class="sd">        execution is complete, it will read total power and total initial capital cost information from it.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c"># Add all protein skimmer related inputs into a list for input into surrogate</span>
+        <span class="n">inputsProtein</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">proteinRatedSpeed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lossMultiplier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proteinRatedEff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ratedHead</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">ratedFlow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenceArea</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">runSpeed</span><span class="p">]</span>
+
+        <span class="c"># Add all sand filter related inputs into a list for input into surrogate</span>
+        <span class="n">inputsSand</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pumpFlow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pumpRatedHead</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pumpRatedRpm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pumpRunRpm</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">pumpEff</span><span class="p">,</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">flowLossCoef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">heatExchFlowLossCoef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">heatExchValveOpen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denitFlowLossCoef</span><span class="p">,</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">ozoneFlowLossCoef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ozoneValveOpen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denitValveOpen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">deaerationFlowLossCoef</span><span class="p">]</span>
+
+        <span class="c"># Calculations for protein skimmers</span>
+        <span class="c"># This calculation is dependent on whether or not we&#39;d like to do an upgrade. The upgrade is essentially the</span>
+        <span class="c"># controlling design variable, while the actual hydraulic-specific variables are only relevant if we perform</span>
+        <span class="c"># the upgrade. Otherwise, we set the output values to their default.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doProteinUpgrade</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="c"># Calculate protein performance attributes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerProtein</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">proteinHead</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">totalFlowProtein</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">proteinPumpPower</span> <span class="o">=</span> <span class="n">calc_protein_power</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">protein_surrogate</span><span class="p">,</span> <span class="n">inputsProtein</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numProteinPumps</span><span class="p">)</span>
+
+            <span class="c"># Calculate protein cost</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proteinCapitalCost</span> <span class="o">=</span> <span class="n">calc_protein_cost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numProteinPumps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pumpModificationUnitCost</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">lossMultiplier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentProteinCircuitLoss</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">proteinRatedEff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentProteinRatedEff</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">proteinRatedSpeed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentProteinRatedSpeed</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">ratedFlow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentProteinRatedFlow</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">ratedHead</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentProteinRatedHead</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># No upgrade, set outputs to original values</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proteinHead</span> <span class="o">=</span> <span class="mf">25.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">totalFlowProtein</span> <span class="o">=</span> <span class="mf">63000.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerProtein</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentProteinPumpKw</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proteinCapitalCost</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proteinPumpPower</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentProteinPumpKw</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">numProteinPumps</span>
+
+        <span class="c"># Calculations for sand filters</span>
+        <span class="c"># This calculation is dependent on whether or not we&#39;d like to do an upgrade. The upgrade is essentially the</span>
+        <span class="c"># controlling design variable, while the actual hydraulic-specific variables are only relevant if we perform</span>
+        <span class="c"># the upgrade. Otherwise, we set the output values to their default.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doSandUpgrade</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="c"># Calculate sand filter performance attributes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerSand</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">sandFilterFlow</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">heatExchFlow1</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">heatExchFlow2</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">denitFlow</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">bypassFlow</span><span class="p">,</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">totalFlowSand</span><span class="p">,</span>\
+            <span class="bp">self</span><span class="o">.</span><span class="n">sandPumpPower</span><span class="p">,</span>\
+            <span class="bp">self</span><span class="o">.</span><span class="n">ozFlow</span> <span class="o">=</span> <span class="n">calc_sand_power</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sand_surrogate</span><span class="p">,</span> <span class="n">inputsSand</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numSandPumps</span><span class="p">)</span>
+
+            <span class="c"># Calculate sand filter cost</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sandCapitalCost</span> <span class="o">=</span> <span class="n">calc_sand_cost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numSandPumps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pumpModificationUnitCost</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">pumpRatedRpm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandRatedSpeed</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">pumpFlow</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandRatedFlow</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">pumpEff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandRatedEff</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">pumpRatedHead</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandRatedHead</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">flowLossCoef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandCircuitLoss</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">heatExchFlowLossCoef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandHxCircuitLoss</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">ozoneFlowLossCoef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandOzCircuitLoss</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">denitFlowLossCoef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandDnCircuitLoss</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">deaerationFlowLossCoef</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandDatCircuitLoss</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sandFilterFlow</span> <span class="o">=</span> <span class="mf">800.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">totalFlowSand</span> <span class="o">=</span> <span class="mf">61000.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">heatExchFlow1</span> <span class="o">=</span> <span class="mf">1000.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">heatExchFlow2</span> <span class="o">=</span> <span class="mf">1000.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">denitFlow</span> <span class="o">=</span> <span class="mf">8000.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bypassFlow</span> <span class="o">=</span> <span class="mf">45500.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerSand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentSandPumpKw</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">365</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sandCapitalCost</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+
+        <span class="c"># Execute lighting model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">numBulbs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numBulbs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recurringCostsNominal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">nominalRecurring</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yearlykWhNominal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">nominalkWh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yearlykWh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">yearlykWh</span>
+
+        <span class="c"># Total calculations</span>
+        <span class="c"># Here we are aggregating up all of the modeled elements of the OceanVoyager exhibit and combining them into</span>
+        <span class="c"># a single set of outputs. If more components were modeled, this is where the aggregation of the various</span>
+        <span class="c"># attributes would be performed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerUsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerProtein</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">totalPowerSand</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lightModel</span><span class="o">.</span><span class="n">yearlykWh</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">yearlyHydraulicCapitalCost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recurringCosts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hydraulicCapitalCost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yearlyHydraulicCapitalCost</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">proteinCapitalCost</span> <span class="o">+</span> \
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">sandCapitalCost</span>
+
+</div></div>
+<span class="k">class</span> <span class="nc">OceanVoyagerOptimization</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Implements an assembly to contain the SolarModel component, and run optimizations on it stand-alone with the</span>
+<span class="sd">    pyOpt plugin of optimization drivers. Implements a caserecorder so that you can investigate the results</span>
+<span class="sd">    afterwards. This assembly will show up automatically when using openmdao gui, or can be used directly in another</span>
+<span class="sd">    python script as you would use a regular python class.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This method is used to implement the custom behavior of the SolarOptimization Assembly. OpenMDAO requires</span>
+<span class="sd">        that you implement this method, and it is used to add the optimization component, the SolarModel,</span>
+<span class="sd">        and to configure the parameters within the optimization component.</span>
+
+<span class="sd">        :returns: Outputs optimization results to the console and saves all data for inputs and outputs into a CSV \</span>
+<span class="sd">        file named &#39;solar_optimization.csv&#39;.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c"># Add the pyOpt driver and case recorder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;driver&quot;</span><span class="p">,</span> <span class="n">pyOptDriver</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CSVCaseRecorder</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;oceanvoyager_optimization.csv&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="s">&#39;ALPSO&#39;</span>
+        <span class="c">#self.driver.options[&#39;SwarmSize&#39;] = 100</span>
+
+        <span class="c"># Add the solar model to the assembly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;ovm&quot;</span><span class="p">,</span> <span class="n">OceanVoyagerModel</span><span class="p">())</span>
+
+        <span class="c"># Add the parameters to be used in optimization</span>
+        <span class="c"># OceanVoyager protein skimmers</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.proteinRatedSpeed&#39;, low=800.0, high=1600.0)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.ratedHead&#39;, low=20.0, high=40.0)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.ratedFlow&#39;, low=1300.0, high=2000.0)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.proteinRatedEff&#39;, low=0.6, high=0.9)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.runSpeed&#39;, low=800.0, high=1600.0)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.lossMultiplier&#39;, low=135.0, high=150.0)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.referenceArea&#39;, low=0.1, high=0.5)</span>
+
+        <span class="c"># OceanVoyager sand filters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.pumpFlow&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">1300.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1700.0</span><span class="p">)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.pumpEff&#39;, low=.78, high=.80)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.pumpRatedHead&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">90.0</span><span class="p">)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.pumpRatedRpm&#39;, low=1000.0, high=1300.0)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.pumpRunRpm&#39;, low=1000.0, high=1300.0)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.flowLossCoef&#39;, low=0.1, high=10.0)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.heatExchFlowLossCoef&#39;, low=0.1, high=6.0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.heatExchValveOpen&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.denitFlowLossCoef&#39;, low=0.1, high=3.0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.denitValveOpen&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.ozoneFlowLossCoef&#39;, low=0.1, high=6.0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.ozoneValveOpen&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="c">#self.driver.add_parameter(&#39;ovm.deaerationFlowLossCoef&#39;, low=0.1, high=2.0)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_objective</span><span class="p">(</span><span class="s">&#39;ovm.sandPumpPower&#39;</span><span class="p">)</span>
+        <span class="c">#self.driver.add_constraint(&#39;ovm.totalFlowProtein - 66000 &lt; 0&#39;)</span>
+        <span class="c">#self.driver.add_constraint(&#39;ovm.totalFlowProtein - 60000 &gt; 0&#39;)</span>
+        <span class="c">#self.driver.add_constraint(&#39;ovm.proteinPumpPower - 20 &lt; 0&#39;)</span>
+        <span class="c">#self.driver.add_constraint(&#39;ovm.proteinPumpPower &gt; 0&#39;)</span>
+        <span class="c">#self.driver.add_constraint(&#39;ovm.totalFlowSand - 61000 &lt; 0&#39;)</span>
+        <span class="c">#self.driver.add_constraint(&#39;ovm.totalFlowSand -60000 &gt; 0&#39;)</span>
+        <span class="c">#self.driver.add_constraint(&#39;ovm.sandFilterFlow - 800 &lt; 0&#39;)</span>
+        <span class="c">#self.driver.add_constraint(&#39;ovm.sandFilterFlow &gt; 0&#39;)</span>
+        <span class="c"># self.driver.add_constraint(&#39;ovm.heatExchFlow2 - 3500 &lt; 0&#39;)</span>
+        <span class="c"># self.driver.add_constraint(&#39;ovm.heatExchFlow2 - 3000 &gt; 0&#39;)</span>
+        <span class="c"># self.driver.add_constraint(&#39;ovm.denitFlow - 8500 &lt; 0&#39;)</span>
+        <span class="c"># self.driver.add_constraint(&#39;ovm.denitFlow - 8000 &gt; 0&#39;)</span>
+        <span class="c"># self.driver.add_constraint(&#39;ovm.bypassFlow - 43000 &lt; 0&#39;)</span>
+        <span class="c"># self.driver.add_constraint(&#39;ovm.bypassFlow - 40000 &gt; 0&#39;)</span>
+        <span class="c"># self.driver.add_constraint(&#39;ovm.ozFlow - 8500 &lt; 0&#39;)</span>
+        <span class="c"># self.driver.add_constraint(&#39;ovm.ozFlow - 8000 &gt; 0&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;(ovm.heatExchFlow2 - 3250)/250 &lt; 1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;(ovm.heatExchFlow2 - 3250)/250 &gt; -1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;(ovm.denitFlow - 8250)/250 &lt; 1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;(ovm.denitFlow - 8250)/250 &gt; -1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;(ovm.bypassFlow - 41500)/1500 &lt; 1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;(ovm.bypassFlow - 41500)/1500 &gt; -1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;(ovm.ozFlow - 8250)/250 &lt; 1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="s">&#39;(ovm.ozFlow - 8250)/250 &gt; -1&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">printvars</span> <span class="o">=</span><span class="p">[</span><span class="s">&#39;ovm.totalFlowSand&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.sandFilterFlow&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.denitFlow&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.bypassFlow&#39;</span><span class="p">,</span>
+                                <span class="s">&#39;ovm.heatExchFlow2&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.ozFlow&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.sandPumpPower&#39;</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">OceanVoyagerDoe</span><span class="p">(</span><span class="n">Assembly</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    An assembly to connect the optimizer directly to the Georgia Aquarium model. This can be used to avoid issues</span>
+<span class="sd">    with the uncertainty distributions. After it is found that this assembly is working correctly, the next step</span>
+<span class="sd">    would be to</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Add components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;ovm&#39;</span><span class="p">,</span> <span class="n">OceanVoyagerModel</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;driver&quot;</span><span class="p">,</span> <span class="n">DOEdriver</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">recorders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CSVCaseRecorder</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;ovm_simpledoe.csv&#39;</span><span class="p">))</span>
+
+        <span class="c"># Add all components to the workflow</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;ovm&quot;</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.pumpFlow&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">1300.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1700.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.pumpEff&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=.</span><span class="mi">78</span><span class="p">,</span> <span class="n">high</span><span class="o">=.</span><span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.pumpRatedHead&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">40.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">80.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.heatExchValveOpen&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.denitValveOpen&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">&#39;ovm.ozoneValveOpen&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_objective</span><span class="p">(</span><span class="s">&#39;ovm.sandPumpPower&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">printvars</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;ovm.totalInitialInvestment&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.breakEvenYear&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.totalFlowProtein&#39;</span><span class="p">,</span>
+                                 <span class="s">&#39;ovm.year5Roi&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.originalEnergyCost&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.totalEnergyCost&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.totalEnergySaved&#39;</span><span class="p">,</span>
+                                 <span class="s">&#39;ovm.totalPowerConsumed&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.totalPowerProduced&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.baselineOceanVoyPowerUse&#39;</span><span class="p">,</span>
+                                 <span class="s">&#39;ovm.baselineTotalPowerUse&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.totalPowerProtein&#39;</span><span class="p">,</span> <span class="s">&#39;ovm.totalPowerSand&#39;</span><span class="p">,</span>
+                                 <span class="s">&#39;ovm.sandPumpPower&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;DOEgenerator&quot;</span><span class="p">,</span> <span class="n">LatinHypercube</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c"># Module test routine, executes when this python file is ran independently</span>
+    <span class="c"># For example, using Pycharm, right click while editing and select Run</span>
+    <span class="kn">from</span> <span class="nn">test_ocean_voyager</span> <span class="kn">import</span> <span class="n">test_ov_openmdao_model</span><span class="p">,</span> <span class="n">test_ov_openmdao_optimization</span>
+    <span class="n">test_ov_openmdao_model</span><span class="p">()</span>
+    <span class="n">test_ov_openmdao_optimization</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

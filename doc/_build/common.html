@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Common Utilities &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="index.html"/>
+        <link rel="next" title="Analysis Notebooks" href="analysis.html"/>
+        <link rel="prev" title="Analysis Components" href="AnalysisComponents.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Common Utilities</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/common.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="common-utilities">
+<h1>Common Utilities<a class="headerlink" href="#common-utilities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="surrogate-model-tools">
+<h2>Surrogate Model Tools<a class="headerlink" href="#surrogate-model-tools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="decision-tree-surrogate">
+<h3><em>Decision Tree Surrogate</em><a class="headerlink" href="#decision-tree-surrogate" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate">
+<em class="property">class </em><tt class="descclassname">Common.DecisionTreeSurrogate.DecisionTreeSurrogate.</tt><tt class="descname">DecisionTreeSurrogate</tt><big>(</big><em>trainingFile</em>, <em>inputCols</em>, <em>outputCols</em>, <em>regressorFile=None</em><big>)</big><a class="reference internal" href="_modules/Common/DecisionTreeSurrogate/DecisionTreeSurrogate.html#DecisionTreeSurrogate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>trainingFile</em>, <em>inputCols</em>, <em>outputCols</em>, <em>regressorFile=None</em><big>)</big><a class="reference internal" href="_modules/Common/DecisionTreeSurrogate/DecisionTreeSurrogate.html#DecisionTreeSurrogate.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor for DecisionTreeSurrogate, which wraps the scikit-learn
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.15.0)"><tt class="xref py py-class docutils literal"><span class="pre">RandomForestRegressor</span></tt></a> class. This class generates many dicision trees with random
+configurations to avoid overfitting the model to the training data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>trainingFile</strong> &#8211; String location of the training CSV file, which must include column headers</li>
+<li><strong>inputCols</strong> &#8211; List of strings corresponding to the input column names</li>
+<li><strong>outputCols</strong> &#8211; List of strings corresponding to the output column names</li>
+<li><strong>regressorFile</strong> &#8211; (optional) String location of trained and pickled model. This is saved on training         completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Initialized DecisionTreeSurrogate object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.print_sim">
+<tt class="descname">print_sim</tt><big>(</big><em>inValues</em><big>)</big><a class="reference internal" href="_modules/Common/DecisionTreeSurrogate/DecisionTreeSurrogate.html#DecisionTreeSurrogate.print_sim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.print_sim" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple method that wil print out the value of the array, inValues, with the corresponding output value.
+This is primarily used for quickly testing to see how well the trained surrogate works.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inValues</strong> &#8211; Array or list of input values to retrieve and print out output values for</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None, prints to console</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.sim">
+<tt class="descname">sim</tt><big>(</big><em>inValue</em><big>)</big><a class="reference internal" href="_modules/Common/DecisionTreeSurrogate/DecisionTreeSurrogate.html#DecisionTreeSurrogate.sim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.sim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the trained surrogate model on new input data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inValue</strong> &#8211; An array or list of values with the same length of the list of input columns (inputCols)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An array of values with the same length of the list of output columns (outputCols)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.test">
+<tt class="descname">test</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/DecisionTreeSurrogate/DecisionTreeSurrogate.html#DecisionTreeSurrogate.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the testing of the model with the scipy <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html#scipy.stats.linregress" title="(in SciPy v0.14.0)"><tt class="xref py py-func docutils literal"><span class="pre">linregress()</span></tt></a> function. This prints out
+the results for each output to the console.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None, prints to console</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.train">
+<tt class="descname">train</tt><big>(</big><em>n_estimators</em><big>)</big><a class="reference internal" href="_modules/Common/DecisionTreeSurrogate/DecisionTreeSurrogate.html#DecisionTreeSurrogate.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.DecisionTreeSurrogate.DecisionTreeSurrogate.DecisionTreeSurrogate.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains the surrogate model with the initialized input and output data, given the number of estimators to use.
+This is used as an input to the <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v0.15.0)"><tt class="xref py py-class docutils literal"><span class="pre">RandomForestRegressor</span></tt></a> initializer, and controls
+the number of decision trees created by the random forest tree.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n_estimators</strong> &#8211; number of decision trees for training, :note: can increase run time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="neural-network-ffnet-surrogate">
+<h3><em>Neural Network (Ffnet) Surrogate</em><a class="headerlink" href="#neural-network-ffnet-surrogate" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate">
+<em class="property">class </em><tt class="descclassname">Common.FfnetSurrogate.FfnetSurrogate.</tt><tt class="descname">FfnetSurrogate</tt><big>(</big><em>trainingFile</em>, <em>inputCols</em>, <em>outputCols</em>, <em>netFile=None</em>, <em>multi=False</em><big>)</big><a class="reference internal" href="_modules/Common/FfnetSurrogate/FfnetSurrogate.html#FfnetSurrogate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>trainingFile</em>, <em>inputCols</em>, <em>outputCols</em>, <em>netFile=None</em>, <em>multi=False</em><big>)</big><a class="reference internal" href="_modules/Common/FfnetSurrogate/FfnetSurrogate.html#FfnetSurrogate.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor for FfnetSurrogate, which wraps the ffnet <a class="reference external" href="http://ffnet.sourceforge.net/apidoc.html#ffnet.ffnet" title="(in ffnet v0.7.1)"><tt class="xref py py-class docutils literal"><span class="pre">ffnet</span></tt></a> class. This class is a
+feed-forward neural network library written in Fortran, that is wrapped with a python interface. The way this
+differs from the neurolab <tt class="xref py py-class docutils literal"><span class="pre">newff</span></tt> feed-forward network class, is that it can make use of
+multiple processors for training, and typically produces better results.</p>
+<p>There is an existing plugin for OpenMDAO wrapping this library, but using it involves actually having the
+real model connected into OpenMDAO for training. This class provides the ability to just have a csv file of
+results, so that you can generate the surrogate ahead of time, then just use it by loading the saved model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>trainingFile</strong> &#8211; String location of the training CSV file, which must include column headers</li>
+<li><strong>inputCols</strong> &#8211; List of strings corresponding to the input column names</li>
+<li><strong>outputCols</strong> &#8211; List of strings corresponding to the output column names</li>
+<li><strong>regressorFile</strong> &#8211; (optional) String location of trained and saved network. This is saved on training         completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Initialized FfnetSurrogate object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.print_sim">
+<tt class="descname">print_sim</tt><big>(</big><em>inValues</em><big>)</big><a class="reference internal" href="_modules/Common/FfnetSurrogate/FfnetSurrogate.html#FfnetSurrogate.print_sim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.print_sim" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple method that wil print out the value of the array, inValues, with the corresponding output value.
+This is primarily used for quickly testing to see how well the trained surrogate works.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inValues</strong> &#8211; Array or list of input values to retrieve and print out output values for</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None, prints to console</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.sim">
+<tt class="descname">sim</tt><big>(</big><em>inValue</em><big>)</big><a class="reference internal" href="_modules/Common/FfnetSurrogate/FfnetSurrogate.html#FfnetSurrogate.sim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.sim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the trained surrogate model on new input data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inValue</strong> &#8211; An array or list of values with the same length of the list of input columns (inputCols)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An array of values with the same length of the list of output columns (outputCols)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.test">
+<tt class="descname">test</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/FfnetSurrogate/FfnetSurrogate.html#FfnetSurrogate.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the testing of the model with the scipy <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html#scipy.stats.linregress" title="(in SciPy v0.14.0)"><tt class="xref py py-func docutils literal"><span class="pre">linregress()</span></tt></a> function. This prints out
+the results for each output to the console.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None, prints to console</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.train">
+<tt class="descname">train</tt><big>(</big><em>num_neurons</em><big>)</big><a class="reference internal" href="_modules/Common/FfnetSurrogate/FfnetSurrogate.html#FfnetSurrogate.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.FfnetSurrogate.FfnetSurrogate.FfnetSurrogate.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a network topology from the num_neurons input, then trains the surrogate model with the initialized         input and output data. The network topology is used as an input to the <a class="reference external" href="http://ffnet.sourceforge.net/apidoc.html#ffnet.ffnet" title="(in ffnet v0.7.1)"><tt class="xref py py-class docutils literal"><span class="pre">ffnet</span></tt></a> initializer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>num_neurons</strong> &#8211; number of internal neurons :note: this can help create a better fit for a complicated         model, at the expense of requiring more computational resources to train.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None, saves network to disk as ffnetSurrogate.net</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="neural-network-neurolab-surrogate">
+<h3><em>Neural Network (Neurolab) Surrogate</em><a class="headerlink" href="#neural-network-neurolab-surrogate" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate">
+<em class="property">class </em><tt class="descclassname">Common.NeurolabSurrogate.NeurolabSurrogate.</tt><tt class="descname">NeurolabSurrogate</tt><big>(</big><em>trainingFile</em>, <em>inputCols</em>, <em>outputCols</em>, <em>netFile=None</em><big>)</big><a class="reference internal" href="_modules/Common/NeurolabSurrogate/NeurolabSurrogate.html#NeurolabSurrogate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>trainingFile</em>, <em>inputCols</em>, <em>outputCols</em>, <em>netFile=None</em><big>)</big><a class="reference internal" href="_modules/Common/NeurolabSurrogate/NeurolabSurrogate.html#NeurolabSurrogate.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor for NeuroSurrogate, which wraps the neurolab <tt class="xref py py-class docutils literal"><span class="pre">newff</span></tt> class. This class is a
+feed-forward neural network library written in python. The way this
+differs from the ffnet <tt class="xref py py-mod docutils literal"><span class="pre">ffnet</span></tt> feed-forward network library, is that it provides many more types of
+neural networks beyond just the feed-forward case, including <tt class="xref py py-class docutils literal"><span class="pre">newp</span></tt>,
+<tt class="xref py py-class docutils literal"><span class="pre">newc</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">newlvq</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">newelm</span></tt>,
+<tt class="xref py py-class docutils literal"><span class="pre">newhop</span></tt>, and <tt class="xref py py-class docutils literal"><span class="pre">newhem</span></tt>. Currently, only support for the
+<tt class="xref py py-class docutils literal"><span class="pre">newff</span></tt> is supported, but it could easily be extended to those as well.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>trainingFile</strong> &#8211; String location of the training CSV file, which must include column headers</li>
+<li><strong>inputCols</strong> &#8211; List of strings corresponding to the input column names</li>
+<li><strong>outputCols</strong> &#8211; List of strings corresponding to the output column names</li>
+<li><strong>netFile</strong> &#8211; (optional) String location of trained and saved network. This is saved on training         completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Initialized NeurolabSurrogate object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.create_norm_func">
+<tt class="descname">create_norm_func</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/NeurolabSurrogate/NeurolabSurrogate.html#NeurolabSurrogate.create_norm_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.create_norm_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neurolab requires that the output data be normalized ahead of time by the user. This can be difficult to deal
+with and makes the library hard to use. This method automates the process of getting the data into the
+correct format then generating a reusable function to convert the data back into the original format after
+you get outputs from the model on calling the sim method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">normalization function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.print_sim">
+<tt class="descname">print_sim</tt><big>(</big><em>inValues</em><big>)</big><a class="reference internal" href="_modules/Common/NeurolabSurrogate/NeurolabSurrogate.html#NeurolabSurrogate.print_sim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.print_sim" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple method that wil print out the value of the array, inValues, with the corresponding output value.
+This is primarily used for quickly testing to see how well the trained surrogate works.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inValues</strong> &#8211; Array or list of input values to retrieve and print out output values for</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None, prints to console</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.sim">
+<tt class="descname">sim</tt><big>(</big><em>inValue</em><big>)</big><a class="reference internal" href="_modules/Common/NeurolabSurrogate/NeurolabSurrogate.html#NeurolabSurrogate.sim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.sim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the trained surrogate model on new input data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inValue</strong> &#8211; An array or list of values with the same length of the list of input columns (inputCols)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An array of values with the same length of the list of output columns (outputCols)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.test">
+<tt class="descname">test</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Common/NeurolabSurrogate/NeurolabSurrogate.html#NeurolabSurrogate.test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the testing of the model with the scipy <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html#scipy.stats.linregress" title="(in SciPy v0.14.0)"><tt class="xref py py-func docutils literal"><span class="pre">linregress()</span></tt></a> function. This prints out
+the results for each output to the console.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None, prints to console</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.train">
+<tt class="descname">train</tt><big>(</big><em>num_neurons</em><big>)</big><a class="reference internal" href="_modules/Common/NeurolabSurrogate/NeurolabSurrogate.html#NeurolabSurrogate.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.NeurolabSurrogate.NeurolabSurrogate.NeurolabSurrogate.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a network topology from the num_neurons input, then trains the surrogate model with the initialized         input and output data. The network topology is used as an input to the <a class="reference external" href="http://pythonhosted.org/neurolab/lib.html#neurolab.net.newff" title="(in NeuroLab v0.2)"><tt class="xref py py-func docutils literal"><span class="pre">newff()</span></tt></a>,
+which returns a <a class="reference external" href="http://pythonhosted.org/neurolab/fw.html#neurolab.core.Net" title="(in NeuroLab v0.2)"><tt class="xref py py-class docutils literal"><span class="pre">Net</span></tt></a> object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>num_neurons</strong> &#8211; number of internal neurons :note: this can help create a better fit for a complicated         model, at the expense of requiring more computational resources to train.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None, saves network to disk as neurolabSurrogate.net</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-Common.AttributeTools.io">
+<span id="helper-utilities"></span><h2>Helper Utilities<a class="headerlink" href="#module-Common.AttributeTools.io" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Common.AttributeTools.io.get_outputs">
+<tt class="descclassname">Common.AttributeTools.io.</tt><tt class="descname">get_outputs</tt><big>(</big><em>component</em><big>)</big><a class="reference internal" href="_modules/Common/AttributeTools/io.html#get_outputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.AttributeTools.io.get_outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the user-defined outputs from an OpenMDAO component.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>component</strong> &#8211; Initialized OpenMDAO component</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Pure list of only user-defined outputs as strings</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Common.AttributeTools.io.print_outputs">
+<tt class="descclassname">Common.AttributeTools.io.</tt><tt class="descname">print_outputs</tt><big>(</big><em>component</em><big>)</big><a class="reference internal" href="_modules/Common/AttributeTools/io.html#print_outputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.AttributeTools.io.print_outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints only the user-defined outputs from an OpenMDAO component</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>component</strong> &#8211; Initialized OpenMDAO component</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None, prints to console</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Common.AttributeTools.io.get_output_values">
+<tt class="descclassname">Common.AttributeTools.io.</tt><tt class="descname">get_output_values</tt><big>(</big><em>component</em><big>)</big><a class="reference internal" href="_modules/Common/AttributeTools/io.html#get_output_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.AttributeTools.io.get_output_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the user-defined outputs form an OpenMDAO component and stores them into a python dict. It could be
+used as followed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">comp</span> <span class="o">=</span> <span class="n">MyComponent</span><span class="p">()</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">get_output_values</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+    <span class="n">this_value</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="n">output</span><span class="p">]</span>
+    <span class="n">do_something_with_value</span><span class="p">(</span><span class="n">this_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>component</strong> &#8211; Initialized OpenMDAO component</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Python dict with keys of the output parameter names, with associated values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Common.AttributeTools.io.get_inputs">
+<tt class="descclassname">Common.AttributeTools.io.</tt><tt class="descname">get_inputs</tt><big>(</big><em>component</em><big>)</big><a class="reference internal" href="_modules/Common/AttributeTools/io.html#get_inputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.AttributeTools.io.get_inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the user-defined inputs from an OpenMDAO component as a list of strings. This is required since
+retrieving them directly from the component will include other attributes that were not defined by the user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>component</strong> &#8211; Initialized OpenMDAO component</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Pure list of only user-defined inputs as strings</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Common.AttributeTools.io.get_input_values">
+<tt class="descclassname">Common.AttributeTools.io.</tt><tt class="descname">get_input_values</tt><big>(</big><em>component</em><big>)</big><a class="reference internal" href="_modules/Common/AttributeTools/io.html#get_input_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Common.AttributeTools.io.get_input_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the user-defined inputs form an OpenMDAO component and stores them into a python dict. It could be
+used as followed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">comp</span> <span class="o">=</span> <span class="n">MyComponent</span><span class="p">()</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">get_input_values</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
+<span class="k">for</span> <span class="nb">input</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+    <span class="n">this_value</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="nb">input</span><span class="p">]</span>
+    <span class="n">do_something_with_value</span><span class="p">(</span><span class="n">this_value</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>component</strong> &#8211; Initialized OpenMDAO component</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Python dict with keys of the input parameter names, with associated values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="analysis.html" class="btn btn-neutral float-right" title="Analysis Notebooks"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="AnalysisComponents.html" class="btn btn-neutral" title="Analysis Components"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

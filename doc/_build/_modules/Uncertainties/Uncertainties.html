@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Uncertainties.Uncertainties &mdash; Georgia Aquarium Energy Model 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Georgia Aquarium Energy Model 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> Georgia Aquarium Energy Model</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../oceanvoyager.html">Ocean Voyager Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../oceanvoyager.html#oceanvoyager-component">OceanVoyager Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../oceanvoyager.html#oceanvoyager-tests">OceanVoyager Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../wind.html">Wind Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-component">WindModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-calculations">WindModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-optimization">WindModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../wind.html#windmodel-tests">WindModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../triboelectric.html">Triboelectric Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#triboelectric-component">Triboelectric Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-calculations">TriboModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-optimization">TriboModel Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../triboelectric.html#tribomodel-tests">TriboModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../pedestrian.html">Pedestrian Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedestrianmodel-component">PedestrianModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedsurrogate-class">PedSurrogate Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pedestrian.html#pedestrianmodel-tests">PedestrianModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lighting.html">Lighting Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lighting.html#reusable-lightingmodel-component">Reusable LightingModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lighting.html#lighting-tests">Lighting Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../cost.html">Cost Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-component">CostModel Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-calculations">CostModel Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cost.html#costmodel-tests">CostModel Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../uncertainties.html">Uncertainties Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../uncertainties.html#uncertainties-component"><em>Uncertainties Component</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../uncertainties.html#run-aggregator-component"><em>Run Aggregator Component</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../AnalysisComponents.html">Analysis Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#module-GeorgiaAquarium">Georgia Aquarium Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-global-optimization">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#id1">Georgia Aquarium Global Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-sampler">Georgia Aquarium Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../AnalysisComponents.html#georgia-aquarium-doe">Georgia Aquarium DOE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../common.html">Common Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../common.html#surrogate-model-tools">Surrogate Model Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common.html#module-Common.AttributeTools.io">Helper Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../analysis.html">Analysis Notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../notebooks/Output_Analysis.html">Uncertainty Distribution Verification</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Georgia Aquarium Energy Model</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>Uncertainties.Uncertainties</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for Uncertainties.Uncertainties</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Nick&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">openmdao.main.api</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">openmdao.lib.datatypes.api</span> <span class="kn">import</span> <span class="n">Float</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">calc_uncertainties</span> <span class="kn">import</span> <span class="n">Distribution</span>
+<span class="kn">from</span> <span class="nn">Common.AttributeTools.io</span> <span class="kn">import</span> <span class="n">get_outputs</span>
+
+
+<div class="viewcode-block" id="UncertaintiesModel"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel">[docs]</a><span class="k">class</span> <span class="nc">UncertaintiesModel</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+    <span class="c"># set up inputs</span>
+    <span class="n">pedsPerHourOn_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour on season distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">pedsPerHourOff_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour off season distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">tileUnitCost_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of a tribo tile distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">elecUtilityRate_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of electricity distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">panelEff_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in conversion of sun energy distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">circuitLoss_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in collecting electrical energy distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">turbineEff_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in collecting electrical energy distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">baselineOceanVoyPowerUse_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span><span class="n">desc</span><span class="o">=</span><span class="s">&#39;current power use per year for OV distribution sample point&#39;</span><span class="p">)</span>
+    <span class="n">baselineTotalPowerUse_prob</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;in&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;current power use per year for total aquarium &#39;</span>
+                                                              <span class="s">&#39;distribution sample point&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up outputs</span>
+    <span class="n">pedsPerHourOn</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">600.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour on season distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">pedsPerHourOff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">500.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;avg peds per hour off season distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">tileUnitCost</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of a tribo tile distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">elecUtilityRate</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;cost of electricity distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">panelEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.23</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in conversion of sun energy distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">circuitLoss</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.30</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in collecting electrical energy distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">turbineEff</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.367</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;eff in collecting electrical energy distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">baselineOceanVoyPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">17265306.1224</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;current power use per year for OV &#39;</span>
+                                                                       <span class="s">&#39;distribution sample value&#39;</span><span class="p">)</span>
+    <span class="n">baselineTotalPowerUse</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">27465306.1224</span><span class="p">,</span> <span class="n">iotype</span><span class="o">=</span><span class="s">&#39;out&#39;</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s">&#39;current power use per year for total &#39;</span>
+                                                                    <span class="s">&#39;aquarium distribution sample value&#39;</span><span class="p">)</span>
+
+    <span class="c"># set up constants</span>
+    <span class="c"># None defined</span>
+
+    <span class="c"># initialization</span>
+<div class="viewcode-block" id="UncertaintiesModel.__init__"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The constructor of the OpenMDAO component is extended to initialize a :class:`list` to contain the</span>
+<span class="sd">        distributions, then it loads the CSV file containing the uncertainties data, then initializes the</span>
+<span class="sd">        :class:`Uncertainties.calc_uncertainties.Distribution` objects, and stores them in the list.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">UncertaintiesModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="c"># set up constants</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distributions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_outputs</span> <span class="o">=</span> <span class="n">get_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">uncertainties.csv&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_distributions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c"># primary component method</span></div>
+<div class="viewcode-block" id="UncertaintiesModel.execute"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        The primary method that OpenMDAO requires that you populate for any component with the behavior you want the</span>
+<span class="sd">        component to have. In this case, the component is just a grouping of uncertainty variable distributions. It</span>
+<span class="sd">        is possible to integrate this capability into the each model, but this provides a way to consolidate them</span>
+<span class="sd">        into one location.</span>
+
+<span class="sd">        On each execution, this component loops through all saved distributions, then samples them with a probability</span>
+<span class="sd">        value (Percent Point Function) to retrieve the value that occurs at the given probability. The values are</span>
+<span class="sd">        stored into the output attributes of the UncertaintiesModel component. See</span>
+<span class="sd">        :class:`Uncertainties.calc_uncertainties.Distribution` for more information.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># ToDo: Determine if it would be better to integrate this capability into individual model components</span>
+
+        <span class="c"># Loop through and sample all of my uncertainties</span>
+        <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">distributions</span><span class="p">:</span>
+            <span class="c"># Get latest value from input probabilities</span>
+            <span class="n">probInput</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">output</span> <span class="o">+</span> <span class="s">&quot;_prob&quot;</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">probInput</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="UncertaintiesModel.init_distributions"><a class="viewcode-back" href="../../uncertainties.html#Uncertainties.Uncertainties.UncertaintiesModel.init_distributions">[docs]</a>    <span class="k">def</span> <span class="nf">init_distributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Inits probability and associated values from a provided CSV file. This enables you to defined the uncertain</span>
+<span class="sd">        variables by cumulative distribution functions in two columns for each variable. One defines the variable</span>
+<span class="sd">        probabilities and must match the Uncertainties component configured input name with an appended &#39;_prob&#39;.</span>
+<span class="sd">        Second is a column with the associated values, with a column name that matches the output name configured on</span>
+<span class="sd">        the Uncertainties component. Example table of a normal-like distribution below:</span>
+
+<span class="sd">        ================== =============</span>
+<span class="sd">        myUncertainty_prob myUncertainty</span>
+<span class="sd">        ================== =============</span>
+<span class="sd">        0                  10</span>
+<span class="sd">        0.25               15</span>
+<span class="sd">        0.5                30</span>
+<span class="sd">        0.75               45</span>
+<span class="sd">        1                  50</span>
+<span class="sd">        ================== =============</span>
+
+<span class="sd">        .. note:: The CSV file can include many uncertainties input as pairs of columns, and each does not need to \</span>
+<span class="sd">        have equal rows.</span>
+
+<span class="sd">        :param filename: Location of the CSV file to load</span>
+<span class="sd">        :return: None, saves distributions into a python :class:`list`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c"># Read in the CSV file</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="c"># Create distributions for each prob,value pair in the CSV file</span>
+        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_outputs</span><span class="p">:</span>
+            <span class="n">probData</span><span class="p">,</span> <span class="n">valueData</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s">&quot;prob&quot;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span>
+                        <span class="n">probData</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>  <span class="c"># Probability series</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">valueData</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>  <span class="c"># Value series</span>
+
+            <span class="c"># Make sure we found the columns before creating distribution, otherwise raise error</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">probData</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">valueData</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Distribution</span><span class="p">(</span><span class="n">probData</span><span class="p">,</span> <span class="n">valueData</span><span class="p">,</span> <span class="n">output</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NameError</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c"># Module test routine, executes when this python file is ran independently</span>
+    <span class="c"># For example, using Pycharm, right click while editing and select Run</span>
+    <span class="kn">from</span> <span class="nn">test_uncertainties</span> <span class="kn">import</span> <span class="n">test_uncertainties_component</span>
+    <span class="n">test_uncertainties_component</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Nick Roth.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
