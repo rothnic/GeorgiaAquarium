@@ -31,7 +31,13 @@ OpenMDAO model of the georgia aquarium energy system
 * navigate to install location
 * activate environment: Scripts\activate
 * pip install neurolab
-* pip install ffnet
+
+### Install ffnet
+* download [ffnet .exe installer](https://pypi.python.org/packages/2.7/f/ffnet/ffnet-0.7.1.win32-py2.7.exe#md5=b00b20e226993f78cd09f8e2d5e9d333) (avoids compiler issues)
+* activate openmdao environment
+* Run "easy_install ffnet_installer_name.exe"
+
+* pip install sphinx_rtd_theme
 
 ### Install pyopt
 * (all the following still performed in activated environment)

@@ -1,13 +1,7 @@
 __author__ = 'Nick'
 
 from Common.DecisionTreeSurrogate.DecisionTreeSurrogate import DecisionTreeSurrogate
-
-# Load csv
-# specify inputs
-# specify outputs
-#
-
-
+import os
 
 def decision_tree_from_csv(trainFile, inputCols, outputCols):
     surr = DecisionTreeSurrogate(trainingFile=trainFile, inputCols=inputCols, outputCols=outputCols)
@@ -27,7 +21,9 @@ def init_surrogate():
 
     trainFile = 'pedTrainingData.csv'
 
-    surr = decision_tree_from_csv(trainFile, inputCols, outputCols)
+    path = os.path.dirname(os.path.realpath(__file__))
+    trainPath = os.path.join(path, trainFile)
+    surr = decision_tree_from_csv(trainPath, inputCols, outputCols)
     surr.test()
     return surr
 

@@ -4,11 +4,10 @@ from FfnetSurrogate import FfnetSurrogate
 
 
 def neural_from_csv(trainFile, inputCols, outputCols):
-    for outputCol in outputCols:
-        surr = FfnetSurrogate(trainingFile=trainFile, inputCols=inputCols, outputCols=outputCols)
-        surr.train(num_neurons=30)
-        surr.test()
-        return surr
+    surr = FfnetSurrogate(trainingFile=trainFile, inputCols=inputCols, outputCols=outputCols)
+    surr.train(num_neurons=2)
+    surr.test()
+    return surr
 
 
 def create_surrogate():

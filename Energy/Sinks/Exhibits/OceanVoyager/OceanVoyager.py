@@ -18,6 +18,7 @@ from Common.Lighting.calc_lighting import Lights
 from numpy import float as numpy_float
 from pyopt_driver.pyopt_driver import pyOptDriver
 import numpy as np
+import os
 
 
 class OceanVoyagerModel(Component):
@@ -340,7 +341,6 @@ class OceanVoyagerDoe(Assembly):
     would be to
     '''
     def configure(self):
-
         # Add components
         self.add('ovm', OceanVoyagerModel())
         self.replace("driver", DOEdriver())
@@ -364,7 +364,7 @@ class OceanVoyagerDoe(Assembly):
                                  'ovm.baselineTotalPowerUse', 'ovm.totalPowerProtein', 'ovm.totalPowerSand',
                                  'ovm.sandPumpPower']
 
-        self.driver.add("DOEgenerator", LatinHypercube(num_samples=10000))
+        self.driver.add("DOEgenerator", LatinHypercube(num_samples=1000))
 
 
 if __name__ == "__main__":

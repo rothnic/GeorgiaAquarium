@@ -31,8 +31,8 @@ def test_lights_cost():
 
 def test_lights_yearly_cost():
     old, new = setup_tests()
-    old.yearly_cost()
-    new.yearly_cost()
+    old.yearly_cost
+    new.yearly_cost
 
 def test_lighting_model():
     old, new = setup_tests()

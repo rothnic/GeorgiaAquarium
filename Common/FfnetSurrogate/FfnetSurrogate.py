@@ -8,7 +8,6 @@ import pandas as pd
 from scipy import stats
 from ffnet import ffnet, mlgraph, imlgraph, savenet, loadnet
 
-
 class FfnetSurrogate:
     def __init__(self, trainingFile, inputCols, outputCols, netFile=None, multi=False):
         '''

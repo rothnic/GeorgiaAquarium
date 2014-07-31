@@ -19,4 +19,4 @@ def test_ov_openmdao_optimization():
 
 def test_ov_openmdao_doe():
     ovd = OceanVoyagerDoe()
-    ovd.run()
+    ovd.execute()

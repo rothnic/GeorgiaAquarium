@@ -4,7 +4,7 @@ from Common.DecisionTreeSurrogate.DecisionTreeSurrogate import DecisionTreeSurro
 
 class PedSurrogate:
 
-    def __init__(self, offDays, onDays, trainingFile, inputCols, outputCols, netFile):
+    def __init__(self, offDays, onDays, trainingFile, inputCols, outputCols, regressorFile):
         '''
         Initializer for the Pedestrian surrogate model. This model reads in data from an agent-based pedestrian model
         for the Georgia Aquarium built in AnyLogic. The AnyLogic model is limited from integrating with this one due
@@ -22,7 +22,7 @@ class PedSurrogate:
         :param netFile: A trained model that has been saved to disk via pickling
         :return: The initialized PedSurrogate object
         '''
-        self.surrogate = DecisionTreeSurrogate(trainingFile, inputCols, outputCols, netFile)
+        self.surrogate = DecisionTreeSurrogate(trainingFile, inputCols, outputCols, regressorFile)
         self.offDays = offDays
         self.onDays = onDays
 
@@ -72,8 +72,8 @@ if __name__ == "__main__":
     defaults = setup_defaults()
 
     # Load training data and initialize surrogate
-    ps = PedSurrogate(trainingFile=defaults['trainingFile'], inputCols=defaults['inputCols'],
-                       outputCols=defaults['outputCols'], netFile=defaults['netFile'])
+    ps = PedSurrogate(236, 139, trainingFile=defaults['trainingFile'], inputCols=defaults['inputCols'],
+                       outputCols=defaults['outputCols'], regressorFile=defaults['netFile'])
 
     # Print results of input data
     print ps.sim(500, 600)

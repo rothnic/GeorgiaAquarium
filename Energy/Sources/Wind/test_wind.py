@@ -7,8 +7,11 @@ import pandas as pd
 from Energy.Sources.Wind.calc_wind import calc_power
 from Energy.Sources.Wind.Wind import WindModel, WindOptimization
 from Common.AttributeTools.io import get_output_values, print_outputs
+import os
 
-path = "C:\Users\Nick\.openmdao\gui\projects\GeorgiaAquarium\Energy\Sources\Wind\windAtl.csv"
+path = os.path.dirname(os.path.abspath(__file__))
+datafile = "windAtl.csv"
+path = os.path.join(path, datafile)
 windDataTable = pd.read_csv(path)
 windData = windDataTable["windSpeed"].values
 

@@ -52,7 +52,7 @@ class PedestrianModel(Component):
         # Initialize surrogate model
         self.model = PedSurrogate(offDays=self.offDays, onDays=self.onDays,
                                   trainingFile=trainingFile, inputCols=defaults['inputCols'],
-                                  outputCols=defaults['outputCols'], netFile=netFile)
+                                  outputCols=defaults['outputCols'], regressorFile=netFile)
 
     # primary model method
     def execute(self):

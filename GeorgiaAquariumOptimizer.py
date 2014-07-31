@@ -4,11 +4,9 @@ from openmdao.main.api import Assembly
 from openmdao.lib.casehandlers.api import CSVCaseRecorder
 from pyopt_driver.pyopt_driver import pyOptDriver
 from openmdao.lib.drivers.doedriver import DOEdriver
-#from openmdao.lib.drivers.api import CONMINdriver
 from openmdao.lib.doegenerators.optlh import LatinHypercube
 from Uncertainties.Uncertainties import UncertaintiesModel
 from Common.RunAggregator.RunAggregator import RunAggregator
-from openmdao.lib.drivers.genetic import Genetic
 import os
 import GeorgiaAquarium as ga
 
@@ -121,12 +119,15 @@ class GeorgiaAquariumOptimization(Assembly):
     would be to
     '''
 
-    def __init__(self, breakEven=3.0, initialInvestment=400000.0, filename=''):
+    def __init__(self, breakEven=3.0, initialInvestment=400000.0, filename=None):
         self.breakEven = breakEven
         self.initialInvestment = initialInvestment
         self.initialInvestmentStr = 'ga.totalInitialInvestment - ' + str(self.initialInvestment) + ' < 0.0'
         self.breakEvenStr = 'ga.breakEvenYear - ' + str(self.breakEven) + ' < 0.0'
-        self.filename = 'ga_simpleoptimization_' + str(filename) + '.csv'
+        if self.filename is not None:
+            self.filename = 'ga_simpleoptimization_' + str(filename) + '.csv'
+        else:
+            self.filename = 'ga_simpleoptimization.csv'
         super(GeorgiaAquariumOptimization, self).__init__()
 
     def configure(self):
@@ -231,7 +232,7 @@ class GeorgiaAquariumDoe(Assembly):
                                  'ga.totalPowerConsumed', 'ga.totalPowerProduced', 'ga.baselineOceanVoyPowerUse',
                                  'ga.baselineTotalPowerUse', 'ga.totalPowerProtein', 'ga.totalPowerSand',
                                  'ga.year1Roi', 'ga.year10Roi', 'ga.year20Roi', 'ga.year30Roi']
-        self.driver.add("DOEgenerator", LatinHypercube(num_samples=10000))
+        self.driver.add("DOEgenerator", LatinHypercube(num_samples=1000))
 
 
 

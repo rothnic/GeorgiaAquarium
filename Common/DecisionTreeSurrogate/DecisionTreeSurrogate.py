@@ -4,7 +4,7 @@
 
 __author__ = 'Nick'
 
-import cPickle as pickle
+import cPickle as cpkl
 
 import numpy as np
 import pandas as pd
@@ -37,7 +37,7 @@ class DecisionTreeSurrogate:
         # Load regressor if we have a saved regressor file
         if regressorFile is not None:
             with open(regressorFile, 'rb') as handle:
-                self.regressor = pickle.load(handle)
+                self.regressor = cpkl.load(handle)
 
     def test(self):
         '''
@@ -88,7 +88,7 @@ class DecisionTreeSurrogate:
         self.regressor.fit(self.inputData, self.outputData)
 
         with open("decisionTreeSurrogate.p", "wb") as handle:
-            pickle.dump(self.regressor, handle)
+            cpkl.dump(self.regressor, handle)
 
     def sim(self, inValue):
         '''
